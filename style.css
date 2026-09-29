@@ -1,0 +1,58 @@
+body{
+    background-color: #f5f5f5;
+    padding-left:100px;
+    padding-right:100px;
+    margin-left:100px;
+    margin-right:50px;
+}
+ 
+h1 {
+    margin: 40px;
+    margin-left: 10px;
+    font-size: 40px;
+}
+.Encodebutton{
+    display: inline-block;
+    padding: 7px 14px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.Decodebutton{
+    display: inline-block;
+    padding: 7px 14px;
+    background-color: black;
+    color: white;
+    text-decoration: none;
+    border-radius: 3px;
+    font-weight: bold;
+}
+
+.inputBox {
+    margin-top:10px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+#userInput {
+    padding-top:8px;
+    padding-left:6px;
+    width: 900px;
+    height: 300px;
+    border: 1px solid;
+    margin-bottom:2px;
+    
+}
+
+#result {
+    padding-top:8px;
+    padding-left:6px;
+    width: 900px;
+    height: 300px;
+    border: 1px solid;
+    margin-top:10px;
+}
