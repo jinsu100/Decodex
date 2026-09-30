@@ -10,7 +10,12 @@ function encode(){
 function decode(){
 
     const input = document.getElementById("userInput").value;
-    const result = new TextDecoder().decode(new Uint8Array(atob(input).split('').map(c => c.charCodeAt(0))));
-    document.getElementById("result").value = result;
-    console.log("decode 실행 완료");
+    try {
+        const result = new TextDecoder().decode(new Uint8Array(atob(input).split('').map(c => c.charCodeAt(0))));
+        document.getElementById("result").value = result;
+        console.log("decode 실행 완료");
+    } catch (error) {
+        console.error("decode failure:", error);
+        document.getElementById("result").value = "Decode failed";
+    }
 }
