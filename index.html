@@ -16,23 +16,26 @@
     
     <meta name="description" content="Try decoding or encoding your URL! my website is a simple tool that allows you to decode or encode your URL. ">
     <link rel="stylesheet" href="style.css">
-    <title>Decoding & Encoding Tool</title>
+    <title>Base64 Online Encoding & Decoding Tool - Decoding Tool</title>
 </head>
 <body>
     <div class="header">
-        <h1>Decoding & Encoding Tool</h1>
+        <h1>Decodex</h1>
+    </div>
+
+    <div class="mainBody">
         <a href="https://jinsu100.github.io/EnDecoder/encode.html" class="Encodebutton">Go encoder</a>
         <a href="https://jinsu100.github.io/EnDecoder/index.html" class="Decodebutton">Go decoder</a>
-    </div>
+        
 
-    <div class="inputBox">
-        <strong>your text</strong>
-        <textarea type="text" id="userInput" placeholder="Enter text to decode"></textarea>
-        <button onclick="decode()">DECODE</button>
-        <strong>decoded text</strong>
-        <textarea type="text" id="result" readonly placeholder="Result will appear here"></textarea>
+        <div class="inputBox">
+            <strong>your text</strong>
+            <textarea type="text" id="userInput" placeholder="Enter text to decode"></textarea>
+            <button onclick="decode()">DECODE</button>
+            <strong>decoded text</strong>
+            <textarea type="text" id="result" readonly placeholder="Result will appear here"></textarea>
+        </div>
     </div>
-
     <script src="function.js"></script>
 </body>
 </html>
