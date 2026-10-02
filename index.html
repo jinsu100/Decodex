@@ -1,48 +1,60 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="google-site-verification" content="Cm98OmZVzYxYRo2uHkpDjDzFabqjTbHxmLgRPnfnQM0" />
-    
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
-    <script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="Cm98OmZVzYxYRo2uHkpDjDzFabqjTbHxmLgRPnfnQM0">
+  <meta name="description" content="Decode Base64 into readable UTF-8 text, including Korean and emoji. Free online tool. Conversion happens in your browser.">
+  <title>Base64 Decoder — Decodex</title>
+  <link rel="canonical" href="https://jinsu100.github.io/Decodex/index.html">
+  <link rel="icon" type="image/png" href="decodexFavicon.png">
+  <link rel="stylesheet" href="style.css">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
+  <script>
     window.dataLayer = window.dataLayer || [];
     function gtag(){dataLayer.push(arguments);}
     gtag('js', new Date());
-
     gtag('config', 'G-XVJFGV14XL');
-    </script>
-    
-    <meta name="description" content="Try decoding or encoding your URL! my website is a simple tool that allows you to decode or encode your URL. ">
-    <link rel="stylesheet" href="style.css">
-    <title>Base64 Encoding & Decoding Online Tool - Decoding Tool</title>
-    <!-- 파비콘 추가 -->
-    <link rel="icon" type="image/png" href="decodexFavicon.png"> 
-     
+  </script>
+  <script src="function.js" defer></script>
 </head>
-<body>
-    <div class="header">
-        <a href="index.html">
-        <img src="decodexLogo.png"
-            alt="Decodex — Base64 인코딩·디코딩"
-            class="logo">
-    </a>
-    </div>
-
-    <div class="mainBody">
-        <a href="https://jinsu100.github.io/Decodex/encode.html" class="Encodebutton">Go encoder</a>
-        <a href="https://jinsu100.github.io/Decodex/index.html" class="Decodebutton">Go decoder</a>
-        
-
-        <div class="inputBox">
-            <strong>your text</strong>
-            <textarea type="text" id="userInput" placeholder="Enter text to decode"></textarea>
-            <button onclick="decode()">DECODE</button>
-            <strong>decoded text</strong>
-            <textarea type="text" id="result" readonly placeholder="Result will appear here"></textarea>
-        </div>
-    </div>
-    <script src="function.js"></script>
+<body data-mode="decode">
+  <header class="header">
+    <a class="brand" href="index.html" aria-label="Decodex home"><img src="decodexLogo.png" alt="Decodex" width="2172" height="724"></a>
+    <span class="header-note"><span class="status-dot"></span> Free browser tool</span>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">LESS FRICTION. MORE FLOW.</p>
+      <h1 id="page-title">Decode Base64.<br><span>Keep things simple.</span></h1>
+      <p class="description">Decode Base64 into readable UTF-8 text, including Korean and emoji.<br>No sign-up. Just paste, convert, and copy.</p>
+    </section>
+    <nav class="mode-switch" aria-label="Conversion mode">
+      <a href="index.html" aria-current="page">Decode <span aria-hidden="true">↙</span></a>
+      <a href="encode.html" >Encode <span aria-hidden="true">↗</span></a>
+    </nav>
+    <form id="converter" novalidate>
+      <div class="workspace">
+        <section class="panel input-panel" aria-labelledby="input-label">
+          <div class="panel-heading"><label id="input-label" for="userInput">Base64 input</label><span class="badge">INPUT</span></div>
+          <textarea id="userInput" placeholder="Paste your Base64 string here…" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="input-hint feedback"></textarea>
+          <div class="panel-footer"><span id="input-count">0 characters</span><div class="small-actions"><button type="button" id="example-button">Try example</button><button type="button" id="clear-button">Clear</button></div></div>
+        </section>
+        <section class="panel output-panel" aria-labelledby="output-label">
+          <div class="panel-heading"><label id="output-label" for="result">Decoded text</label><span class="badge">OUTPUT</span></div>
+          <textarea id="result" readonly placeholder="Your result will appear here." spellcheck="false"></textarea>
+          <div class="panel-footer"><span id="output-count">0 characters</span><button type="button" id="copy-button" disabled>Copy result <span aria-hidden="true">↗</span></button></div>
+        </section>
+      </div>
+      <div class="conversion-bar"><p id="input-hint">Base64 & Base64URL supported · Whitespace is ignored</p><button class="primary-button" type="submit">Decode text <span aria-hidden="true">→</span></button></div>
+      <p id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+    </form>
+    <section class="details" aria-label="About this tool">
+      <div><span class="detail-icon" aria-hidden="true">&lt;/&gt;</span><h2>Made for everyday text</h2><p>Convert snippets, API values, and UTF-8 strings in a few clicks.</p></div>
+      <div><span class="detail-icon" aria-hidden="true">↔</span><h2>Conversion stays local</h2><p>Your input and output are processed in your browser and aren't sent by this tool to a server. Site visits are measured with Google Analytics.</p></div>
+      <div><span class="detail-icon" aria-hidden="true">Aa</span><h2>Encoding, explained</h2><p>Base64 represents data as text. It is not encryption and doesn't keep sensitive information secret.</p></div>
+    </section>
+  </main>
+  <footer><span>Decodex</span><span>A small tool for clearer work.</span></footer>
 </body>
 </html>
