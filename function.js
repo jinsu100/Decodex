@@ -6,6 +6,20 @@ const copyButton = document.getElementById('copy-button');
 const mode = document.body.dataset.mode;
 const MAX_BYTES = 5 * 1024 * 1024;
 let copyVersion = 0;
+const autoDecodeButton = document.getElementById('auto-decode-button');
+let autoDecode = mode === 'decode' && Boolean(autoDecodeButton);
+let autoDecodeTimer;
+let composing = false;
+function cancelAutoDecode() {
+  clearTimeout(autoDecodeTimer);
+}
+function scheduleAutoDecode() {
+  cancelAutoDecode();
+  resetResult();
+  if (autoDecode && !composing && input.value.trim()) {
+    autoDecodeTimer = setTimeout(() => convert(), 250);
+  }
+}
 function counts() {
   document.getElementById('input-count').textContent = `${Array.from(input.value).length.toLocaleString()} characters`;
   document.getElementById('output-count').textContent = `${Array.from(output.value).length.toLocaleString()} characters`;
@@ -47,6 +61,7 @@ function decodeText(text) {
   catch { throw new Error('This Base64 contains binary data or invalid UTF-8. This tool decodes text only.'); }
 }
 function convert() {
+  cancelAutoDecode();
   resetResult();
   if (!input.value) { message(mode === 'encode' ? 'Enter some text to get started.' : 'Paste a Base64 string to get started.', true); input.setAttribute('aria-invalid', 'true'); input.focus(); return; }
   try {
@@ -59,13 +74,27 @@ function convert() {
   }
 }
 document.getElementById('converter').addEventListener('submit', event => { event.preventDefault(); convert(); });
-input.addEventListener('input', resetResult);
+input.addEventListener('input', scheduleAutoDecode);
+input.addEventListener('compositionstart', () => { composing = true; cancelAutoDecode(); });
+input.addEventListener('compositionend', () => { composing = false; scheduleAutoDecode(); });
+if (autoDecodeButton && mode === 'decode') {
+  autoDecodeButton.addEventListener('click', () => {
+    autoDecode = !autoDecode;
+    autoDecodeButton.setAttribute('aria-pressed', String(autoDecode));
+    autoDecodeButton.textContent = `Auto decode: ${autoDecode ? 'ON' : 'OFF'}`;
+    document.getElementById('auto-decode-hint').textContent = autoDecode
+      ? 'Decodes automatically as you type or paste. Turn off to use the Decode button.'
+      : 'Auto decode is off. Click Decode Base64 to convert your input.';
+    cancelAutoDecode();
+    if (autoDecode) scheduleAutoDecode();
+  });
+}
 input.addEventListener('keydown', event => { if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') { event.preventDefault(); convert(); } });
-document.getElementById('clear-button').addEventListener('click', () => { input.value = ''; resetResult(); input.focus(); });
+document.getElementById('clear-button').addEventListener('click', () => { input.value = ''; cancelAutoDecode(); resetResult(); input.focus(); });
 document.getElementById('example-button').addEventListener('click', () => {
   const example = 'Hello, Decodex! 안녕하세요 👋';
   input.value = mode === 'encode' ? example : encodeText(example);
-  resetResult(); input.focus();
+  scheduleAutoDecode(); input.focus();
 });
 copyButton.addEventListener('click', async () => {
   const version = copyVersion;

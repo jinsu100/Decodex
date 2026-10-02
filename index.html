@@ -13,7 +13,7 @@
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Decodex">
   <link rel="icon" type="image/png" href="decodexFavicon.png">
-  <link rel="stylesheet" href="style.css?v=20261002b">
+  <link rel="stylesheet" href="style.css?v=20261002c">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -21,7 +21,7 @@
     gtag('js', new Date());
     gtag('config', 'G-XVJFGV14XL');
   </script>
-  <script src="function.js?v=20261002b" defer></script>
+  <script src="function.js?v=20261002c" defer></script>
 </head>
 <body data-mode="decode">
   <header class="header">
@@ -39,6 +39,10 @@
       <a href="encode.html" >Base64 Encode</a>
     </nav>
     <form id="converter" novalidate>
+      <div class="auto-decode-controls">
+        <button type="button" id="auto-decode-button" class="auto-decode-button" aria-pressed="true" aria-describedby="auto-decode-hint">Auto decode: ON</button>
+        <p id="auto-decode-hint">Decodes automatically as you type or paste. Turn off to use the Decode button.</p>
+      </div>
       <div class="workspace">
         <section class="panel input-panel" aria-labelledby="input-label">
           <div class="panel-heading"><label id="input-label" for="userInput">Base64 input</label><span class="badge">INPUT</span></div>
@@ -59,7 +63,7 @@
       <div><span class="detail-icon" aria-hidden="true">↔</span><h2>Conversion stays local</h2><p>Your input and output are processed in your browser and aren't sent by this tool to a server. Site visits are measured with Google Analytics.</p></div>
       <div><span class="detail-icon" aria-hidden="true">Aa</span><h2>Encoding, explained</h2><p>Base64 represents data as text. It is not encryption and doesn't keep sensitive information secret.</p></div>
     </section>
-    <section class="guide" aria-label="Base64 usage guide"><h2>How to decode Base64 online</h2><ol><li>Paste a Base64 or Base64URL string into the input box.</li><li>Click <strong>Decode Base64</strong>, or press Ctrl+Enter (⌘+Enter on Mac).</li><li>Click <strong>Copy result</strong> to copy the decoded UTF-8 text.</li></ol><p>For example, <code>SGVsbG8=</code> decodes to <code>Hello</code>. Spaces and line breaks are ignored. Unpadded Base64 and the Base64URL characters <code>-</code> and <code>_</code> are also supported.</p><h2>Base64 decoding questions</h2><details><summary>Why does my Base64 fail to decode?</summary><p>Check for extra punctuation, a full data URL prefix, or incorrectly placed padding. Paste only the Base64 portion. This decoder supports UTF-8 text; images, PDFs and other binary files cannot be displayed as text.</p></details><details><summary>Can I decode Korean text or emoji?</summary><p>Yes, when the original text was encoded as UTF-8. A different character encoding can produce an invalid UTF-8 error.</p></details><details><summary>Is Base64 encryption?</summary><p>No. Base64 is a reversible representation of bytes as text and does not protect secrets. Use encryption when confidentiality is required.</p></details><p>Need the opposite conversion? <a href="encode.html">Encode text to Base64</a>.</p><p>Conversion runs in your browser. Your text is not sent to a conversion server. Google Analytics measures site visits.</p></section>
+    <section class="guide" aria-label="Base64 usage guide"><h2>How to decode Base64 online</h2><ol><li>Paste a Base64 or Base64URL string into the input box.</li><li>Your text decodes automatically. With <strong>Auto decode</strong> off, click <strong>Decode Base64</strong>, or press Ctrl+Enter (⌘+Enter on Mac).</li><li>Click <strong>Copy result</strong> to copy the decoded UTF-8 text.</li></ol><p>For example, <code>SGVsbG8=</code> decodes to <code>Hello</code>. Spaces and line breaks are ignored. Unpadded Base64 and the Base64URL characters <code>-</code> and <code>_</code> are also supported.</p><h2>Base64 decoding questions</h2><details><summary>Why does my Base64 fail to decode?</summary><p>Check for extra punctuation, a full data URL prefix, or incorrectly placed padding. Paste only the Base64 portion. This decoder supports UTF-8 text; images, PDFs and other binary files cannot be displayed as text.</p></details><details><summary>Can I decode Korean text or emoji?</summary><p>Yes, when the original text was encoded as UTF-8. A different character encoding can produce an invalid UTF-8 error.</p></details><details><summary>Is Base64 encryption?</summary><p>No. Base64 is a reversible representation of bytes as text and does not protect secrets. Use encryption when confidentiality is required.</p></details><p>Need the opposite conversion? <a href="encode.html">Encode text to Base64</a>.</p><p>Conversion runs in your browser. Your text is not sent to a conversion server. Google Analytics measures site visits.</p></section>
   </main>
   <footer><span>Decodex</span><span>A small tool for clearer work.</span></footer>
 </body>
