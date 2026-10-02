@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Base64 encoding Korean text and emoji with UTF-8 | Decodex</title>
+  <meta name="description" content="Convert Korean text and emoji to and from Base64, understand garbled text, and test a verified UTF-8 example.">
+  <link rel="canonical" href="https://decodex.fyi/base64-korean.html">
+  <link rel="alternate" hreflang="en" href="https://decodex.fyi/base64-korean.html">
+  <link rel="alternate" hreflang="ko" href="https://decodex.fyi/ko/base64-korean.html">
+  <link rel="alternate" hreflang="x-default" href="https://decodex.fyi/base64-korean.html">
+  <meta property="og:title" content="Base64 encoding Korean text and emoji with UTF-8 | Decodex">
+  <meta property="og:description" content="Convert Korean text and emoji to and from Base64, understand garbled text, and test a verified UTF-8 example.">
+  <meta property="og:url" content="https://decodex.fyi/base64-korean.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Decodex">
+  <link rel="icon" type="image/png" href="decodexFavicon.png">
+  <link rel="stylesheet" href="style.css?v=20261002h">
+  <script src="language.js?v=20261002h"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XVJFGV14XL');
+  </script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "Base64 encoding Korean text and emoji with UTF-8", "description": "Convert Korean text and emoji to and from Base64, understand garbled text, and test a verified UTF-8 example.", "inLanguage": "en", "datePublished": "2026-10-02", "dateModified": "2026-10-02", "author": {"@type": "Person", "name": "jinsu100", "url": "https://github.com/jinsu100"}, "publisher": {"@type": "Organization", "name": "Decodex", "url": "https://decodex.fyi/"}, "mainEntityOfPage": "https://decodex.fyi/base64-korean.html"}</script>
+</head>
+<body data-lang="en">
+  <header class="header">
+    <a class="brand" href="./" aria-label="Decodex home"><img src="decodexLogo.png" alt="Decodex" width="2172" height="724"></a>
+    <div class="header-tools"><nav class="language-switch" aria-label="Language"><a href="base64-korean.html" lang="en" aria-current="page">English</a><a href="ko/base64-korean.html" lang="ko">한국어</a></nav></div>
+  </header>
+  <main class="info-page">
+    <a class="back-link" href="./">← Back to the Base64 tool</a>
+    <section class="intro"><p class="eyebrow">BASE64 GUIDE</p><h1>Base64 encoding Korean text and emoji with UTF-8</h1><p class="description">Convert Korean text and emoji to and from Base64, understand garbled text, and test a verified UTF-8 example.</p></section>
+    <article class="info-content" aria-label="Base64 encoding Korean text and emoji with UTF-8"><p>Korean text and emoji can both be converted to Base64. The important choice is the <strong>character encoding</strong> used before and after Base64. Decodex encodes text as UTF-8 bytes and reads decoded bytes as UTF-8.</p>
+<nav class="article-toc" aria-label="Contents"><strong>In this guide</strong><a href="#example">A Korean and emoji example</a><a href="#steps">Try the conversion</a><a href="#broken">Why text looks garbled</a><a href="#developers">Notes for JavaScript developers</a></nav>
+<h2 id="example">A Korean and emoji example</h2><p>These two values convert into each other using UTF-8. Use the exact text: adding a trailing space or line break can change the encoded result.</p><div class="example-block"><p><strong>Original text</strong></p><pre><code>안녕하세요 😀</code></pre><p><strong>Base64</strong></p><pre><code>7JWI64WV7ZWY7IS47JqUIPCfmIA=</code></pre></div><p>The encoding workflow is <strong>text → UTF-8 bytes → Base64</strong>. Decoding reverses it: <strong>Base64 → bytes → UTF-8 text</strong>. A Base64 value alone does not tell you which character encoding the original text used.</p>
+<h2 id="steps">Try the conversion in Decodex</h2><ol><li>Open the <a href="encode.html">encoder</a> and enter <code>안녕하세요 😀</code>.</li><li>With <strong>Auto convert</strong> on by default, the result appears after you enter the text. When it is off, click <strong>Encode Base64</strong>.</li><li>Click <strong>Copy result</strong> and paste it into the <a href="./">decoder</a>. Switching pages does not automatically transfer your input.</li><li>Check that the original Korean text and emoji return.</li></ol><p>Mixed English and Korean sentences use the same workflow. Encoding preserves spaces and line breaks as part of your text. Decoding ignores whitespace inside the Base64 representation.</p>
+<h2 id="broken">Why Korean text looks garbled</h2><p>Base64 does not automatically change a character encoding. Bytes originally produced using CP949 or EUC-KR may not read correctly as UTF-8. Check the encoding used by the source service or file. If possible, produce UTF-8 text there before encoding it again.</p><p>If the original text is already garbled, converting it to Base64 preserves that garbled content. Repeated decoding cannot generally recover the original Korean text. Decode again only when the source was actually encoded multiple times.</p><p>If the character encoding is correct, check for truncation or extra content with the examples in our <a href="base64-errors.html">Base64 error troubleshooting guide</a>.</p>
+<h2 id="developers">Notes for JavaScript developers</h2><p>Passing Unicode directly to <code>btoa("안녕하세요")</code> causes an error. <code>btoa()</code> treats each character as one byte, so first produce UTF-8 bytes with <code>TextEncoder</code>, then encode those bytes. Reverse the process by converting Base64 back into bytes and interpreting them with <code>TextDecoder</code>. See <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/btoa#unicode_strings">MDN’s Unicode conversion guidance</a> for implementation details.</p>
+<h2>Handle the result with care</h2><p>Anyone can reverse Base64. Korean text becoming an unfamiliar ASCII string does not make it encrypted. Decodex processes conversions in your browser, but posting the copied result on another site can expose the original text. Read our <a href="privacy.html">privacy policy</a> for information about site visit statistics.</p><aside class="article-related"><h2>Related guides</h2><p><a href="base64-errors.html">How to fix Base64 decoding errors</a></p><p><a href="guides.html">All guides</a></p></aside></article>
+  </main>
+  <footer><span>© Decodex</span><nav class="footer-links" aria-label="Site information"><a href="guides.html">Guides</a><a href="about.html">About</a><a href="privacy.html">Privacy</a><a href="contact.html">Contact</a></nav></footer>
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>How to fix Base64 decoding errors | Decodex</title>
+  <meta name="description" content="Troubleshoot invalid Base64 characters, padding, copied URLs and UTF-8 errors with examples tested in Decodex.">
+  <link rel="canonical" href="https://decodex.fyi/base64-errors.html">
+  <link rel="alternate" hreflang="en" href="https://decodex.fyi/base64-errors.html">
+  <link rel="alternate" hreflang="ko" href="https://decodex.fyi/ko/base64-errors.html">
+  <link rel="alternate" hreflang="x-default" href="https://decodex.fyi/base64-errors.html">
+  <meta property="og:title" content="How to fix Base64 decoding errors | Decodex">
+  <meta property="og:description" content="Troubleshoot invalid Base64 characters, padding, copied URLs and UTF-8 errors with examples tested in Decodex.">
+  <meta property="og:url" content="https://decodex.fyi/base64-errors.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Decodex">
+  <link rel="icon" type="image/png" href="decodexFavicon.png">
+  <link rel="stylesheet" href="style.css?v=20261002h">
+  <script src="language.js?v=20261002h"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XVJFGV14XL');
+  </script>
+  <script type="application/ld+json">{"@context": "https://schema.org", "@type": "Article", "headline": "How to fix Base64 decoding errors", "description": "Troubleshoot invalid Base64 characters, padding, copied URLs and UTF-8 errors with examples tested in Decodex.", "inLanguage": "en", "datePublished": "2026-10-02", "dateModified": "2026-10-02", "author": {"@type": "Person", "name": "jinsu100", "url": "https://github.com/jinsu100"}, "publisher": {"@type": "Organization", "name": "Decodex", "url": "https://decodex.fyi/"}, "mainEntityOfPage": "https://decodex.fyi/base64-errors.html"}</script>
+</head>
+<body data-lang="en">
+  <header class="header">
+    <a class="brand" href="./" aria-label="Decodex home"><img src="decodexLogo.png" alt="Decodex" width="2172" height="724"></a>
+    <div class="header-tools"><nav class="language-switch" aria-label="Language"><a href="base64-errors.html" lang="en" aria-current="page">English</a><a href="ko/base64-errors.html" lang="ko">한국어</a></nav></div>
+  </header>
+  <main class="info-page">
+    <a class="back-link" href="./">← Back to the Base64 tool</a>
+    <section class="intro"><p class="eyebrow">BASE64 GUIDE</p><h1>How to fix Base64 decoding errors</h1><p class="description">Troubleshoot invalid Base64 characters, padding, copied URLs and UTF-8 errors with examples tested in Decodex.</p></section>
+    <article class="info-content" aria-label="How to fix Base64 decoding errors"><p>When a Base64 value fails to decode, first separate a <strong>format problem</strong> from a <strong>text interpretation problem</strong>. Decodex is a UTF-8 text tool: valid Base64 can still represent an image or bytes that cannot be read as UTF-8.</p>
+<nav class="article-toc" aria-label="Contents"><strong>In this guide</strong><a href="#format">Characters and padding</a><a href="#prefix">Values copied from URLs or JSON</a><a href="#utf8">Binary and UTF-8 errors</a><a href="#check">Test a known working example</a></nav>
+<h2 id="format">1. Check characters and padding</h2><p>If quotes or commas surround a copied value, check whether they belong to a wrapper and copy only the Base64 field. If an equals sign appears in the middle, or part of the value is missing, retrieve the original. The <a href="https://www.rfc-editor.org/rfc/rfc4648.html#section-4">Base64 specification</a> places padding at the end.</p><div class="table-wrap"><table><caption>Examples you can test in Decodex</caption><thead><tr><th>Input</th><th>Result or next step</th></tr></thead><tbody><tr><td><code>SGVsbG8=</code></td><td>Decodes to <code>Hello</code>.</td></tr><tr><td><code>SGVsbG8</code></td><td>Decodex handles omitted trailing padding.</td></tr><tr><td><code>Zg=</code></td><td>Incomplete padding. If the original text was f, the correct value is <code>Zg==</code>.</td></tr><tr><td><code>A</code></td><td>This length cannot represent complete data. Check for missing content.</td></tr></tbody></table></div><p>Decodex ignores whitespace and accepts the Base64URL characters <code>-</code> and <code>_</code>. Other tools or APIs may use stricter rules. Adding padding cannot restore missing content.</p>
+<h2 id="prefix">2. Check values copied from URLs, JSON, or data URLs</h2><p>For a JSON value such as <code>"SGVsbG8="</code>, paste the content without the quotes. For <code>data:text/plain;base64,SGVsbG8=</code>, paste only <code>SGVsbG8=</code> after the comma. An image data URL still contains binary image data, which this text tool cannot display.</p><p>A value containing percent escapes such as <code>%3D</code> may need URL decoding before Base64 decoding. Some transport layers also turn <code>+</code> into a space. Compare with the original: replacing every space with a plus can corrupt genuine formatting whitespace.</p><p>A whole token separated by dots is not a single Base64 value. Identify the field you actually need to decode first.</p>
+<h2 id="utf8">3. “Binary data or invalid UTF-8”</h2><p>This error means the decoded bytes could not be interpreted as UTF-8 text. For example, <code>/w==</code> is valid Base64, but its decoded byte is not valid UTF-8 text.</p><ul><li>For images, PDFs, or archives, use a tool that handles the original file format.</li><li>For text encoded as CP949 or EUC-KR, use a decoder for that character encoding. Decodex uses UTF-8.</li><li>If the original was UTF-8, check whether copying or transport damaged the value.</li></ul><p>See our <a href="base64-korean.html">Korean and emoji conversion guide</a> for the text encoding workflow.</p>
+<h2 id="check">4. Start with a working example</h2><ol><li>Paste <code>SGVsbG8=</code> into the <a href="./">decoder</a> and check that the result is <code>Hello</code>.</li><li>If that works, compare your own value’s source format and character encoding.</li><li>If an error appears while typing an incomplete value, paste the whole value or turn off <strong>Auto convert</strong> and use the manual button.</li><li>For a size-limit error, try a smaller sample. This tool’s conversion limit is 5 MiB (5 × 1024 × 1024 bytes).</li></ol><p>If the problem continues, <a href="contact.html">report the browser and error message</a> with a short, non-confidential sample. Avoid passwords or tokens.</p><aside class="article-related"><h2>Related guides</h2><p><a href="base64-korean.html">Base64 encoding Korean text and emoji with UTF-8</a></p><p><a href="guides.html">All guides</a></p></aside></article>
+  </main>
+  <footer><span>© Decodex</span><nav class="footer-links" aria-label="Site information"><a href="guides.html">Guides</a><a href="about.html">About</a><a href="privacy.html">Privacy</a><a href="contact.html">Contact</a></nav></footer>
+</body>
+</html>

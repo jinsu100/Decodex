@@ -15,7 +15,7 @@
   // The English entry pages choose Korean automatically; explicit choices work both ways.
   const shouldChange = koreanPage ? selected === 'en' : preferred === 'ko';
   const page = koreanPage ? path.slice(3) : path;
-  const supportedPage = ['/', '/index.html', '/encode.html', '/about.html', '/privacy.html', '/contact.html'].includes(page);
+  const supportedPage = ['/', '/index.html', '/encode.html', '/about.html', '/privacy.html', '/contact.html', '/guides.html', '/base64-errors.html', '/base64-korean.html'].includes(page);
   if (shouldChange && supportedPage) {
     const destination = koreanPage ? page : '/ko' + page;
     window.location.replace(destination + window.location.search + window.location.hash);
