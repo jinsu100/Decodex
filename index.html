@@ -4,11 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="Cm98OmZVzYxYRo2uHkpDjDzFabqjTbHxmLgRPnfnQM0">
-  <meta name="description" content="Decode Base64 into readable UTF-8 text, including Korean and emoji. Free online tool. Conversion happens in your browser.">
-  <title>Base64 Decoder — Decodex</title>
-  <link rel="canonical" href="https://jinsu100.github.io/Decodex/index.html">
+  <meta name="description" content="Decode Base64 and Base64URL into UTF-8 text online. Supports Korean, emoji, missing padding and line breaks. Free, with no sign-up.">
+  <title>Base64 Decoder Online — Free UTF-8 Tool | Decodex</title>
+  <link rel="canonical" href="https://jinsu100.github.io/Decodex/">
+  <meta property="og:title" content="Base64 Decoder Online | Decodex">
+  <meta property="og:description" content="Decode Base64 and Base64URL into UTF-8 text online. Supports Korean, emoji, missing padding and line breaks. Free, with no sign-up.">
+  <meta property="og:url" content="https://jinsu100.github.io/Decodex/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Decodex">
   <link rel="icon" type="image/png" href="decodexFavicon.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20261002b">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -16,22 +21,22 @@
     gtag('js', new Date());
     gtag('config', 'G-XVJFGV14XL');
   </script>
-  <script src="function.js" defer></script>
+  <script src="function.js?v=20261002b" defer></script>
 </head>
 <body data-mode="decode">
   <header class="header">
-    <a class="brand" href="index.html" aria-label="Decodex home"><img src="decodexLogo.png" alt="Decodex" width="2172" height="724"></a>
+    <a class="brand" href="./" aria-label="Decodex home"><img src="decodexLogo.png" alt="Decodex" width="2172" height="724"></a>
     <span class="header-note"><span class="status-dot"></span> Free browser tool</span>
   </header>
   <main>
     <section class="intro" aria-labelledby="page-title">
-      <p class="eyebrow">LESS FRICTION. MORE FLOW.</p>
-      <h1 id="page-title">Decode Base64.<br><span>Keep things simple.</span></h1>
+      <p class="eyebrow">FREE ONLINE BASE64 TOOL</p>
+      <h1 id="page-title">Base64 Decoder Online</h1>
       <p class="description">Decode Base64 into readable UTF-8 text, including Korean and emoji.<br>No sign-up. Just paste, convert, and copy.</p>
     </section>
     <nav class="mode-switch" aria-label="Conversion mode">
-      <a href="index.html" aria-current="page">Decode <span aria-hidden="true">↙</span></a>
-      <a href="encode.html" >Encode <span aria-hidden="true">↗</span></a>
+      <a href="./" aria-current="page">Base64 Decode</a>
+      <a href="encode.html" >Base64 Encode</a>
     </nav>
     <form id="converter" novalidate>
       <div class="workspace">
@@ -39,14 +44,14 @@
           <div class="panel-heading"><label id="input-label" for="userInput">Base64 input</label><span class="badge">INPUT</span></div>
           <textarea id="userInput" placeholder="Paste your Base64 string here…" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="input-hint feedback"></textarea>
           <div class="panel-footer"><span id="input-count">0 characters</span><div class="small-actions"><button type="button" id="example-button">Try example</button><button type="button" id="clear-button">Clear</button></div></div>
+      <div class="conversion-bar panel-action"><p id="input-hint">Base64 & Base64URL supported · Whitespace is ignored</p><button class="primary-button" type="submit">Decode Base64 <span aria-hidden="true">→</span></button></div>
         </section>
         <section class="panel output-panel" aria-labelledby="output-label">
-          <div class="panel-heading"><label id="output-label" for="result">Decoded text</label><span class="badge">OUTPUT</span></div>
+          <div class="panel-heading"><label id="output-label" for="result">Decoded text</label><button class="copy-button" type="button" id="copy-button" disabled><span aria-hidden="true">⧉</span> Copy result</button></div>
           <textarea id="result" readonly placeholder="Your result will appear here." spellcheck="false"></textarea>
-          <div class="panel-footer"><span id="output-count">0 characters</span><button type="button" id="copy-button" disabled>Copy result <span aria-hidden="true">↗</span></button></div>
+          <div class="panel-footer"><span id="output-count">0 characters</span><span class="output-hint">Select or copy your result</span></div>
         </section>
       </div>
-      <div class="conversion-bar"><p id="input-hint">Base64 & Base64URL supported · Whitespace is ignored</p><button class="primary-button" type="submit">Decode text <span aria-hidden="true">→</span></button></div>
       <p id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></p>
     </form>
     <section class="details" aria-label="About this tool">
@@ -54,6 +59,7 @@
       <div><span class="detail-icon" aria-hidden="true">↔</span><h2>Conversion stays local</h2><p>Your input and output are processed in your browser and aren't sent by this tool to a server. Site visits are measured with Google Analytics.</p></div>
       <div><span class="detail-icon" aria-hidden="true">Aa</span><h2>Encoding, explained</h2><p>Base64 represents data as text. It is not encryption and doesn't keep sensitive information secret.</p></div>
     </section>
+    <section class="guide" aria-label="Base64 usage guide"><h2>How to decode Base64 online</h2><ol><li>Paste a Base64 or Base64URL string into the input box.</li><li>Click <strong>Decode Base64</strong>, or press Ctrl+Enter (⌘+Enter on Mac).</li><li>Click <strong>Copy result</strong> to copy the decoded UTF-8 text.</li></ol><p>For example, <code>SGVsbG8=</code> decodes to <code>Hello</code>. Spaces and line breaks are ignored. Unpadded Base64 and the Base64URL characters <code>-</code> and <code>_</code> are also supported.</p><h2>Base64 decoding questions</h2><details><summary>Why does my Base64 fail to decode?</summary><p>Check for extra punctuation, a full data URL prefix, or incorrectly placed padding. Paste only the Base64 portion. This decoder supports UTF-8 text; images, PDFs and other binary files cannot be displayed as text.</p></details><details><summary>Can I decode Korean text or emoji?</summary><p>Yes, when the original text was encoded as UTF-8. A different character encoding can produce an invalid UTF-8 error.</p></details><details><summary>Is Base64 encryption?</summary><p>No. Base64 is a reversible representation of bytes as text and does not protect secrets. Use encryption when confidentiality is required.</p></details><p>Need the opposite conversion? <a href="encode.html">Encode text to Base64</a>.</p><p>Conversion runs in your browser. Your text is not sent to a conversion server. Google Analytics measures site visits.</p></section>
   </main>
   <footer><span>Decodex</span><span>A small tool for clearer work.</span></footer>
 </body>

@@ -323,3 +323,43 @@ footer span:first-child {
     transition:background-color .15s,color .15s;
   }
 }
+
+/* Keep the conversion actions visible beside the text they operate on. */
+.header { padding-top:14px; padding-bottom:14px; }
+.brand img { width:160px; }
+main { padding-top:28px; }
+.intro { margin-bottom:22px; }
+h1 { font-size:clamp(28px,4vw,42px); line-height:1.2; margin-bottom:10px; }
+.eyebrow { margin-bottom:10px; }
+.mode-switch { border:1px solid #bacfc1; }
+.mode-switch a { font-size:15px; min-height:46px; color:#3c5147; }
+.mode-switch a[aria-current] { background:var(--green); color:white; }
+.mode-switch a:hover { background:#d3e3d8; color:#174a32; }
+.mode-switch a[aria-current]:hover { background:#0a5137; color:white; }
+.panel-heading { min-height:72px; padding:14px 18px; }
+textarea { min-height:220px; font-size:14px; }
+.panel-action { margin:0; padding:16px 18px; border-top:1px solid var(--line); flex-direction:column; align-items:stretch; gap:10px; }
+.primary-button { min-height:50px; width:100%; font-size:16px; justify-content:center; gap:14px; box-shadow:0 3px 7px #126a4a22; }
+.copy-button { display:flex; align-items:center; gap:8px; min-height:44px; padding:10px 16px; background:#126a4a; color:white; font-size:14px; font-weight:700; border:1px solid #126a4a; }
+.copy-button:hover:not(:disabled) { background:#0a5137; }
+.copy-button:disabled { opacity:1; background:#e0e8e3; border-color:#ccd8d0; color:#5a6b61; }
+.panel-footer button { min-height:40px; font-size:12px; padding:8px 10px; background:#eef4ef; }
+.output-hint { font-size:11px; }
+.guide { margin-top:32px; padding-top:20px; border-top:1px solid var(--line); max-width:860px; }
+.guide h2 { font-size:20px; margin:22px 0 12px; }
+.guide p,.guide li { font-size:14px; line-height:1.8; color:#52645a; }
+.guide ol { padding-left:22px; }
+.guide code { background:#e5ede7; padding:2px 5px; border-radius:4px; overflow-wrap:anywhere; }
+.guide a { color:#126a4a; text-underline-offset:3px; }
+.guide details { border-bottom:1px solid var(--line); padding:14px 0; }
+.guide summary { font-size:15px; font-weight:600; cursor:pointer; line-height:1.5; }
+@media(max-width:700px) {
+  main { padding-top:24px; }
+  .description br { display:none; }
+  .mode-switch { display:flex; }
+  .mode-switch a { flex:1; justify-content:center; min-width:0; padding:10px; font-size:14px; }
+  .panel-heading { padding:12px 16px; }
+  textarea { min-height:160px; padding:16px; }
+  .panel-footer { padding:10px 14px; }
+  .copy-button { padding:10px 12px; }
+}

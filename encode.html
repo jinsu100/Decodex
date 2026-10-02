@@ -4,11 +4,16 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="google-site-verification" content="Cm98OmZVzYxYRo2uHkpDjDzFabqjTbHxmLgRPnfnQM0">
-  <meta name="description" content="Encode UTF-8 text to Base64, including Korean and emoji. Free online tool. Conversion happens in your browser.">
-  <title>Base64 Encoder — Decodex</title>
+  <meta name="description" content="Encode text to Base64 online with UTF-8 support for Korean, emoji and other languages. Free browser-based Base64 encoder, with no sign-up.">
+  <title>Base64 Encoder Online — Free UTF-8 Tool | Decodex</title>
   <link rel="canonical" href="https://jinsu100.github.io/Decodex/encode.html">
+  <meta property="og:title" content="Base64 Encoder Online | Decodex">
+  <meta property="og:description" content="Encode text to Base64 online with UTF-8 support for Korean, emoji and other languages. Free browser-based Base64 encoder, with no sign-up.">
+  <meta property="og:url" content="https://jinsu100.github.io/Decodex/encode.html">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Decodex">
   <link rel="icon" type="image/png" href="decodexFavicon.png">
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style.css?v=20261002b">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -16,22 +21,22 @@
     gtag('js', new Date());
     gtag('config', 'G-XVJFGV14XL');
   </script>
-  <script src="function.js" defer></script>
+  <script src="function.js?v=20261002b" defer></script>
 </head>
 <body data-mode="encode">
   <header class="header">
-    <a class="brand" href="index.html" aria-label="Decodex home"><img src="decodexLogo.png" alt="Decodex" width="2172" height="724"></a>
+    <a class="brand" href="./" aria-label="Decodex home"><img src="decodexLogo.png" alt="Decodex" width="2172" height="724"></a>
     <span class="header-note"><span class="status-dot"></span> Free browser tool</span>
   </header>
   <main>
     <section class="intro" aria-labelledby="page-title">
-      <p class="eyebrow">LESS FRICTION. MORE FLOW.</p>
-      <h1 id="page-title">Encode Base64.<br><span>Keep things simple.</span></h1>
+      <p class="eyebrow">FREE ONLINE BASE64 TOOL</p>
+      <h1 id="page-title">Base64 Encoder Online</h1>
       <p class="description">Encode UTF-8 text to Base64, including Korean and emoji.<br>No sign-up. Just paste, convert, and copy.</p>
     </section>
     <nav class="mode-switch" aria-label="Conversion mode">
-      <a href="index.html" >Decode <span aria-hidden="true">↙</span></a>
-      <a href="encode.html" aria-current="page">Encode <span aria-hidden="true">↗</span></a>
+      <a href="./" >Base64 Decode</a>
+      <a href="encode.html" aria-current="page">Base64 Encode</a>
     </nav>
     <form id="converter" novalidate>
       <div class="workspace">
@@ -39,14 +44,14 @@
           <div class="panel-heading"><label id="input-label" for="userInput">Plain text</label><span class="badge">INPUT</span></div>
           <textarea id="userInput" placeholder="Type or paste your text here…" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="input-hint feedback"></textarea>
           <div class="panel-footer"><span id="input-count">0 characters</span><div class="small-actions"><button type="button" id="example-button">Try example</button><button type="button" id="clear-button">Clear</button></div></div>
+      <div class="conversion-bar panel-action"><p id="input-hint">UTF-8 text supported · Korean & emoji included</p><button class="primary-button" type="submit">Encode Base64 <span aria-hidden="true">→</span></button></div>
         </section>
         <section class="panel output-panel" aria-labelledby="output-label">
-          <div class="panel-heading"><label id="output-label" for="result">Base64 output</label><span class="badge">OUTPUT</span></div>
+          <div class="panel-heading"><label id="output-label" for="result">Base64 output</label><button class="copy-button" type="button" id="copy-button" disabled><span aria-hidden="true">⧉</span> Copy result</button></div>
           <textarea id="result" readonly placeholder="Your result will appear here." spellcheck="false"></textarea>
-          <div class="panel-footer"><span id="output-count">0 characters</span><button type="button" id="copy-button" disabled>Copy result <span aria-hidden="true">↗</span></button></div>
+          <div class="panel-footer"><span id="output-count">0 characters</span><span class="output-hint">Select or copy your result</span></div>
         </section>
       </div>
-      <div class="conversion-bar"><p id="input-hint">UTF-8 text supported · Korean & emoji included</p><button class="primary-button" type="submit">Encode text <span aria-hidden="true">→</span></button></div>
       <p id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></p>
     </form>
     <section class="details" aria-label="About this tool">
@@ -54,6 +59,7 @@
       <div><span class="detail-icon" aria-hidden="true">↔</span><h2>Conversion stays local</h2><p>Your input and output are processed in your browser and aren't sent by this tool to a server. Site visits are measured with Google Analytics.</p></div>
       <div><span class="detail-icon" aria-hidden="true">Aa</span><h2>Encoding, explained</h2><p>Base64 represents data as text. It is not encryption and doesn't keep sensitive information secret.</p></div>
     </section>
+    <section class="guide" aria-label="Base64 usage guide"><h2>How to encode text to Base64</h2><ol><li>Enter or paste your text into the input box.</li><li>Click <strong>Encode Base64</strong>, or press Ctrl+Enter (⌘+Enter on Mac).</li><li>Click <strong>Copy result</strong> to copy the Base64 string.</li></ol><p>For example, <code>Hello</code> becomes <code>SGVsbG8=</code>. Text is first converted to UTF-8 bytes, so Korean, emoji and other Unicode characters are supported.</p><h2>Base64 encoding questions</h2><details><summary>What format does this encoder produce?</summary><p>It produces standard Base64 using letters, digits, plus and slash, with equals signs for padding when needed. The output contains no added line breaks.</p></details><details><summary>Can I encode a file with this tool?</summary><p>This tool encodes text only, up to 5 MB of UTF-8 data. Pasting a filename does not encode the file contents.</p></details><details><summary>Does Base64 make text smaller or keep it secret?</summary><p>No. Base64 usually makes byte data about one-third larger, plus padding. Anyone can decode it; it is not encryption.</p></details><p>Need to read a Base64 string? <a href="./">Decode Base64 to text</a>.</p><p>Conversion runs in your browser. Your text is not sent to a conversion server. Google Analytics measures site visits.</p></section>
   </main>
   <footer><span>Decodex</span><span>A small tool for clearer work.</span></footer>
 </body>
