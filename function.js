@@ -27,6 +27,42 @@ const autoConvertButton = document.getElementById('auto-convert-button');
 let autoConvert = Boolean(autoConvertButton);
 let autoConvertTimer;
 let composing = false;
+let analyticsTimer;
+
+// Only fixed categories are sent: never text, results, lengths, or error messages.
+function trackUsage(eventName, parameters = {}) {
+  if (typeof gtag !== 'function') return;
+  try {
+    gtag('event', eventName, {
+      send_to: 'G-XVJFGV14XL',
+      conversion_mode: mode,
+      ui_language: locale,
+      ...parameters
+    });
+  } catch { /* Analytics must never interrupt conversion or copying. */ }
+}
+function cancelAnalytics() {
+  clearTimeout(analyticsTimer);
+}
+function trackConversion(outcome, trigger, errorType) {
+  cancelAnalytics();
+  if (typeof gtag !== 'function') return;
+  const version = copyVersion;
+  const report = () => {
+    if (version !== copyVersion) return;
+    const parameters = { conversion_method: trigger };
+    if (errorType) parameters.error_type = errorType;
+    trackUsage(`${mode}_${outcome}`, parameters);
+  };
+  // Automatic conversions settle before being counted; manual attempts count immediately.
+  if (trigger === 'auto') analyticsTimer = setTimeout(report, 1500);
+  else report();
+}
+function conversionError(code, text) {
+  const error = new Error(t(text));
+  error.code = code;
+  return error;
+}
 function cancelAutoConvert() {
   clearTimeout(autoConvertTimer);
 }
@@ -34,7 +70,7 @@ function scheduleAutoConvert() {
   cancelAutoConvert();
   resetResult();
   if (autoConvert && !composing && (mode === 'encode' ? input.value.length : input.value.trim().length)) {
-    autoConvertTimer = setTimeout(() => convert(), 250);
+    autoConvertTimer = setTimeout(() => convert('auto'), 250);
   }
 }
 function counts() {
@@ -47,6 +83,7 @@ function message(text, error = false) {
   feedback.classList.toggle('error', error);
 }
 function resetResult() {
+  cancelAnalytics();
   copyVersion++;
   output.value = '';
   input.removeAttribute('aria-invalid');
@@ -55,7 +92,7 @@ function resetResult() {
 }
 function encodeText(text) {
   const bytes = new TextEncoder().encode(text);
-  if (bytes.length > MAX_BYTES) throw new Error(t("Please use text smaller than 5 MB."));
+  if (bytes.length > MAX_BYTES) throw conversionError("size_limit", "Please use text smaller than 5 MB.");
   const chunks = [];
   for (let i = 0; i < bytes.length; i += 8192) {
     chunks.push(String.fromCharCode(...bytes.subarray(i, i + 8192)));
@@ -64,35 +101,37 @@ function encodeText(text) {
 }
 function decodeText(text) {
   let normalized = text.replace(/\s/g, '').replace(/-/g, '+').replace(/_/g, '/');
-  if (!normalized) throw new Error(t("Paste a Base64 string to get started."));
-  if (normalized.length > Math.ceil(MAX_BYTES / 3) * 4) throw new Error(t("Please use Base64 representing less than 5 MB."));
+  if (!normalized) throw conversionError("empty_input", "Paste a Base64 string to get started.");
+  if (normalized.length > Math.ceil(MAX_BYTES / 3) * 4) throw conversionError("size_limit", "Please use Base64 representing less than 5 MB.");
   if (!/^[A-Za-z0-9+/]*={0,2}$/.test(normalized) || normalized.length % 4 === 1 || (normalized.includes('=') && normalized.length % 4 !== 0)) {
-    throw new Error(t("This is not valid Base64. Check the characters and padding, then try again."));
+    throw conversionError("invalid_base64", "This is not valid Base64. Check the characters and padding, then try again.");
   }
   normalized += '='.repeat((4 - normalized.length % 4) % 4);
   let binary;
   try { binary = atob(normalized); }
-  catch { throw new Error(t("This is not valid Base64. Check the characters and padding, then try again.")); }
-  if (binary.length > MAX_BYTES) throw new Error(t("Please use Base64 representing less than 5 MB."));
+  catch { throw conversionError("invalid_base64", "This is not valid Base64. Check the characters and padding, then try again."); }
+  if (binary.length > MAX_BYTES) throw conversionError("size_limit", "Please use Base64 representing less than 5 MB.");
   try { return new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(binary, c => c.charCodeAt(0))); }
-  catch { throw new Error(t("This Base64 contains binary data or invalid UTF-8. This tool decodes text only.")); }
+  catch { throw conversionError("invalid_utf8", "This Base64 contains binary data or invalid UTF-8. This tool decodes text only."); }
 }
-function convert() {
+function convert(trigger = 'manual') {
   cancelAutoConvert();
   resetResult();
-  if (!input.value) { message(mode === 'encode' ? t("Enter some text to get started.") : t("Paste a Base64 string to get started."), true); input.setAttribute('aria-invalid', 'true'); input.focus(); return; }
+  if (!input.value) { message(mode === 'encode' ? t("Enter some text to get started.") : t("Paste a Base64 string to get started."), true); input.setAttribute('aria-invalid', 'true'); input.focus(); trackConversion('error', trigger, 'empty_input'); return; }
   try {
     output.value = mode === 'encode' ? encodeText(input.value) : decodeText(input.value);
     counts();
     message(mode === 'encode' ? t("Encoded successfully. Your result is ready to copy.") : t("Decoded successfully. Your result is ready to copy."));
+    trackConversion('success', trigger);
   } catch (error) {
+    trackConversion('error', trigger, ['empty_input', 'size_limit', 'invalid_base64', 'invalid_utf8'].includes(error.code) ? error.code : 'conversion_failed');
     message(error.message, true);
     input.setAttribute('aria-invalid', 'true');
   }
 }
 document.getElementById('converter').addEventListener('submit', event => { event.preventDefault(); convert(); });
 input.addEventListener('input', scheduleAutoConvert);
-input.addEventListener('compositionstart', () => { composing = true; cancelAutoConvert(); });
+input.addEventListener('compositionstart', () => { composing = true; cancelAutoConvert(); cancelAnalytics(); });
 input.addEventListener('compositionend', () => { composing = false; scheduleAutoConvert(); });
 if (autoConvertButton) {
   autoConvertButton.addEventListener('click', () => {
@@ -105,6 +144,7 @@ if (autoConvertButton) {
       ? t("Converts automatically as you type or paste. Turn off to convert manually.")
       : t("Auto convert is off. Click the conversion button below to convert your input.");
     cancelAutoConvert();
+    cancelAnalytics();
     if (autoConvert) scheduleAutoConvert();
   });
 }
@@ -121,6 +161,7 @@ copyButton.addEventListener('click', async () => {
   if (!text) return;
   try {
     await navigator.clipboard.writeText(text);
+    trackUsage('result_copy');
     if (version === copyVersion) message(t("Copied to clipboard."));
   } catch {
     if (version !== copyVersion) return;
