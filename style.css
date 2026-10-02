@@ -7,13 +7,17 @@
 }
  
 .header {
-    padding-left:0px;
-    padding-right:100px;
-    background-color: #ffffff;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-}    
+    padding:5px 4px;
+    padding-top: 0px;
+    margin-left: 10px;
+}
+
+.logo {
+    display: block;
+    width: 260px;
+    max-width: 100%;
+    height: auto;
+}
 
 h1 {
     margin: 0px;
