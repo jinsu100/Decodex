@@ -14,11 +14,10 @@
   // Keep directly linked translated URLs available to readers and search engines.
   // The English entry pages choose Korean automatically; explicit choices work both ways.
   const shouldChange = koreanPage ? selected === 'en' : preferred === 'ko';
-  if (shouldChange) {
-    const encoder = path.endsWith('/encode.html');
-    const destination = koreanPage
-      ? encoder ? '/encode.html' : '/'
-      : encoder ? '/ko/encode.html' : '/ko/';
+  const page = koreanPage ? path.slice(3) : path;
+  const supportedPage = ['/', '/index.html', '/encode.html', '/about.html', '/privacy.html', '/contact.html'].includes(page);
+  if (shouldChange && supportedPage) {
+    const destination = koreanPage ? page : '/ko' + page;
     window.location.replace(destination + window.location.search + window.location.hash);
   }
   document.addEventListener('DOMContentLoaded', () => {
