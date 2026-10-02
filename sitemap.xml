@@ -2,4 +2,6 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://decodex.fyi/</loc></url>
   <url><loc>https://decodex.fyi/encode.html</loc></url>
+  <url><loc>https://decodex.fyi/ko/</loc></url>
+  <url><loc>https://decodex.fyi/ko/encode.html</loc></url>
 </urlset>

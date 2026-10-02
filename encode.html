@@ -10,10 +10,13 @@
   <meta property="og:title" content="Base64 Encoder Online | Decodex">
   <meta property="og:description" content="Encode text to Base64 online with UTF-8 support for Korean, emoji and other languages. Free browser-based Base64 encoder, with no sign-up.">
   <meta property="og:url" content="https://decodex.fyi/encode.html">
+  <link rel="alternate" hreflang="en" href="https://decodex.fyi/encode.html">
+  <link rel="alternate" hreflang="ko" href="https://decodex.fyi/ko/encode.html">
+  <link rel="alternate" hreflang="x-default" href="https://decodex.fyi/encode.html">
   <meta property="og:type" content="website">
   <meta property="og:site_name" content="Decodex">
   <link rel="icon" type="image/png" href="decodexFavicon.png">
-  <link rel="stylesheet" href="style.css?v=20261002d">
+  <link rel="stylesheet" href="style.css?v=20261002e">
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -21,12 +24,14 @@
     gtag('js', new Date());
     gtag('config', 'G-XVJFGV14XL');
   </script>
-  <script src="function.js?v=20261002d" defer></script>
+  <script src="function.js?v=20261002e" defer></script>
 </head>
-<body data-mode="encode">
+<body data-lang="en" data-mode="encode">
   <header class="header">
     <a class="brand" href="./" aria-label="Decodex home"><img src="decodexLogo.png" alt="Decodex" width="2172" height="724"></a>
-    <span class="header-note"><span class="status-dot"></span> Free browser tool</span>
+    <div class="header-tools"><span class="header-note"><span class="status-dot"></span> Free browser tool</span>
+      <nav class="language-switch" aria-label="Language"><a href="encode.html" lang="en" aria-current="page">English</a><a href="ko/encode.html" lang="ko">한국어</a></nav>
+    </div>
   </header>
   <main>
     <section class="intro" aria-labelledby="page-title">

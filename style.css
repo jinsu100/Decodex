@@ -376,3 +376,10 @@ textarea { min-height:220px; font-size:14px; }
   .auto-convert-button { padding:10px 8px; font-size:12px; }
   .converter-toolbar .mode-switch a { padding:8px; font-size:12px; min-height:40px; }
 }
+
+.header-tools { display:flex; align-items:center; gap:18px; }
+.language-switch { display:flex; gap:4px; border:1px solid var(--line); border-radius:8px; padding:3px; }
+.language-switch a { padding:7px 10px; font-size:12px; text-decoration:none; border-radius:5px; }
+.language-switch a[aria-current] { background:#e0ede4; color:var(--green); font-weight:700; }
+.language-switch a:hover { background:#e8eee9; }
+@media(max-width:700px) { .header-tools { gap:8px; } .header-tools .header-note { display:none; } .brand img { width:125px; } .language-switch a { padding:7px 8px; } }

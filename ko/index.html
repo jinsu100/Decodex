@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="Cm98OmZVzYxYRo2uHkpDjDzFabqjTbHxmLgRPnfnQM0">
+  <meta name="description" content="Base64와 Base64URL을 한글·이모지가 포함된 UTF-8 텍스트로 디코딩하세요. 자동 변환을 지원하며 가입 없이 무료로 사용할 수 있습니다.">
+  <title>Base64 디코딩 — 무료 한글 자동 변환 도구 | Decodex</title>
+  <link rel="canonical" href="https://decodex.fyi/ko/">
+  <meta property="og:title" content="무료 Base64 디코딩 | Decodex">
+  <meta property="og:description" content="Base64와 Base64URL을 한글·이모지가 포함된 UTF-8 텍스트로 디코딩하세요. 자동 변환을 지원하며 가입 없이 무료로 사용할 수 있습니다.">
+  <meta property="og:url" content="https://decodex.fyi/ko/">
+  <link rel="alternate" hreflang="en" href="https://decodex.fyi/">
+  <link rel="alternate" hreflang="ko" href="https://decodex.fyi/ko/">
+  <link rel="alternate" hreflang="x-default" href="https://decodex.fyi/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Decodex">
+  <link rel="icon" type="image/png" href="../decodexFavicon.png">
+  <link rel="stylesheet" href="../style.css?v=20261002e">
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XVJFGV14XL');
+  </script>
+  <script src="../function.js?v=20261002e" defer></script>
+</head>
+<body data-lang="ko" data-mode="decode">
+  <header class="header">
+    <a class="brand" href="./" aria-label="Decodex 홈"><img src="../decodexLogo.png" alt="Decodex" width="2172" height="724"></a>
+    <div class="header-tools"><span class="header-note"><span class="status-dot"></span> 무료 온라인 도구</span>
+      <nav class="language-switch" aria-label="언어 선택"><a href="../" lang="en">English</a><a href="./" lang="ko" aria-current="page">한국어</a></nav>
+    </div>
+  </header>
+  <main>
+    <section class="intro" aria-labelledby="page-title">
+      <p class="eyebrow">무료 온라인 BASE64 변환 도구</p>
+      <h1 id="page-title">Base64 디코딩</h1>
+      <p class="description">Base64를 한글·이모지가 포함된 UTF-8 텍스트로 변환하세요.<br>가입 없이 입력하고, 변환하고, 복사하세요.</p>
+    </section>
+
+    <form id="converter" novalidate>
+      <div class="converter-toolbar">
+        <button type="button" id="auto-convert-button" class="auto-convert-button" aria-pressed="true" aria-describedby="auto-convert-hint">자동 변환: 켜짐</button>
+    <nav class="mode-switch" aria-label="변환 모드">
+      <a href="./" aria-current="page">Base64 디코딩</a>
+      <a href="encode.html" >Base64 인코딩</a>
+    </nav>
+      </div>
+      <p id="auto-convert-hint" class="auto-convert-hint">입력하거나 붙여넣으면 자동으로 변환합니다. 끄면 버튼으로 직접 변환할 수 있습니다.</p>
+
+      <div class="workspace">
+        <section class="panel input-panel" aria-labelledby="input-label">
+          <div class="panel-heading"><label id="input-label" for="userInput">Base64 입력</label><span class="badge">입력</span></div>
+          <textarea id="userInput" placeholder="Base64 문자열을 붙여넣으세요…" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="input-hint feedback"></textarea>
+          <div class="panel-footer"><span id="input-count">0자</span><div class="small-actions"><button type="button" id="example-button">예제 넣기</button><button type="button" id="clear-button">비우기</button></div></div>
+      <div class="conversion-bar panel-action"><p id="input-hint">Base64·Base64URL 지원 · 공백과 줄바꿈 자동 제외</p><button class="primary-button" type="submit">디코딩하기 <span aria-hidden="true">→</span></button></div>
+        </section>
+        <section class="panel output-panel" aria-labelledby="output-label">
+          <div class="panel-heading"><label id="output-label" for="result">디코딩 결과</label><button class="copy-button" type="button" id="copy-button" disabled><span aria-hidden="true">⧉</span> 결과 복사</button></div>
+          <textarea id="result" readonly placeholder="변환 결과가 여기에 표시됩니다." spellcheck="false"></textarea>
+          <div class="panel-footer"><span id="output-count">0자</span><span class="output-hint">결과를 선택하거나 복사하세요</span></div>
+        </section>
+      </div>
+      <p id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></p>
+    </form>
+    <section class="details" aria-label="도구 소개">
+      <div><span class="detail-icon" aria-hidden="true">&lt;/&gt;</span><h2>일상적인 텍스트 변환</h2><p>코드 조각, API 값, UTF-8 문자열을 간편하게 변환하세요.</p></div>
+      <div><span class="detail-icon" aria-hidden="true">↔</span><h2>브라우저에서 변환</h2><p>입력과 결과는 브라우저에서 처리하며 변환 서버로 전송하지 않습니다. 사이트 방문은 Google 애널리틱스로 측정합니다.</p></div>
+      <div><span class="detail-icon" aria-hidden="true">Aa</span><h2>Base64란?</h2><p>Base64는 데이터를 텍스트로 표현하는 방식입니다. 암호화가 아니며 민감한 정보를 보호하지 않습니다.</p></div>
+    </section>
+    <section class="guide" aria-label="Base64 사용 안내"><h2>Base64 디코딩 사용법</h2><ol><li>Base64 또는 Base64URL 문자열을 입력 칸에 붙여넣으세요.</li><li>자동으로 디코딩됩니다. <strong>자동 변환</strong>을 끈 경우 <strong>디코딩하기</strong>를 누르거나 Ctrl+Enter(맥: ⌘+Enter)를 누르세요.</li><li><strong>결과 복사</strong>를 눌러 UTF-8 텍스트를 복사하세요.</li></ol><p>예를 들어 <code>SGVsbG8=</code>는 <code>Hello</code>로 변환됩니다. 공백과 줄바꿈은 제외하며, 패딩 없는 Base64와 Base64URL의 <code>-</code>, <code>_</code>도 지원합니다.</p><h2>Base64 디코딩 자주 묻는 질문</h2><details><summary>디코딩이 실패하는 이유는 무엇인가요?</summary><p>불필요한 문장 부호, 데이터 URL 접두어, 잘못된 패딩이 있는지 확인하세요. Base64 부분만 붙여넣어야 합니다. 이 도구는 UTF-8 텍스트 전용이므로 이미지·PDF 등 바이너리 파일은 텍스트로 표시할 수 없습니다.</p></details><details><summary>한글이나 이모지도 디코딩할 수 있나요?</summary><p>원본 텍스트가 UTF-8로 인코딩됐다면 가능합니다. 다른 문자 인코딩으로 만들어진 데이터는 UTF-8 오류가 발생할 수 있습니다.</p></details><details><summary>Base64는 암호화인가요?</summary><p>아니요. Base64는 바이트를 텍스트로 표현하는 되돌릴 수 있는 방식입니다. 비밀 정보를 보호하려면 암호화를 사용해야 합니다.</p></details><p>반대 변환이 필요한가요? <a href="encode.html">텍스트를 Base64로 인코딩하세요</a>.</p><p>변환은 브라우저에서 처리하며 입력 텍스트를 변환 서버로 보내지 않습니다. Google 애널리틱스는 사이트 방문을 측정합니다.</p></section>
+  </main>
+  <footer><span>Decodex</span><span>텍스트 변환을 더 간편하게.</span></footer>
+</body>
+</html>
