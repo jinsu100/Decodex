@@ -53,5 +53,6 @@
     "Auto convert is off. Click the conversion button below to convert your input.": "自动转换已关闭，请点击转换按钮。",
     "Copied to clipboard.": "已复制到剪贴板。",
     "Automatic copying is unavailable. The result is selected; press Ctrl+C or ⌘C to copy.": "无法自动复制，已选中结果，请按Ctrl+C或⌘C复制。"
-  }
+  },
+  "freeTool": "免费在线工具"
 }

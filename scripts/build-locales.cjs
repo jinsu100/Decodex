@@ -30,7 +30,8 @@ for (const lang of Object.keys(names).filter(l=>!['en','ko'].includes(l))) {
   head=head.replace(/(src|href)="(theme.js|language.js|function.js|style.css)\?[^\"]+"/g,`$1="/$2?v=${version}"`);
   if(!converter)head=head.replace(/\s*<script src="\/function.js[^<]+<\/script>/,'');
   head=head.replace('<script src="/theme.js',`<script src="/locales/${lang}.js?v=${version}"></script>\n<script src="/theme.js`)+alternates(page);
-  const header=`<header class="header"><a class="brand" href="./" aria-label="Decodex"><img src="/decodexLogo.png" alt="Decodex" width="2172" height="724"></a><div class="header-tools"><button id="theme-toggle" class="theme-toggle" type="button" aria-label="${e('dark')}" aria-pressed="false" hidden><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">${e('dark')}</span></button>${menu(lang,page,d.language)}</div></header>`;
+  const note=converter?`<span class="header-note"><span class="status-dot"></span> ${e("freeTool")}</span>`:"";
+ const header=`<header class="header"><a class="brand" href="./" aria-label="Decodex"><img src="/decodexLogo.png" alt="Decodex" width="2172" height="724"></a><div class="header-tools">${note}<button id="theme-toggle" class="theme-toggle" type="button" aria-label="${e('dark')}" aria-pressed="false" hidden><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">${e('dark')}</span></button>${menu(lang,page,d.language)}</div></header>`;
   let main;
   if(converter){
    const action=e(enc?'encode':'decode');

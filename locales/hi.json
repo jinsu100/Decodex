@@ -53,5 +53,6 @@
     "Auto convert is off. Click the conversion button below to convert your input.": "स्वचालित रूपांतरण बंद है। रूपांतरण बटन दबाएँ।",
     "Copied to clipboard.": "क्लिपबोर्ड पर कॉपी हो गया।",
     "Automatic copying is unavailable. The result is selected; press Ctrl+C or ⌘C to copy.": "अपने-आप कॉपी नहीं हो सका। परिणाम चुना गया है; Ctrl+C या ⌘C दबाएँ।"
-  }
+  },
+  "freeTool": "निःशुल्क ऑनलाइन टूल"
 }

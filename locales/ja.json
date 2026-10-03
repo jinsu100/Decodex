@@ -53,5 +53,6 @@
     "Auto convert is off. Click the conversion button below to convert your input.": "自動変換はオフです。変換ボタンを押してください。",
     "Copied to clipboard.": "クリップボードにコピーしました。",
     "Automatic copying is unavailable. The result is selected; press Ctrl+C or ⌘C to copy.": "自動コピーを利用できません。結果を選択しました。Ctrl+Cまたは⌘Cでコピーしてください。"
-  }
+  },
+  "freeTool": "無料オンラインツール"
 }

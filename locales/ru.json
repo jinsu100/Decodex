@@ -53,5 +53,6 @@
     "Auto convert is off. Click the conversion button below to convert your input.": "Автопреобразование отключено. Нажмите кнопку преобразования.",
     "Copied to clipboard.": "Скопировано в буфер обмена.",
     "Automatic copying is unavailable. The result is selected; press Ctrl+C or ⌘C to copy.": "Автоматическое копирование недоступно. Результат выделен; нажмите Ctrl+C или ⌘C."
-  }
+  },
+  "freeTool": "Бесплатный онлайн-инструмент"
 }

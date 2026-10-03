@@ -53,5 +53,6 @@
     "Auto convert is off. Click the conversion button below to convert your input.": "A conversão automática está desativada. Clique no botão de conversão.",
     "Copied to clipboard.": "Copiado para a área de transferência.",
     "Automatic copying is unavailable. The result is selected; press Ctrl+C or ⌘C to copy.": "Não foi possível copiar automaticamente. O resultado está selecionado; pressione Ctrl+C ou ⌘C."
-  }
+  },
+  "freeTool": "Ferramenta online gratuita"
 }
