@@ -14,9 +14,9 @@
   <link rel="icon" href="https://decodex.fyi/favicon.ico" sizes="16x16 32x32 48x48 96x96">
   <link rel="icon" type="image/png" href="https://decodex.fyi/decodexFavicon.png" sizes="96x96">
   <meta name="color-scheme" content="light dark">
-  <script src="../theme.js?v=20261003n"></script>
-  <link rel="stylesheet" href="../style.css?v=20261003n">
-  <script src="../language.js?v=20261003n"></script>
+  <script src="../theme.js?v=20261003o"></script>
+  <link rel="stylesheet" href="../style.css?v=20261003o">
+  <script src="../language.js?v=20261003o"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -47,13 +47,13 @@
   <main class="info-page">
     <a class="back-link" href="./">← Base64 변환 도구로 돌아가기</a>
     <section class="intro"><p class="eyebrow">BASE64 GUIDE</p><h1>한글·이모지 Base64 인코딩과 디코딩</h1><p class="description">한글이 깨지는 이유와 UTF-8 변환 순서를 설명하고, 검증된 예시로 한글·이모지 Base64를 변환합니다.</p></section>
-    <article class="info-content" aria-label="한글·이모지 Base64 인코딩과 디코딩"><p>한글이나 이모지도 Base64로 변환할 수 있습니다. 중요한 것은 Base64 앞뒤에서 사용하는 <strong>문자 인코딩</strong>입니다. Decodex는 텍스트를 UTF-8 바이트로 바꾼 뒤 인코딩하며, 디코딩한 바이트도 UTF-8로 읽습니다.</p>
+    <article class="info-content" aria-label="한글·이모지 Base64 인코딩과 디코딩"><nav class="article-tool-links" aria-label="Decodex"><a href="./">Base64 디코딩 →</a><a href="encode.html">Base64 인코딩 →</a></nav><p>한글이나 이모지도 Base64로 변환할 수 있습니다. 중요한 것은 Base64 앞뒤에서 사용하는 <strong>문자 인코딩</strong>입니다. Decodex는 텍스트를 UTF-8 바이트로 바꾼 뒤 인코딩하며, 디코딩한 바이트도 UTF-8로 읽습니다.</p>
 <nav class="article-toc" aria-label="이 글의 내용"><strong>이 글에서 확인할 내용</strong><a href="#example">한글·이모지 변환 예시</a><a href="#steps">직접 변환하는 방법</a><a href="#broken">한글이 깨지는 이유</a><a href="#developers">개발자가 확인할 점</a></nav>
 <h2 id="example">한글·이모지 변환 예시</h2><p>아래 두 값은 UTF-8 기준으로 서로 변환됩니다. 문자열 뒤에 공백이나 줄바꿈을 더하면 결과가 달라질 수 있으므로 예시 그대로 사용하세요.</p><div class="example-block"><p><strong>원문</strong></p><pre><code>안녕하세요 😀</code></pre><p><strong>Base64</strong></p><pre><code>7JWI64WV7ZWY7IS47JqUIPCfmIA=</code></pre></div><p>변환 순서는 <strong>텍스트 → UTF-8 바이트 → Base64</strong>입니다. 반대 방향은 <strong>Base64 → 바이트 → UTF-8 텍스트</strong>입니다. Base64 문자열만으로는 원문이 어떤 문자 인코딩을 사용했는지 알 수 없습니다.</p>
 <h2 id="steps">Decodex에서 직접 변환하는 방법</h2><ol><li><a href="encode.html">인코딩 페이지</a>에서 <code>안녕하세요 😀</code>를 입력합니다.</li><li>기본 설정인 자동 변환이 켜져 있으면 입력 뒤 결과가 표시됩니다. 자동 변환을 끄면 <strong>Base64 인코딩</strong> 버튼을 누릅니다.</li><li><strong>결과 복사</strong>를 누르고 <a href="./">디코딩 페이지</a>에 붙여 넣습니다. 페이지 이동 시 입력이 자동 전달되지는 않습니다.</li><li>원래 한글과 이모지로 돌아오는지 확인합니다.</li></ol><p>영어와 한글이 섞인 문장도 같은 방식으로 변환합니다. 인코딩할 때 앞뒤 공백과 줄바꿈은 원문의 일부로 보존됩니다. 디코딩할 때 Base64 안의 공백과 줄바꿈은 무시합니다.</p>
 <h2 id="broken">한글이 깨지거나 UTF-8 오류가 나는 이유</h2><p>Base64는 문자 인코딩을 자동으로 바꾸는 기능이 아닙니다. CP949·EUC-KR로 만든 바이트를 UTF-8로 읽으면 제대로 해석되지 않을 수 있습니다. 원본을 생성한 서비스나 파일의 문자 인코딩을 먼저 확인하고, 가능하면 그쪽에서 UTF-8로 저장한 뒤 다시 인코딩하세요.</p><p>이미 깨진 문자열을 Base64로 바꾸면 깨진 내용 그대로 변환됩니다. 여러 번 디코딩한다고 원래 한글이 복원되는 것은 아닙니다. 원본이 실제로 여러 번 인코딩된 경우에만 추가 디코딩을 시도하세요.</p><p>문자 인코딩이 맞는데도 실패한다면 문자열이 잘렸거나 다른 값이 섞였는지 <a href="base64-errors.html">Base64 오류 해결 안내</a>의 예시와 비교해보세요.</p>
 <h2 id="developers">JavaScript에서 한글을 변환한다면</h2><p><code>btoa("안녕하세요")</code>처럼 유니코드 문자열을 그대로 넣으면 오류가 납니다. <code>btoa()</code>는 각 문자를 한 바이트로 취급하므로, 먼저 <code>TextEncoder</code>로 UTF-8 바이트를 만들고 그 바이트를 Base64로 변환해야 합니다. 반대 방향에서는 Base64를 바이트로 복원한 다음 <code>TextDecoder</code>로 UTF-8을 해석합니다. 자세한 설명은 <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/btoa#unicode_strings">MDN의 유니코드 변환 안내</a>에서 확인할 수 있습니다.</p>
-<h2>변환한 내용을 안전하게 다루기</h2><p>Base64 결과는 누구나 되돌릴 수 있습니다. 한글이 알아보기 어려운 영문 문자열로 바뀌어도 암호화된 것은 아닙니다. Decodex의 변환은 브라우저에서 처리되지만, 복사한 결과를 다른 사이트에 붙여 넣거나 공개하면 원문도 노출될 수 있습니다. 사이트 방문 통계에 관한 내용은 <a href="privacy.html">개인정보처리방침</a>을 확인하세요.</p><aside class="article-related"><h2>관련 안내</h2><p><a href="base64-errors.html">Base64 디코딩 오류 해결 방법</a></p><p><a href="guides.html">모든 안내 글 보기</a></p></aside></article>
+<h2>변환한 내용을 안전하게 다루기</h2><p>Base64 결과는 누구나 되돌릴 수 있습니다. 한글이 알아보기 어려운 영문 문자열로 바뀌어도 암호화된 것은 아닙니다. Decodex의 변환은 브라우저에서 처리되지만, 복사한 결과를 다른 사이트에 붙여 넣거나 공개하면 원문도 노출될 수 있습니다. 사이트 방문 통계에 관한 내용은 <a href="privacy.html">개인정보처리방침</a>을 확인하세요.</p><aside class="article-related"><h2>관련 안내</h2><p><a href="base64-errors.html">Base64 디코딩 오류 해결 방법</a></p><p><a href="guides.html">모든 안내 글 보기</a></p></aside><p>기본값은 UTF-8입니다. 글자가 깨지면 원본에 사용된 문자 인코딩을 선택하세요.</p></article>
 <section class="guide-resources" data-new-guides><h2>더 알아보기</h2><div class="guide-grid"><a class="guide-card" href="base64url.html"><h3>Base64와 Base64URL 차이 — URL 안전 문자·패딩·디코딩 예제</h3><p>Base64와 Base64URL의 + /, - _ 차이와 패딩 생략 조건을 예제로 비교합니다. URL에서 문자가 바뀌는 이유와 UTF-8 디코딩 방법을 확인하세요.</p></a><a class="guide-card" href="base64-padding.html"><h3>Base64 끝의 =와 == 의미 — 패딩 오류·생략 규칙 설명</h3><p>Base64 패딩 =와 ==의 의미를 f·fo·foo 예제로 설명합니다. 패딩 없는 문자열의 복원, 길이 오류, Zg와 Zg=의 차이를 확인하세요.</p></a><a class="guide-card" href="javascript-base64.html"><h3>JavaScript 한글 Base64 인코딩·디코딩 — btoa 오류 해결</h3><p>JavaScript btoa의 한글·이모지 오류를 TextEncoder와 TextDecoder로 해결합니다. UTF-8 인코딩·디코딩 코드와 검증된 예제를 제공합니다.</p></a></div></section>
 </main>
   <footer><span>© Decodex</span><nav class="footer-links" aria-label="사이트 정보"><a href="guides.html">사용 안내</a><a href="about.html">사이트 소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a></nav></footer>

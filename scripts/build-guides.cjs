@@ -44,7 +44,7 @@ for (const lang of Object.keys(names)) {
    .replace(/(<link rel="canonical" href=")[^"]*(">)/,`$1${canonical}$2`)
    .replace(/(<meta property="og:url" content=")[^"]*(">)/,`$1${canonical}$2`)
    .replace(/(<meta property="og:type" content=")[^"]*(">)/,'$1article$2')
-   .replace(/(src|href)="(?:\.\.\/)?(theme.js|language.js|style.css)\?[^\"]+"/g,'$1="/$2?v=20261003n"');
+   .replace(/(src|href)="(?:\.\.\/)?(theme.js|language.js|style.css)\?[^\"]+"/g,'$1="/$2?v=20261003o"');
   head += Object.keys(names).map(l=>`\n<link rel="alternate" hreflang="${l}" href="${url(l,page)}">`).join('')+`\n<link rel="alternate" hreflang="x-default" href="${url('en',page)}">`;
   const schema=[{'@context':'https://schema.org','@type':'Article',headline:article.title,description:article.description,inLanguage:lang,mainEntityOfPage:canonical,datePublished:'2026-10-03',dateModified:'2026-10-03',author:{'@type':'Person',name:'jinsu100',url:'https://github.com/jinsu100'},publisher:{'@type':'Organization',name:'Decodex',url:'https://decodex.fyi/'}}, {'@context':'https://schema.org','@type':'BreadcrumbList',itemListElement:[{'@type':'ListItem',position:1,name:'Decodex',item:url(lang,'index.html')},{'@type':'ListItem',position:2,name:hub.match(/<h1[^>]*>([^<]*)<\/h1>/)[1],item:url(lang,'guides.html')},{'@type':'ListItem',position:3,name:article.title,item:canonical}]}];
   head+=`\n<script type="application/ld+json">${JSON.stringify(schema).replaceAll('<','\\u003c')}</script>\n`;

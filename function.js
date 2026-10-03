@@ -20,7 +20,10 @@ const koreanMessages = {
   "Copied to clipboard.": "클립보드에 복사했습니다.",
   "Automatic copying is unavailable. The result is selected; press Ctrl+C or ⌘C to copy.": "자동 복사를 사용할 수 없습니다. 선택된 결과를 Ctrl+C 또는 ⌘C로 복사하세요."
 };
-function t(text) { return localized?.messages[text] || (locale === 'ko' ? koreanMessages[text] || text : text); }
+function t(text) { return window.decodexCharsetMessages?.[locale]?.[text] || localized?.messages[text] || (locale === 'ko' ? koreanMessages[text] || text : text); }
+
+const charsetSelect = document.getElementById('charset-select');
+const selectedEncoding = () => charsetSelect?.value || 'utf-8';
 
 const MAX_BYTES = 5 * 1024 * 1024;
 let copyVersion = 0;
@@ -91,8 +94,13 @@ function resetResult() {
   message('');
   counts();
 }
-function encodeText(text) {
-  const bytes = new TextEncoder().encode(text);
+function encodeText(text, encoding = selectedEncoding()) {
+  let bytes;
+  try {
+    bytes = encoding === 'utf-8' ? new TextEncoder().encode(text) : window.decodexCharsets.encode(text, encoding);
+  } catch {
+    throw conversionError('unrepresentable_text', 'These characters cannot be represented in the selected encoding. Choose UTF-8 or change the text.');
+  }
   if (bytes.length > MAX_BYTES) throw conversionError("size_limit", "Please use text smaller than 5 MB.");
   const chunks = [];
   for (let i = 0; i < bytes.length; i += 8192) {
@@ -100,7 +108,7 @@ function encodeText(text) {
   }
   return btoa(chunks.join(''));
 }
-function decodeText(text) {
+function decodeText(text, encoding = selectedEncoding()) {
   let normalized = text.replace(/\s/g, '').replace(/-/g, '+').replace(/_/g, '/');
   if (!normalized) throw conversionError("empty_input", "Paste a Base64 string to get started.");
   if (normalized.length > Math.ceil(MAX_BYTES / 3) * 4) throw conversionError("size_limit", "Please use Base64 representing less than 5 MB.");
@@ -112,26 +120,49 @@ function decodeText(text) {
   try { binary = atob(normalized); }
   catch { throw conversionError("invalid_base64", "This is not valid Base64. Check the characters and padding, then try again."); }
   if (binary.length > MAX_BYTES) throw conversionError("size_limit", "Please use Base64 representing less than 5 MB.");
-  try { return new TextDecoder('utf-8', { fatal: true }).decode(Uint8Array.from(binary, c => c.charCodeAt(0))); }
-  catch { throw conversionError("invalid_utf8", "This Base64 contains binary data or invalid UTF-8. This tool decodes text only."); }
+  const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+  try {
+    return encoding === 'utf-8'
+      ? new TextDecoder('utf-8', { fatal: true }).decode(bytes)
+      : window.decodexCharsets.decode(bytes, encoding);
+  } catch {
+    throw conversionError(encoding === 'utf-8' ? 'invalid_utf8' : 'invalid_encoding',
+      encoding === 'utf-8' ? 'This Base64 contains binary data or invalid UTF-8. This tool decodes text only.'
+      : 'The bytes are invalid for this encoding. Check the original encoding or whether the data is a binary file.');
+  }
 }
-function convert(trigger = 'manual') {
+async function convert(trigger = 'manual') {
   cancelAutoConvert();
   resetResult();
   if (!input.value) { message(mode === 'encode' ? t("Enter some text to get started.") : t("Paste a Base64 string to get started."), true); input.setAttribute('aria-invalid', 'true'); input.focus(); trackConversion('error', trigger, 'empty_input'); return; }
   try {
-    output.value = mode === 'encode' ? encodeText(input.value) : decodeText(input.value);
+    const version = copyVersion;
+    const encoding = selectedEncoding();
+    const text = input.value;
+    if (mode === 'encode' && !['utf-8','ascii','iso-8859-1'].includes(encoding)) {
+      // Bound input before loading a codec or allocating legacy output.
+      if (new TextEncoder().encode(text).length > MAX_BYTES) throw conversionError('size_limit','Please use text smaller than 5 MB.');
+      message(t('Loading character encoding…'));
+      try { await window.decodexCharsets.loadEncoder(); }
+      catch {
+        if (version !== copyVersion) return;
+        throw conversionError('encoder_unavailable','Could not load the encoder. Check your connection and try again.');
+      }
+      if (version !== copyVersion || text !== input.value || encoding !== selectedEncoding() || (trigger === 'auto' && (!autoConvert || composing))) return;
+    }
+    output.value = mode === 'encode' ? encodeText(text, encoding) : decodeText(text, encoding);
     counts();
     message(mode === 'encode' ? t("Encoded successfully. Your result is ready to copy.") : t("Decoded successfully. Your result is ready to copy."));
     trackConversion('success', trigger);
   } catch (error) {
-    trackConversion('error', trigger, ['empty_input', 'size_limit', 'invalid_base64', 'invalid_utf8'].includes(error.code) ? error.code : 'conversion_failed');
+    trackConversion('error', trigger, ['empty_input', 'size_limit', 'invalid_base64', 'invalid_utf8', 'invalid_encoding', 'unrepresentable_text', 'encoder_unavailable'].includes(error.code) ? error.code : 'conversion_failed');
     message(error.message, true);
     input.setAttribute('aria-invalid', 'true');
   }
 }
 document.getElementById('converter').addEventListener('submit', event => { event.preventDefault(); convert(); });
 input.addEventListener('input', scheduleAutoConvert);
+if (charsetSelect) charsetSelect.addEventListener('change', scheduleAutoConvert);
 input.addEventListener('compositionstart', () => { composing = true; cancelAutoConvert(); cancelAnalytics(); });
 input.addEventListener('compositionend', () => { composing = false; scheduleAutoConvert(); });
 if (autoConvertButton) {
@@ -153,10 +184,23 @@ if (autoConvertButton) {
 }
 input.addEventListener('keydown', event => { if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') { event.preventDefault(); convert(); } });
 document.getElementById('clear-button').addEventListener('click', () => { input.value = ''; cancelAutoConvert(); resetResult(); input.focus(); });
-document.getElementById('example-button').addEventListener('click', () => {
-  const example = localized?.example || 'Hello, Decodex! 안녕하세요 👋';
-  input.value = mode === 'encode' ? example : encodeText(example);
-  scheduleAutoConvert(); input.focus();
+document.getElementById('example-button').addEventListener('click', async () => {
+  const encoding = selectedEncoding();
+  const samples = {'euc-kr':'안녕하세요','shift_jis':'こんにちは','euc-jp':'こんにちは',gbk:'你好',gb18030:'你好',big5:'你好','windows-1251':'Привет','koi8-r':'Привет','koi8-u':'Привет',ibm866:'Привет','windows-1252':'Café','iso-8859-1':'Café'};
+  const example = encoding === 'utf-8' ? (localized?.example || 'Hello, Decodex! 안녕하세요 👋') : (samples[encoding] || 'Hello, Decodex!');
+  cancelAutoConvert(); resetResult();
+  const version = copyVersion;
+  try {
+    if (mode === 'decode' && !['utf-8','ascii','iso-8859-1'].includes(encoding)) {
+      message(t('Loading character encoding…'));
+      await window.decodexCharsets.loadEncoder();
+    }
+    if (version !== copyVersion || encoding !== selectedEncoding()) return;
+    input.value = mode === 'encode' ? example : encodeText(example, encoding);
+    scheduleAutoConvert(); input.focus();
+  } catch {
+    if (version === copyVersion) message(t('Could not load the encoder. Check your connection and try again.'), true);
+  }
 });
 copyButton.addEventListener('click', async () => {
   const version = copyVersion;

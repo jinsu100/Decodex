@@ -3,7 +3,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
-const version = '20261003n';
+const version = '20261003o';
 const names = {en:'English',ko:'한국어',es:'Español','pt-BR':'Português (Brasil)',de:'Deutsch',ja:'日本語','zh-CN':'简体中文',fr:'Français',it:'Italiano',nl:'Nederlands',hi:'हिन्दी',ru:'Русский'};
 // English and Korean are pinned; others follow OBDILCI V6 (July 2025)
 // estimated connected L1+L2 speakers, using Chinese/Portuguese as locale proxies.
@@ -14,7 +14,7 @@ const url = (lang,page)=>'/'+dirs[lang]+(page==='index.html'?'':page);
 const escape = s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 function alternates(page) {return [...Object.keys(names).map(lang=>`<link rel="alternate" hreflang="${lang}" href="https://decodex.fyi${url(lang,page)}">`),`<link rel="alternate" hreflang="x-default" href="https://decodex.fyi${url('en',page)}">`].join('\n');}
 function menu(lang,page,label) {return `<nav class="language-switch" aria-label="${escape(label)}"><details class="language-menu"><summary>🌐 ${names[lang]}</summary><div class="language-options">${menuOrder.map(l=>`<a href="${url(l,page)}" lang="${l}" hreflang="${l}"${l===lang?' aria-current="page"':''}>${names[l]}</a>`).join('')}</div></details></nav>`;}
-const baseHead=fs.readFileSync(path.join(root,'index.html'),'utf8').match(/<head>([\s\S]*?)<\/head>/)[1];
+const baseHead=fs.readFileSync(path.join(root,'index.html'),'utf8').match(/<head>([\s\S]*?)<\/head>/)[1].replace(/\s*<script src="\/charset(?:s|-messages)\.js[^<]*<\/script>/g,'');
 for (const lang of Object.keys(names).filter(l=>!['en','ko'].includes(l))) {
  const d=JSON.parse(fs.readFileSync(path.join(root,'locales',lang+'.json'),'utf8'));
  const e=k=>escape(d[k]);
@@ -67,3 +67,5 @@ console.log('Updated 96 converter, information and existing guide pages.');
 require('./build-guides.cjs');
 
 require('./build-converter-help.cjs');
+
+require('./build-charset-ui.cjs');
