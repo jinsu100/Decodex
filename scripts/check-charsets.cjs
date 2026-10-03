@@ -21,6 +21,10 @@ for(const [lang] of Object.entries(JSON.parse(fs.readFileSync(path.join(root,'co
   assert.ok(html.indexOf('/charsets.js')<html.indexOf('function.js'));
   assert.ok(html.indexOf('class="output-actions"')<html.indexOf('id="copy-button"'));
   assert.ok(html.indexOf('id="result"')<html.indexOf('id="copy-button"'));
+  assert.ok(html.indexOf('id="example-button"')<html.indexOf('id="userInput"'));
+  assert.ok(html.indexOf('id="clear-button"')<html.indexOf('id="userInput"'));
+  assert.ok(!html.includes('id="input-count"') && !html.includes('id="output-count"'));
+  assert.ok(!html.includes('class="panel-footer"'));
  }
 }
 (async()=>{

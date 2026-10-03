@@ -77,9 +77,7 @@ function scheduleAutoConvert() {
     autoConvertTimer = setTimeout(() => convert('auto'), 250);
   }
 }
-function counts() {
-  document.getElementById('input-count').textContent = `${Array.from(input.value).length.toLocaleString(locale)}${locale === 'ko' ? '자' : ' ' + (localized?.chars || 'characters')}`;
-  document.getElementById('output-count').textContent = `${Array.from(output.value).length.toLocaleString(locale)}${locale === 'ko' ? '자' : ' ' + (localized?.chars || 'characters')}`;
+function syncCopyButton() {
   copyButton.disabled = !output.value;
 }
 function message(text, error = false) {
@@ -92,7 +90,7 @@ function resetResult() {
   output.value = '';
   input.removeAttribute('aria-invalid');
   message('');
-  counts();
+  syncCopyButton();
 }
 function encodeText(text, encoding = selectedEncoding()) {
   let bytes;
@@ -151,7 +149,7 @@ async function convert(trigger = 'manual') {
       if (version !== copyVersion || text !== input.value || encoding !== selectedEncoding() || (trigger === 'auto' && (!autoConvert || composing))) return;
     }
     output.value = mode === 'encode' ? encodeText(text, encoding) : decodeText(text, encoding);
-    counts();
+    syncCopyButton();
     message(mode === 'encode' ? t("Encoded successfully. Your result is ready to copy.") : t("Decoded successfully. Your result is ready to copy."));
     trackConversion('success', trigger);
   } catch (error) {
@@ -162,7 +160,11 @@ async function convert(trigger = 'manual') {
 }
 document.getElementById('converter').addEventListener('submit', event => { event.preventDefault(); convert(); });
 input.addEventListener('input', scheduleAutoConvert);
-if (charsetSelect) charsetSelect.addEventListener('change', scheduleAutoConvert);
+if (charsetSelect) charsetSelect.addEventListener('change', () => {
+  const caption = document.getElementById('charset-value');
+  if (caption) caption.textContent = charsetSelect.selectedOptions?.[0]?.textContent || 'UTF-8';
+  scheduleAutoConvert();
+});
 input.addEventListener('compositionstart', () => { composing = true; cancelAutoConvert(); cancelAnalytics(); });
 input.addEventListener('compositionend', () => { composing = false; scheduleAutoConvert(); });
 if (autoConvertButton) {
@@ -216,7 +218,7 @@ copyButton.addEventListener('click', async () => {
     message(t("Automatic copying is unavailable. The result is selected; press Ctrl+C or \u2318C to copy."));
   }
 });
-counts();
+syncCopyButton();
 
 // Only named public demonstrations are read from the URL, never user text.
 if (window.location && typeof URLSearchParams !== 'undefined') {
