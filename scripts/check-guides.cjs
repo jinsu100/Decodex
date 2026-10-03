@@ -30,4 +30,27 @@ for(const [mode,preset,result] of [['decode','base64url','😀'],['decode','padd
  tasks.shift()?.();
  assert.equal(node('result').value,result);
 }
-console.log('PASS 36 guide metadata and examples; UTF-8 code round-trips, malformed input rejection, large text and preset links');
+const help=JSON.parse(fs.readFileSync(path.join(root,'content/converter-help.json'),'utf8'));
+const codecContext={window:{},TextEncoder,TextDecoder,Uint8Array,ArrayBuffer};
+vm.createContext(codecContext);
+vm.runInContext(fs.readFileSync(path.join(root,'charsets.js'),'utf8'),codecContext);
+for(const lang of langs)for(const mode of ['decode','encode']){
+ const folder=lang==='en'?'':lang.toLowerCase()+'/';
+ const html=fs.readFileSync(path.join(root,folder,mode==='decode'?'index.html':'encode.html'),'utf8');
+ assert.equal((html.match(/<h1[ >]/g)||[]).length,1);
+ assert.equal((html.match(/data-converter-help=/g)||[]).length,1);
+ assert.ok(!/class="guide-resources/.test(html),'Converter explanations must stay inline');
+ for(const section of help[lang][mode].sections){
+  assert.ok(html.includes(section.heading));
+  for(const paragraph of section.paragraphs)assert.ok(html.includes(paragraph.replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;')));
+ }
+ const rows=help[lang][mode].sections[0].table.rows;
+ for(const [encoding,text,base64] of rows){
+  const key=encoding==='EUC-KR / CP949'?'euc-kr':encoding.toLowerCase();
+  const bytes=Uint8Array.from(Buffer.from(base64,'base64'));
+  assert.equal(codecContext.window.decodexCharsets.decode(bytes,key),text);
+ }
+}
+context.value='U0dWc2JHOD0=';assert.equal(vm.runInContext('base64ToUtf8(base64ToUtf8(value))',context),'Hello');
+for(const [text,value] of [['Hello','SGVsbG8='],['Hello ','SGVsbG8g'],['Hello\n','SGVsbG8K']])assert.equal(Buffer.from(text).toString('base64'),value);
+console.log('PASS 36 guide metadata; 24 inline converter explanations and native encoding examples; UTF-8 round-trips, malformed input, large text and preset links');

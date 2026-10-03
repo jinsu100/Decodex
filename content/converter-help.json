@@ -9,9 +9,88 @@
       "faqHeading": "자주 묻는 질문",
       "faq": [
         [
-          "Base64를 디코딩했는데 글자가 깨지거나 UTF-8 오류가 나요.",
-          "원문이 UTF-8로 인코딩되었는지 확인하세요. Base64 자체에는 문자 인코딩 정보가 없습니다. EUC-KR·Shift_JIS 같은 다른 인코딩이나 이미지·PDF의 바이트는 이 텍스트 디코더에서 올바르게 표시되지 않을 수 있습니다. 오류가 난다고 =를 계속 추가하면 해결되는 것은 아닙니다."
+          "Base64 디코딩 결과가 깨지거나 UTF-8 오류가 나면 어떻게 하나요?",
+          "Base64에는 원본의 언어나 문자 인코딩 정보가 들어 있지 않습니다. 일반적인 텍스트는 기본값 UTF-8로 디코딩하세요. 예전 시스템에서 만든 한글 데이터라면 원본이 EUC-KR / CP949인지 확인한 다음 결과 칸 위의 문자 인코딩을 맞추세요. 일본어 Shift_JIS, 중국어 GB18030도 직접 선택할 수 있습니다. 문자 인코딩을 자동으로 판별하지는 않습니다. 오류 없이 변환되어도 잘못된 인코딩을 선택했다면 내용이 틀릴 수 있으니 아는 단어나 원문과 비교하세요. 이미지·PDF·압축 데이터는 텍스트가 아니므로 인코딩을 바꿔도 문서 내용으로 복원되지 않습니다."
+        ],
+        [
+          "한 번 디코딩했는데 다시 Base64 문자열이 나와요.",
+          "원문을 여러 번 인코딩했을 수 있습니다. U0dWc2JHOD0= → SGVsbG8= → Hello처럼 각 단계의 결과를 입력 칸에 다시 붙여넣으면 한 단계씩 복원할 수 있습니다. 자동으로 여러 단계를 풀지는 않습니다."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Base64 디코딩 후 한글이 깨질 때: UTF-8과 EUC-KR 선택",
+          "paragraphs": [
+            "Base64에는 원본의 언어나 문자 인코딩 정보가 들어 있지 않습니다. 일반적인 텍스트는 기본값 UTF-8로 디코딩하세요. 예전 시스템에서 만든 한글 데이터라면 원본이 EUC-KR / CP949인지 확인한 다음 결과 칸 위의 문자 인코딩을 맞추세요. 일본어 Shift_JIS, 중국어 GB18030도 직접 선택할 수 있습니다.",
+            "문자 인코딩을 자동으로 판별하지는 않습니다. 오류 없이 변환되어도 잘못된 인코딩을 선택했다면 내용이 틀릴 수 있으니 아는 단어나 원문과 비교하세요. 이미지·PDF·압축 데이터는 텍스트가 아니므로 인코딩을 바꿔도 문서 내용으로 복원되지 않습니다."
+          ],
+          "table": {
+            "headings": [
+              "문자 인코딩",
+              "원문",
+              "Base64 값"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "한글",
+                "7ZWc6riA"
+              ],
+              [
+                "EUC-KR / CP949",
+                "한글",
+                "x9Gx2w=="
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "문자 형식 오류와 UTF-8 오류 구분하기",
+          "paragraphs": [
+            "먼저 Base64 문자열 자체가 올바른지 확인하고, 그다음 복원한 바이트의 문자 인코딩을 확인하세요. 문자 형식 오류와 UTF-8 오류는 원인이 달라 같은 방법으로 해결되지 않습니다. 아래 예는 이 디코더의 실제 처리 결과입니다."
+          ],
+          "table": {
+            "headings": [
+              "입력",
+              "결과 또는 원인",
+              "해결 방법"
+            ],
+            "rows": [
+              [
+                "Zg",
+                "f",
+                "패딩 전체가 생략된 값은 자동 복원합니다."
+              ],
+              [
+                "Zg=",
+                "패딩 오류",
+                "Zg 또는 Zg==처럼 완전한 값을 사용하세요."
+              ],
+              [
+                "A=AA",
+                "패딩 위치 오류",
+                "=는 끝에만 올 수 있습니다. 원본 값을 다시 확인하세요."
+              ],
+              [
+                "A",
+                "문자열 길이 오류",
+                "한 문자가 빠졌는지 확인하세요. =만 추가해 해결할 수 없습니다."
+              ],
+              [
+                "/w==",
+                "UTF-8 오류",
+                "복원한 FF 바이트는 올바른 UTF-8이 아닙니다. 실제 원본 인코딩이나 파일 형식을 확인하세요."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "JSON 값과 여러 번 인코딩된 문자열 디코딩",
+          "paragraphs": [
+            "API 응답이 {\"data\":\"SGVsbG8=\"}라면 JSON 전체가 아니라 data 값인 SGVsbG8=만 넣으세요. data:text/plain;base64,SGVsbG8= 형태의 데이터 URL도 쉼표 뒤의 Base64 부분만 입력합니다. %3D 같은 URL 이스케이프가 포함되어 있다면 먼저 URL 디코딩이 필요하며, 이 도구는 URL 디코딩을 대신하지 않습니다.",
+            "U0dWc2JHOD0=를 한 번 디코딩하면 SGVsbG8=가 나오고, 그 결과를 다시 입력하면 Hello가 나옵니다. 이 도구는 한 번에 한 단계만 변환합니다. 결과가 Base64처럼 보인다고 무조건 다시 디코딩하지 말고 원본 시스템에서 여러 번 인코딩했는지 확인하세요."
+          ]
+        }
       ]
     },
     "encode": {
@@ -25,7 +104,72 @@
         [
           "공백과 줄바꿈도 인코딩되나요?",
           "네. 입력한 공백과 줄바꿈은 UTF-8 바이트에 포함되므로 Hello와 Hello 뒤에 줄바꿈을 넣은 결과는 다릅니다. 다시 디코딩하면 실제 입력한 텍스트가 복원됩니다. 운영체제에 따라 LF와 CRLF가 다를 수 있으니 정확한 값이 필요하면 원문의 줄바꿈도 확인하세요."
+        ],
+        [
+          "이모지가 포함된 텍스트를 EUC-KR로 인코딩할 수 있나요?",
+          "EUC-KR / CP949는 이모지를 표현하지 못합니다. 이모지가 있는 입력은 UTF-8을 선택하세요. 이 도구는 표현할 수 없는 문자를 ?로 바꾸어 결과를 만들지 않고 오류를 표시합니다."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "한글·이모지 Base64 인코딩: 문자 인코딩 선택",
+          "paragraphs": [
+            "한글과 이모지를 함께 보낼 때는 기본값 UTF-8을 사용하세요. 받는 시스템이 EUC-KR / CP949, Shift_JIS, Windows-1252 같은 방식을 지정했다면 결과 칸 위에서 해당 문자 인코딩을 선택한 뒤 결과를 복사하세요.",
+            "디코딩할 때도 같은 문자 인코딩을 선택해야 원문이 복원됩니다. 일부 오래된 인코딩은 이모지나 다른 언어의 문자를 담을 수 없습니다. 변환할 수 없다는 오류가 나오면 받는 시스템이 허용하는 경우 UTF-8로 바꾸세요."
+          ],
+          "table": {
+            "headings": [
+              "문자 인코딩",
+              "원문",
+              "Base64 값"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "한글",
+                "7ZWc6riA"
+              ],
+              [
+                "EUC-KR / CP949",
+                "한글",
+                "x9Gx2w=="
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "JSON·API에 사용할 Base64 값 만들기",
+          "paragraphs": [
+            "이 인코더는 입력한 텍스트 자체를 변환합니다. {\"name\":\"한글\"}을 넣으면 JSON 문서 전체가 인코딩되고, 한글만 넣으면 해당 값만 인코딩됩니다. 이미지 파일 경로나 https://로 시작하는 주소를 입력해도 파일을 읽어 변환하지 않고 그 경로·주소 문자열을 인코딩합니다.",
+            "기본 출력은 +, /, =를 포함할 수 있는 표준 Base64입니다. 받는 API가 표준 Base64인지 Base64URL인지 먼저 확인하세요. URL 쿼리에 표준 Base64를 넣을 때는 URL 인코딩을 적용해야 +가 공백으로 해석되는 일을 피할 수 있습니다. Base64URL이 필요한 경우 +를 -로, /를 _로 바꾸고 API가 지정한 패딩 규칙을 따르세요."
+          ]
+        },
+        {
+          "heading": "같은 글인데 Base64 결과가 다른 이유",
+          "paragraphs": [
+            "공백, 줄바꿈, 문자 인코딩이 다르면 눈으로 비슷하게 보이는 텍스트도 바이트가 달라집니다. 아래 예는 모두 UTF-8 기준이며 LF는 줄바꿈 한 개입니다. 결과가 예상과 다르면 앞뒤 공백과 줄바꿈을 먼저 확인하세요."
+          ],
+          "table": {
+            "headings": [
+              "입력 텍스트",
+              "Base64 결과"
+            ],
+            "rows": [
+              [
+                "Hello",
+                "SGVsbG8="
+              ],
+              [
+                "Hello + 공백 1개",
+                "SGVsbG8g"
+              ],
+              [
+                "Hello + LF",
+                "SGVsbG8K"
+              ]
+            ]
+          }
+        }
       ]
     },
     "examplesHeading": "한글·영문·이모지 Base64 예제",
@@ -43,8 +187,87 @@
       "faq": [
         [
           "Why is the decoded text garbled or reported as invalid UTF-8?",
-          "Check how the original text was encoded. Base64 does not identify a character encoding. EUC-KR, Shift_JIS and binary image or PDF data may not display correctly in this UTF-8 text decoder. Adding more = characters does not solve a character encoding problem."
+          "Base64 stores bytes, not a language or character encoding. Leave UTF-8 selected for modern text. For Korean from an older system, try EUC-KR / CP949 only if that is how the source was encoded; Japanese may use Shift_JIS and Chinese may use GB18030. The tool does not detect character encoding automatically. A result without an error can still be wrong when the wrong encoding is selected. Confirm a known word against the source. Image, PDF and compressed bytes are not text; changing the encoding does not turn them into a readable document."
+        ],
+        [
+          "Why does decoding produce another Base64 string?",
+          "The original may have been encoded more than once. Paste each result back into the input to decode one layer at a time: U0dWc2JHOD0= → SGVsbG8= → Hello. Multiple layers are not decoded automatically."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Choose the original character encoding to decode text",
+          "paragraphs": [
+            "Base64 stores bytes, not a language or character encoding. Leave UTF-8 selected for modern text. For Korean from an older system, try EUC-KR / CP949 only if that is how the source was encoded; Japanese may use Shift_JIS and Chinese may use GB18030.",
+            "The tool does not detect character encoding automatically. A result without an error can still be wrong when the wrong encoding is selected. Confirm a known word against the source. Image, PDF and compressed bytes are not text; changing the encoding does not turn them into a readable document."
+          ],
+          "table": {
+            "headings": [
+              "Character encoding",
+              "Text",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "한글",
+                "7ZWc6riA"
+              ],
+              [
+                "EUC-KR / CP949",
+                "한글",
+                "x9Gx2w=="
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Distinguishing format errors from UTF-8 errors",
+          "paragraphs": [
+            "Check the Base64 string first, then the character encoding of the decoded bytes. Invalid Base64 and invalid UTF-8 have different causes. The examples below show how this decoder handles each value."
+          ],
+          "table": {
+            "headings": [
+              "Input",
+              "Result or cause",
+              "What to do"
+            ],
+            "rows": [
+              [
+                "Zg",
+                "f",
+                "Fully omitted padding is restored."
+              ],
+              [
+                "Zg=",
+                "Invalid padding",
+                "Use the complete value Zg or Zg==."
+              ],
+              [
+                "A=AA",
+                "Misplaced padding",
+                "= is allowed only at the end. Check the source."
+              ],
+              [
+                "A",
+                "Invalid length",
+                "Check for truncated data; adding = alone cannot fix it."
+              ],
+              [
+                "/w==",
+                "Invalid UTF-8",
+                "The decoded FF byte is not valid UTF-8. Check the source encoding or file type."
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Decoding JSON values and repeatedly encoded text",
+          "paragraphs": [
+            "For an API response such as {\"data\":\"SGVsbG8=\"}, paste only SGVsbG8=, not the entire JSON object. For data:text/plain;base64,SGVsbG8=, paste only the part after the comma. URL escapes such as %3D need URL decoding first; this tool does not perform that step.",
+            "Decoding U0dWc2JHOD0= once produces SGVsbG8=; pasting that result again produces Hello. The tool converts one layer at a time. A result that looks like Base64 is not proof of another layer: confirm how the source system encoded it."
+          ]
+        }
       ]
     },
     "encode": {
@@ -58,7 +281,72 @@
         [
           "Are spaces and line breaks included when encoding?",
           "Yes. Spaces and line breaks are part of the UTF-8 input bytes, so Hello and Hello followed by a newline have different outputs. Decoding restores the actual input text. LF and CRLF line endings also produce different values; check the original line endings when exact bytes matter."
+        ],
+        [
+          "Can I encode emoji using EUC-KR?",
+          "EUC-KR / CP949 cannot represent emoji. Choose UTF-8 for text containing emoji. The tool reports an error instead of silently replacing unsupported characters with ?."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Choose a character encoding before Base64 encoding",
+          "paragraphs": [
+            "UTF-8 is the default and supports accents, Korean and emoji. If another system explicitly requires EUC-KR / CP949, Shift_JIS or Windows-1252, choose that encoding above the result before copying it.",
+            "The receiver must decode the bytes using the same character encoding. Some older encodings cannot represent emoji or every language: if conversion fails, use UTF-8 when the receiving system allows it."
+          ],
+          "table": {
+            "headings": [
+              "Character encoding",
+              "Text",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "한글",
+                "7ZWc6riA"
+              ],
+              [
+                "EUC-KR / CP949",
+                "한글",
+                "x9Gx2w=="
+              ]
+            ]
+          }
+        },
+        {
+          "heading": "Preparing Base64 values for JSON and APIs",
+          "paragraphs": [
+            "The encoder converts exactly the text you enter. Entering {\"name\":\"한글\"} encodes the entire JSON document; entering only 한글 encodes just that value. A file path or https:// URL is encoded as text: the tool does not fetch or encode the referenced file.",
+            "The output is standard Base64 and can contain +, / and =. Check whether the API expects standard Base64 or Base64URL. URL-encode standard Base64 in query parameters to avoid + being interpreted as a space. For Base64URL, replace + with - and / with _, then follow the API’s padding rules."
+          ]
+        },
+        {
+          "heading": "Why similar text can produce different Base64 values",
+          "paragraphs": [
+            "Spaces, line endings and character encodings change the input bytes even when text looks similar. These examples use UTF-8; LF means one line-feed character. Check leading or trailing spaces and line breaks when an output differs from what you expect."
+          ],
+          "table": {
+            "headings": [
+              "Input text",
+              "Base64 result"
+            ],
+            "rows": [
+              [
+                "Hello",
+                "SGVsbG8="
+              ],
+              [
+                "Hello + one space",
+                "SGVsbG8g"
+              ],
+              [
+                "Hello + LF",
+                "SGVsbG8K"
+              ]
+            ]
+          }
+        }
       ]
     },
     "examplesHeading": "Tested Base64 text examples",
@@ -75,9 +363,37 @@
       "faqHeading": "Preguntas frecuentes",
       "faq": [
         [
-          "¿Por qué el texto aparece ilegible o da un error UTF-8?",
-          "Comprueba la codificación original. Base64 no indica si los bytes son UTF-8, otra codificación o datos binarios. Este decodificador no convierte automáticamente EUC-KR ni Shift_JIS. Añadir = no corrige ese problema."
+          "¿Cómo corregir texto ilegible o un error UTF-8?",
+          "Base64 contiene bytes, no información sobre su codificación. UTF-8 es la opción predeterminada. Si el origen usa EUC-KR / CP949, Shift_JIS o GB18030, selecciona esa codificación encima del resultado. La codificación no se detecta automáticamente. Compara el resultado con el original: una conversión sin error puede producir texto incorrecto. Las imágenes, los PDF y los datos comprimidos no son texto."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Elegir la codificación original al decodificar Base64",
+          "paragraphs": [
+            "Base64 contiene bytes, no información sobre su codificación. UTF-8 es la opción predeterminada. Si el origen usa EUC-KR / CP949, Shift_JIS o GB18030, selecciona esa codificación encima del resultado.",
+            "La codificación no se detecta automáticamente. Compara el resultado con el original: una conversión sin error puede producir texto incorrecto. Las imágenes, los PDF y los datos comprimidos no son texto."
+          ],
+          "table": {
+            "headings": [
+              "Codificación",
+              "Texto",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "¡Hola!",
+                "wqFIb2xhIQ=="
+              ],
+              [
+                "Windows-1252",
+                "¡Hola!",
+                "oUhvbGEh"
+              ]
+            ]
+          }
+        }
       ]
     },
     "encode": {
@@ -92,6 +408,34 @@
           "¿Se codifican los espacios y saltos de línea?",
           "Sí. Forman parte de los bytes de entrada. Hello y Hello seguido de un salto de línea producen resultados distintos. LF y CRLF también generan valores diferentes. La decodificación recupera el texto introducido."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Elegir la codificación antes de codificar en Base64",
+          "paragraphs": [
+            "UTF-8 permite acentos y emojis. Selecciona otra codificación solo si el sistema receptor la requiere; al decodificar debe utilizar la misma.",
+            "Si una codificación antigua no admite un carácter, la conversión falla. Usa UTF-8 si el sistema receptor lo permite."
+          ],
+          "table": {
+            "headings": [
+              "Codificación",
+              "Texto",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "¡Hola!",
+                "wqFIb2xhIQ=="
+              ],
+              [
+                "Windows-1252",
+                "¡Hola!",
+                "oUhvbGEh"
+              ]
+            ]
+          }
+        }
       ]
     },
     "examplesHeading": "Ejemplos verificados de texto Base64",
@@ -108,9 +452,37 @@
       "faqHeading": "Perguntas frequentes",
       "faq": [
         [
-          "Por que o texto fica ilegível ou apresenta erro UTF-8?",
-          "Confira a codificação original. Base64 não identifica UTF-8, outras codificações ou dados binários. Este decodificador não converte automaticamente EUC-KR ou Shift_JIS. Adicionar = não resolve esse problema."
+          "Como corrigir texto ilegível ou um erro UTF-8?",
+          "Base64 contém bytes, não informa a codificação original. UTF-8 é o padrão. Se a origem usa EUC-KR / CP949, Shift_JIS ou GB18030, selecione essa codificação acima do resultado. A codificação não é detectada automaticamente. Confira o texto original: uma conversão sem erro ainda pode gerar texto incorreto. Imagens, PDFs e dados compactados não são texto."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Escolher a codificação original ao decodificar Base64",
+          "paragraphs": [
+            "Base64 contém bytes, não informa a codificação original. UTF-8 é o padrão. Se a origem usa EUC-KR / CP949, Shift_JIS ou GB18030, selecione essa codificação acima do resultado.",
+            "A codificação não é detectada automaticamente. Confira o texto original: uma conversão sem erro ainda pode gerar texto incorreto. Imagens, PDFs e dados compactados não são texto."
+          ],
+          "table": {
+            "headings": [
+              "Codificação",
+              "Texto",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "Olá",
+                "T2zDoQ=="
+              ],
+              [
+                "Windows-1252",
+                "Olá",
+                "T2zh"
+              ]
+            ]
+          }
+        }
       ]
     },
     "encode": {
@@ -125,6 +497,34 @@
           "Espaços e quebras de linha são codificados?",
           "Sim. Eles fazem parte dos bytes de entrada. Hello e Hello seguido de uma quebra de linha produzem resultados diferentes. LF e CRLF também geram valores distintos. A decodificação recupera o texto inserido."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Escolher a codificação antes de gerar Base64",
+          "paragraphs": [
+            "UTF-8 permite acentos e emojis. Escolha outra codificação apenas quando o sistema receptor exigir; a decodificação deve usar a mesma.",
+            "Se uma codificação antiga não representar um caractere, a conversão falha. Use UTF-8 se o sistema receptor permitir."
+          ],
+          "table": {
+            "headings": [
+              "Codificação",
+              "Texto",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "Olá",
+                "T2zDoQ=="
+              ],
+              [
+                "Windows-1252",
+                "Olá",
+                "T2zh"
+              ]
+            ]
+          }
+        }
       ]
     },
     "examplesHeading": "Exemplos verificados de texto Base64",
@@ -141,9 +541,37 @@
       "faqHeading": "Häufige Fragen",
       "faq": [
         [
-          "Warum ist der Text unlesbar oder wird als ungültiges UTF-8 gemeldet?",
-          "Prüfe die ursprüngliche Zeichenkodierung. Base64 kennzeichnet weder UTF-8 noch andere Kodierungen oder Binärdaten. Dieser Decoder wandelt EUC-KR oder Shift_JIS nicht automatisch um. Weitere = beheben dieses Problem nicht."
+          "Wie behebe ich unlesbaren Text oder einen UTF-8-Fehler?",
+          "Base64 enthält Bytes, aber keine Angabe zur Zeichenkodierung. UTF-8 ist voreingestellt. Verwendet die Quelle EUC-KR / CP949, Shift_JIS oder GB18030, wähle diese Kodierung über dem Ergebnis. Die Kodierung wird nicht automatisch erkannt. Vergleiche mit dem Original: Auch eine Umwandlung ohne Fehler kann falschen Text liefern. Bilder, PDF-Dateien und komprimierte Daten sind kein Text."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Die ursprüngliche Zeichenkodierung beim Dekodieren wählen",
+          "paragraphs": [
+            "Base64 enthält Bytes, aber keine Angabe zur Zeichenkodierung. UTF-8 ist voreingestellt. Verwendet die Quelle EUC-KR / CP949, Shift_JIS oder GB18030, wähle diese Kodierung über dem Ergebnis.",
+            "Die Kodierung wird nicht automatisch erkannt. Vergleiche mit dem Original: Auch eine Umwandlung ohne Fehler kann falschen Text liefern. Bilder, PDF-Dateien und komprimierte Daten sind kein Text."
+          ],
+          "table": {
+            "headings": [
+              "Zeichenkodierung",
+              "Text",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "Grüße",
+                "R3LDvMOfZQ=="
+              ],
+              [
+                "Windows-1252",
+                "Grüße",
+                "R3L832U="
+              ]
+            ]
+          }
+        }
       ]
     },
     "encode": {
@@ -158,6 +586,34 @@
           "Werden Leerzeichen und Zeilenumbrüche mitkodiert?",
           "Ja. Sie gehören zu den Eingabebytes. Hello und Hello mit anschließendem Zeilenumbruch ergeben unterschiedliche Ausgaben. Auch LF und CRLF unterscheiden sich. Beim Dekodieren wird der eingegebene Text wiederhergestellt."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Zeichenkodierung vor der Base64-Kodierung wählen",
+          "paragraphs": [
+            "UTF-8 unterstützt Umlaute und Emojis. Wähle eine andere Kodierung nur, wenn das empfangende System sie verlangt; beim Dekodieren muss dieselbe verwendet werden.",
+            "Kann eine ältere Kodierung ein Zeichen nicht darstellen, schlägt die Umwandlung fehl. Nutze UTF-8, wenn das empfangende System es zulässt."
+          ],
+          "table": {
+            "headings": [
+              "Zeichenkodierung",
+              "Text",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "Grüße",
+                "R3LDvMOfZQ=="
+              ],
+              [
+                "Windows-1252",
+                "Grüße",
+                "R3L832U="
+              ]
+            ]
+          }
+        }
       ]
     },
     "examplesHeading": "Geprüfte Base64-Textbeispiele",
@@ -174,9 +630,37 @@
       "faqHeading": "よくある質問",
       "faq": [
         [
-          "文字化けやUTF-8エラーが出るのはなぜですか？",
-          "元の文字エンコーディングを確認してください。Base64自体はUTF-8か別の形式か、バイナリデータかを示しません。このデコーダーはShift_JISやEUC-KRを自動変換しません。=を増やしても解決しません。"
+          "文字化けやUTF-8エラーを解決するには？",
+          "Base64には元の文字コードの情報が含まれていません。初期設定はUTF-8です。元のデータがShift_JIS、EUC-KR / CP949、GB18030の場合は、結果欄の上でその文字コードを選択してください。 文字コードは自動判定しません。エラーがなくても誤った文字コードでは内容が変わるため、元の文章と比較してください。画像、PDF、圧縮データはテキストではありません。"
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Base64デコードで文字化けするときの文字コード選択",
+          "paragraphs": [
+            "Base64には元の文字コードの情報が含まれていません。初期設定はUTF-8です。元のデータがShift_JIS、EUC-KR / CP949、GB18030の場合は、結果欄の上でその文字コードを選択してください。",
+            "文字コードは自動判定しません。エラーがなくても誤った文字コードでは内容が変わるため、元の文章と比較してください。画像、PDF、圧縮データはテキストではありません。"
+          ],
+          "table": {
+            "headings": [
+              "文字コード",
+              "テキスト",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "こんにちは",
+                "44GT44KT44Gr44Gh44Gv"
+              ],
+              [
+                "Shift_JIS",
+                "こんにちは",
+                "grGC8YLJgr+CzQ=="
+              ]
+            ]
+          }
+        }
       ]
     },
     "encode": {
@@ -191,6 +675,34 @@
           "空白や改行もエンコードされますか？",
           "はい。空白や改行も入力バイトの一部です。Helloと改行付きのHelloは結果が異なります。LFとCRLFも異なる値になります。デコードすると実際に入力したテキストが復元されます。"
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Base64エンコード前に文字コードを選ぶ",
+          "paragraphs": [
+            "UTF-8は日本語や絵文字に対応しています。受信側が指定している場合だけ別の文字コードを選び、デコード時にも同じ文字コードを使用してください。",
+            "選択した文字コードで表せない文字があると変換は失敗します。受信側が対応していればUTF-8を使用してください。"
+          ],
+          "table": {
+            "headings": [
+              "文字コード",
+              "テキスト",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "こんにちは",
+                "44GT44KT44Gr44Gh44Gv"
+              ],
+              [
+                "Shift_JIS",
+                "こんにちは",
+                "grGC8YLJgr+CzQ=="
+              ]
+            ]
+          }
+        }
       ]
     },
     "examplesHeading": "検証済みのBase64変換例",
@@ -207,9 +719,37 @@
       "faqHeading": "常见问题",
       "faq": [
         [
-          "为什么解码后乱码或出现UTF-8错误？",
-          "检查原始字符编码。Base64本身不标明UTF-8、其他编码或二进制数据。此解码器不会自动转换GBK、EUC-KR或Shift_JIS。继续添加=不能解决此问题。"
+          "如何解决解码乱码或UTF-8错误？",
+          "Base64保存字节，不包含原始字符编码信息。默认使用UTF-8。如果原始数据使用GB18030、Shift_JIS或EUC-KR / CP949，请在结果框上方选择相同编码。 工具不会自动识别字符编码。即使没有报错，选错编码也可能得到错误文本，请与原文比较。图片、PDF和压缩数据不是文本。"
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Base64解码乱码时如何选择字符编码",
+          "paragraphs": [
+            "Base64保存字节，不包含原始字符编码信息。默认使用UTF-8。如果原始数据使用GB18030、Shift_JIS或EUC-KR / CP949，请在结果框上方选择相同编码。",
+            "工具不会自动识别字符编码。即使没有报错，选错编码也可能得到错误文本，请与原文比较。图片、PDF和压缩数据不是文本。"
+          ],
+          "table": {
+            "headings": [
+              "字符编码",
+              "文本",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "你好",
+                "5L2g5aW9"
+              ],
+              [
+                "GB18030",
+                "你好",
+                "xOO6ww=="
+              ]
+            ]
+          }
+        }
       ]
     },
     "encode": {
@@ -224,6 +764,34 @@
           "空格和换行也会编码吗？",
           "会。它们属于输入字节。Hello与末尾带换行的Hello结果不同。LF和CRLF也产生不同值。解码会还原实际输入的文本。"
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Base64编码前选择字符编码",
+          "paragraphs": [
+            "UTF-8支持中文和表情符号。仅在接收系统有明确要求时选择其他编码，解码时也必须使用相同编码。",
+            "如果旧编码无法表示某个字符，转换会失败。接收系统允许时，请改用UTF-8。"
+          ],
+          "table": {
+            "headings": [
+              "字符编码",
+              "文本",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "你好",
+                "5L2g5aW9"
+              ],
+              [
+                "GB18030",
+                "你好",
+                "xOO6ww=="
+              ]
+            ]
+          }
+        }
       ]
     },
     "examplesHeading": "经过验证的Base64文本示例",
@@ -240,9 +808,37 @@
       "faqHeading": "Questions fréquentes",
       "faq": [
         [
-          "Pourquoi le texte est-il illisible ou signalé comme UTF-8 invalide ?",
-          "Vérifiez l’encodage d’origine. Base64 n’identifie ni UTF-8, ni un autre encodage, ni des données binaires. Ce décodeur ne convertit pas automatiquement EUC-KR ou Shift_JIS. Ajouter des = ne résout pas ce problème."
+          "Comment corriger un texte illisible ou une erreur UTF-8 ?",
+          "Base64 contient des octets, sans préciser leur encodage. UTF-8 est sélectionné par défaut. Si la source utilise EUC-KR / CP949, Shift_JIS ou GB18030, choisissez cet encodage au-dessus du résultat. L’encodage n’est pas détecté automatiquement. Comparez avec l’original : une conversion sans erreur peut produire un texte incorrect. Les images, PDF et données compressées ne sont pas du texte."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Choisir l’encodage d’origine pour décoder Base64",
+          "paragraphs": [
+            "Base64 contient des octets, sans préciser leur encodage. UTF-8 est sélectionné par défaut. Si la source utilise EUC-KR / CP949, Shift_JIS ou GB18030, choisissez cet encodage au-dessus du résultat.",
+            "L’encodage n’est pas détecté automatiquement. Comparez avec l’original : une conversion sans erreur peut produire un texte incorrect. Les images, PDF et données compressées ne sont pas du texte."
+          ],
+          "table": {
+            "headings": [
+              "Encodage",
+              "Texte",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "café",
+                "Y2Fmw6k="
+              ],
+              [
+                "Windows-1252",
+                "café",
+                "Y2Fm6Q=="
+              ]
+            ]
+          }
+        }
       ]
     },
     "encode": {
@@ -257,6 +853,34 @@
           "Les espaces et sauts de ligne sont-ils encodés ?",
           "Oui. Ils font partie des octets d’entrée. Hello et Hello suivi d’un saut de ligne donnent des résultats différents. LF et CRLF produisent aussi des valeurs distinctes. Le décodage restitue le texte réellement saisi."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Choisir l’encodage avant de convertir en Base64",
+          "paragraphs": [
+            "UTF-8 prend en charge les accents et les emojis. Ne choisissez un autre encodage que si le système destinataire l’exige ; le décodage doit utiliser le même.",
+            "Si un encodage ancien ne peut pas représenter un caractère, la conversion échoue. Utilisez UTF-8 si le système destinataire le permet."
+          ],
+          "table": {
+            "headings": [
+              "Encodage",
+              "Texte",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "café",
+                "Y2Fmw6k="
+              ],
+              [
+                "Windows-1252",
+                "café",
+                "Y2Fm6Q=="
+              ]
+            ]
+          }
+        }
       ]
     },
     "examplesHeading": "Exemples Base64 vérifiés",
@@ -273,9 +897,37 @@
       "faqHeading": "Domande frequenti",
       "faq": [
         [
-          "Perché il testo è illeggibile o produce un errore UTF-8?",
-          "Controlla la codifica originale. Base64 non identifica UTF-8, altre codifiche o dati binari. Questo decoder non converte automaticamente EUC-KR o Shift_JIS. Aggiungere = non risolve il problema."
+          "Come correggere testo illeggibile o un errore UTF-8?",
+          "Base64 contiene byte, senza indicare la codifica originale. UTF-8 è la scelta predefinita. Se la fonte usa EUC-KR / CP949, Shift_JIS o GB18030, seleziona quella codifica sopra il risultato. La codifica non viene rilevata automaticamente. Confronta con l’originale: anche una conversione senza errori può produrre testo errato. Immagini, PDF e dati compressi non sono testo."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Scegliere la codifica originale per decodificare Base64",
+          "paragraphs": [
+            "Base64 contiene byte, senza indicare la codifica originale. UTF-8 è la scelta predefinita. Se la fonte usa EUC-KR / CP949, Shift_JIS o GB18030, seleziona quella codifica sopra il risultato.",
+            "La codifica non viene rilevata automaticamente. Confronta con l’originale: anche una conversione senza errori può produrre testo errato. Immagini, PDF e dati compressi non sono testo."
+          ],
+          "table": {
+            "headings": [
+              "Codifica",
+              "Testo",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "Caffè",
+                "Q2FmZsOo"
+              ],
+              [
+                "Windows-1252",
+                "Caffè",
+                "Q2FmZug="
+              ]
+            ]
+          }
+        }
       ]
     },
     "encode": {
@@ -290,6 +942,34 @@
           "Spazi e interruzioni di riga vengono codificati?",
           "Sì. Fanno parte dei byte di input. Hello e Hello seguito da un’interruzione di riga hanno risultati diversi. Anche LF e CRLF producono valori differenti. La decodifica ripristina il testo inserito."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Scegliere la codifica prima di generare Base64",
+          "paragraphs": [
+            "UTF-8 supporta accenti ed emoji. Scegli un’altra codifica solo se il sistema destinatario la richiede; per decodificare occorre usare la stessa.",
+            "Se una vecchia codifica non può rappresentare un carattere, la conversione fallisce. Usa UTF-8 se il sistema destinatario lo consente."
+          ],
+          "table": {
+            "headings": [
+              "Codifica",
+              "Testo",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "Caffè",
+                "Q2FmZsOo"
+              ],
+              [
+                "Windows-1252",
+                "Caffè",
+                "Q2FmZug="
+              ]
+            ]
+          }
+        }
       ]
     },
     "examplesHeading": "Esempi Base64 verificati",
@@ -306,9 +986,37 @@
       "faqHeading": "Veelgestelde vragen",
       "faq": [
         [
-          "Waarom is de tekst onleesbaar of ongeldig UTF-8?",
-          "Controleer de oorspronkelijke tekencodering. Base64 identificeert geen UTF-8, andere coderingen of binaire gegevens. Deze decoder zet EUC-KR of Shift_JIS niet automatisch om. Extra = lossen dit probleem niet op."
+          "Hoe los ik onleesbare tekst of een UTF-8-fout op?",
+          "Base64 bevat bytes, maar geen informatie over de oorspronkelijke tekencodering. UTF-8 is de standaard. Gebruikt de bron EUC-KR / CP949, Shift_JIS of GB18030, kies die codering boven het resultaat. De codering wordt niet automatisch herkend. Vergelijk met het origineel: ook zonder foutmelding kan de tekst onjuist zijn. Afbeeldingen, PDF-bestanden en gecomprimeerde gegevens zijn geen tekst."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "De oorspronkelijke tekencodering kiezen bij Base64-decodering",
+          "paragraphs": [
+            "Base64 bevat bytes, maar geen informatie over de oorspronkelijke tekencodering. UTF-8 is de standaard. Gebruikt de bron EUC-KR / CP949, Shift_JIS of GB18030, kies die codering boven het resultaat.",
+            "De codering wordt niet automatisch herkend. Vergelijk met het origineel: ook zonder foutmelding kan de tekst onjuist zijn. Afbeeldingen, PDF-bestanden en gecomprimeerde gegevens zijn geen tekst."
+          ],
+          "table": {
+            "headings": [
+              "Tekencodering",
+              "Tekst",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "hé",
+                "aMOp"
+              ],
+              [
+                "Windows-1252",
+                "hé",
+                "aOk="
+              ]
+            ]
+          }
+        }
       ]
     },
     "encode": {
@@ -323,6 +1031,34 @@
           "Worden spaties en regeleinden meegecodeerd?",
           "Ja. Ze horen bij de invoerbytes. Hello en Hello gevolgd door een regeleinde geven verschillende resultaten. LF en CRLF leveren ook verschillende waarden. Decoderen herstelt de ingevoerde tekst."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Tekencodering kiezen vóór Base64-codering",
+          "paragraphs": [
+            "UTF-8 ondersteunt accenten en emoji. Kies alleen een andere codering als het ontvangende systeem die vereist; gebruik dezelfde bij het decoderen.",
+            "Kan een oudere codering een teken niet weergeven, dan mislukt de conversie. Gebruik UTF-8 als het ontvangende systeem dat toestaat."
+          ],
+          "table": {
+            "headings": [
+              "Tekencodering",
+              "Tekst",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "hé",
+                "aMOp"
+              ],
+              [
+                "Windows-1252",
+                "hé",
+                "aOk="
+              ]
+            ]
+          }
+        }
       ]
     },
     "examplesHeading": "Gecontroleerde Base64-voorbeelden",
@@ -339,9 +1075,37 @@
       "faqHeading": "अक्सर पूछे जाने वाले प्रश्न",
       "faq": [
         [
-          "टेक्स्ट बिगड़ा हुआ या अमान्य UTF-8 क्यों दिखता है?",
-          "मूल कैरेक्टर एन्कोडिंग जाँचें। Base64 UTF-8, दूसरी एन्कोडिंग या बाइनरी डेटा की पहचान नहीं बताता। यह डिकोडर EUC-KR या Shift_JIS अपने आप नहीं बदलता। और = जोड़ने से यह समस्या हल नहीं होती।"
+          "अपठनीय टेक्स्ट या UTF-8 त्रुटि कैसे ठीक करें?",
+          "Base64 में बाइट होते हैं, मूल अक्षर एन्कोडिंग की जानकारी नहीं। डिफ़ॉल्ट UTF-8 है। यदि मूल डेटा EUC-KR / CP949, Shift_JIS या GB18030 में है, तो परिणाम के ऊपर वही एन्कोडिंग चुनें। एन्कोडिंग अपने आप पहचानी नहीं जाती। मूल टेक्स्ट से तुलना करें: बिना त्रुटि के भी गलत एन्कोडिंग गलत टेक्स्ट दे सकती है। चित्र, PDF और संपीड़ित डेटा टेक्स्ट नहीं हैं।"
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Base64 डिकोड करते समय मूल अक्षर एन्कोडिंग चुनें",
+          "paragraphs": [
+            "Base64 में बाइट होते हैं, मूल अक्षर एन्कोडिंग की जानकारी नहीं। डिफ़ॉल्ट UTF-8 है। यदि मूल डेटा EUC-KR / CP949, Shift_JIS या GB18030 में है, तो परिणाम के ऊपर वही एन्कोडिंग चुनें।",
+            "एन्कोडिंग अपने आप पहचानी नहीं जाती। मूल टेक्स्ट से तुलना करें: बिना त्रुटि के भी गलत एन्कोडिंग गलत टेक्स्ट दे सकती है। चित्र, PDF और संपीड़ित डेटा टेक्स्ट नहीं हैं।"
+          ],
+          "table": {
+            "headings": [
+              "अक्षर एन्कोडिंग",
+              "टेक्स्ट",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "नमस्ते",
+                "4KSo4KSu4KS44KWN4KSk4KWH"
+              ],
+              [
+                "UTF-16LE",
+                "नमस्ते",
+                "KAkuCTgJTQkkCUcJ"
+              ]
+            ]
+          }
+        }
       ]
     },
     "encode": {
@@ -356,6 +1120,34 @@
           "क्या स्पेस और नई लाइन भी एन्कोड होते हैं?",
           "हाँ। वे इनपुट बाइट का हिस्सा हैं। Hello और नई लाइन वाला Hello अलग परिणाम देते हैं। LF और CRLF के मान भी अलग होते हैं। डिकोडिंग असल में लिखे टेक्स्ट को लौटाती है।"
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Base64 एन्कोड करने से पहले अक्षर एन्कोडिंग चुनें",
+          "paragraphs": [
+            "UTF-8 हिन्दी और इमोजी का समर्थन करता है। दूसरी एन्कोडिंग तभी चुनें जब प्राप्त करने वाला सिस्टम उसकी मांग करे; डिकोड करते समय भी वही चुनें।",
+            "यदि पुरानी एन्कोडिंग किसी अक्षर को नहीं दर्शा सकती, तो रूपांतरण विफल होगा। प्राप्त करने वाला सिस्टम अनुमति दे तो UTF-8 इस्तेमाल करें।"
+          ],
+          "table": {
+            "headings": [
+              "अक्षर एन्कोडिंग",
+              "टेक्स्ट",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "नमस्ते",
+                "4KSo4KSu4KS44KWN4KSk4KWH"
+              ],
+              [
+                "UTF-16LE",
+                "नमस्ते",
+                "KAkuCTgJTQkkCUcJ"
+              ]
+            ]
+          }
+        }
       ]
     },
     "examplesHeading": "जाँचे गए Base64 टेक्स्ट उदाहरण",
@@ -372,9 +1164,37 @@
       "faqHeading": "Частые вопросы",
       "faq": [
         [
-          "Почему текст нечитаемый или возникает ошибка UTF-8?",
-          "Проверьте исходную кодировку. Base64 не указывает UTF-8, другую кодировку или двоичные данные. Этот декодер не преобразует EUC-KR или Shift_JIS автоматически. Дополнительные = не решат проблему."
+          "Как исправить нечитаемый текст или ошибку UTF-8?",
+          "Base64 содержит байты, но не сведения об исходной кодировке. По умолчанию выбран UTF-8. Если источник использует EUC-KR / CP949, Shift_JIS или GB18030, выберите ту же кодировку над результатом. Кодировка не определяется автоматически. Сравните с оригиналом: даже без ошибки неверная кодировка может дать неправильный текст. Изображения, PDF и сжатые данные не являются текстом."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Как выбрать исходную кодировку при декодировании Base64",
+          "paragraphs": [
+            "Base64 содержит байты, но не сведения об исходной кодировке. По умолчанию выбран UTF-8. Если источник использует EUC-KR / CP949, Shift_JIS или GB18030, выберите ту же кодировку над результатом.",
+            "Кодировка не определяется автоматически. Сравните с оригиналом: даже без ошибки неверная кодировка может дать неправильный текст. Изображения, PDF и сжатые данные не являются текстом."
+          ],
+          "table": {
+            "headings": [
+              "Кодировка",
+              "Текст",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "Привет",
+                "0J/RgNC40LLQtdGC"
+              ],
+              [
+                "Windows-1251",
+                "Привет",
+                "z/Do4uXy"
+              ]
+            ]
+          }
+        }
       ]
     },
     "encode": {
@@ -389,6 +1209,34 @@
           "Кодируются ли пробелы и переносы строк?",
           "Да. Они входят в байты ввода. Hello и Hello с переносом строки дают разные результаты. LF и CRLF также создают разные значения. Декодирование восстанавливает введённый текст."
         ]
+      ],
+      "sections": [
+        {
+          "heading": "Выбор кодировки перед преобразованием в Base64",
+          "paragraphs": [
+            "UTF-8 поддерживает кириллицу и эмодзи. Выбирайте другую кодировку только по требованию принимающей системы; при декодировании используйте ту же.",
+            "Если старая кодировка не может представить символ, преобразование завершится ошибкой. Используйте UTF-8, если принимающая система это допускает."
+          ],
+          "table": {
+            "headings": [
+              "Кодировка",
+              "Текст",
+              "Base64"
+            ],
+            "rows": [
+              [
+                "UTF-8",
+                "Привет",
+                "0J/RgNC40LLQtdGC"
+              ],
+              [
+                "Windows-1251",
+                "Привет",
+                "z/Do4uXy"
+              ]
+            ]
+          }
+        }
       ]
     },
     "examplesHeading": "Проверенные примеры Base64",
