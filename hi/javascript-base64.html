@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="hi"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="Cm98OmZVzYxYRo2uHkpDjDzFabqjTbHxmLgRPnfnQM0">
+  <meta name="description" content="TextEncoder, btoa, atob और TextDecoder से हिंदी, कोरियाई और इमोजी का UTF-8 Base64 रूपांतरण करें।">
+  <title>JavaScript में हिंदी Base64: btoa Unicode त्रुटि सुधारें | Decodex</title>
+  <link rel="canonical" href="https://decodex.fyi/hi/javascript-base64.html">
+  <meta property="og:title" content="JavaScript में हिंदी Base64: btoa Unicode त्रुटि सुधारें | Decodex">
+  <meta property="og:description" content="TextEncoder, btoa, atob और TextDecoder से हिंदी, कोरियाई और इमोजी का UTF-8 Base64 रूपांतरण करें।">
+  <meta property="og:url" content="https://decodex.fyi/hi/javascript-base64.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Decodex">
+  <link rel="icon" href="https://decodex.fyi/favicon.ico" sizes="16x16 32x32 48x48 96x96">
+  <link rel="icon" type="image/png" href="https://decodex.fyi/decodexFavicon.png" sizes="96x96">
+  <meta name="color-scheme" content="light dark">
+  <script src="/locales/hi.js?v=20261003m"></script>
+<script src="/theme.js?v=20261003m"></script>
+  <link rel="stylesheet" href="/style.css?v=20261003m">
+  <script src="/language.js?v=20261003m"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XVJFGV14XL');
+  </script>
+<link rel="alternate" hreflang="en" href="https://decodex.fyi/javascript-base64.html">
+<link rel="alternate" hreflang="ko" href="https://decodex.fyi/ko/javascript-base64.html">
+<link rel="alternate" hreflang="es" href="https://decodex.fyi/es/javascript-base64.html">
+<link rel="alternate" hreflang="pt-BR" href="https://decodex.fyi/pt-br/javascript-base64.html">
+<link rel="alternate" hreflang="de" href="https://decodex.fyi/de/javascript-base64.html">
+<link rel="alternate" hreflang="ja" href="https://decodex.fyi/ja/javascript-base64.html">
+<link rel="alternate" hreflang="zh-CN" href="https://decodex.fyi/zh-cn/javascript-base64.html">
+<link rel="alternate" hreflang="fr" href="https://decodex.fyi/fr/javascript-base64.html">
+<link rel="alternate" hreflang="it" href="https://decodex.fyi/it/javascript-base64.html">
+<link rel="alternate" hreflang="nl" href="https://decodex.fyi/nl/javascript-base64.html">
+<link rel="alternate" hreflang="hi" href="https://decodex.fyi/hi/javascript-base64.html">
+<link rel="alternate" hreflang="ru" href="https://decodex.fyi/ru/javascript-base64.html">
+<link rel="alternate" hreflang="x-default" href="https://decodex.fyi/javascript-base64.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"JavaScript में हिंदी Base64: btoa Unicode त्रुटि सुधारें","description":"TextEncoder, btoa, atob और TextDecoder से हिंदी, कोरियाई और इमोजी का UTF-8 Base64 रूपांतरण करें।","inLanguage":"hi","mainEntityOfPage":"https://decodex.fyi/hi/javascript-base64.html","datePublished":"2026-10-03","dateModified":"2026-10-03","author":{"@type":"Person","name":"jinsu100","url":"https://github.com/jinsu100"},"publisher":{"@type":"Organization","name":"Decodex","url":"https://decodex.fyi/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Decodex","item":"https://decodex.fyi/hi/"},{"@type":"ListItem","position":2,"name":"मार्गदर्शिकाएँ","item":"https://decodex.fyi/hi/guides.html"},{"@type":"ListItem","position":3,"name":"JavaScript में हिंदी Base64: btoa Unicode त्रुटि सुधारें","item":"https://decodex.fyi/hi/javascript-base64.html"}]}]</script>
+</head><body data-lang="hi"><header class="header"><a class="brand" href="./" aria-label="Decodex"><img src="/decodexLogo.png" alt="Decodex" width="2172" height="724"></a><div class="header-tools"><button id="theme-toggle" class="theme-toggle" type="button" aria-label="डार्क मोड" aria-pressed="false" hidden><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">डार्क मोड</span></button><nav class="language-switch" aria-label="भाषा"><details class="language-menu"><summary>🌐 हिन्दी</summary><div class="language-options"><a href="/javascript-base64.html" lang="en" hreflang="en">English</a><a href="/ko/javascript-base64.html" lang="ko" hreflang="ko">한국어</a><a href="/zh-cn/javascript-base64.html" lang="zh-CN" hreflang="zh-CN">简体中文</a><a href="/es/javascript-base64.html" lang="es" hreflang="es">Español</a><a href="/hi/javascript-base64.html" lang="hi" hreflang="hi" aria-current="page">हिन्दी</a><a href="/ru/javascript-base64.html" lang="ru" hreflang="ru">Русский</a><a href="/fr/javascript-base64.html" lang="fr" hreflang="fr">Français</a><a href="/pt-br/javascript-base64.html" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a><a href="/de/javascript-base64.html" lang="de" hreflang="de">Deutsch</a><a href="/ja/javascript-base64.html" lang="ja" hreflang="ja">日本語</a><a href="/it/javascript-base64.html" lang="it" hreflang="it">Italiano</a><a href="/nl/javascript-base64.html" lang="nl" hreflang="nl">Nederlands</a></div></details></nav></div></header><main class="info-page"><nav class="article-breadcrumb" aria-label="Decodex"><a href="./">Decodex</a> → <a href="guides.html">मार्गदर्शिकाएँ</a></nav><section class="intro"><p class="eyebrow">DECODEX · BASE64 · UTF-8</p><h1>JavaScript में हिंदी Base64: btoa Unicode त्रुटि सुधारें</h1><p class="description">TextEncoder, btoa, atob और TextDecoder से हिंदी, कोरियाई और इमोजी का UTF-8 Base64 रूपांतरण करें।</p><p class="article-byline">लेखक: <a href="https://github.com/jinsu100">jinsu100 · Decodex</a> · अपडेट: <time datetime="2026-10-03">2026-10-03</time></p></section><article class="info-content"><p>btoa() एक बाइनरी स्ट्रिंग लेता है जिसकी हर इकाई एक बाइट में आती है। यह अपने आप UTF-8 नहीं बनाता। हिंदी और कई Unicode अक्षर InvalidCharacterError दे सकते हैं; पहले टेक्स्ट को UTF-8 बाइट में बदलें।</p><nav class="article-toc" aria-label="विषय सूची"><strong>विषय सूची</strong><ol><li><a href="#section-1">UTF-8 एन्कोड और डिकोड करें</a></li><li><a href="#section-2">पूरा रूपांतरण जाँचें</a></li><li><a href="#section-3">त्रुटि का चरण पहचानें</a></li><li><a href="#examples">यह उदाहरण बदलें</a></li></ol></nav><section id="section-1"><h2>UTF-8 एन्कोड और डिकोड करें</h2><p>TextEncoder टेक्स्ट से बाइट बनाता है। नीचे का कोड btoa से पहले छोटे समूह इस्तेमाल करता है ताकि फ़ंक्शन आर्गुमेंट की सीमा न आए। डिकोड करते समय atob के परिणाम से Uint8Array बनाएँ और TextDecoder इस्तेमाल करें। fatal विकल्प अमान्य UTF-8 बाइट पर त्रुटि देता है।</p></section><section id="section-2"><h2>पूरा रूपांतरण जाँचें</h2><p>안녕하세요 😀 का Base64 7JWI64WV7ZWY7IS47JqUIPCfmIA= है। डिकोडिंग में वही टेक्स्ट और स्पेस लौटने चाहिए। उदाहरण लिंक में निश्चित सार्वजनिक उदाहरण का नाम है, आपका टेक्स्ट URL में नहीं जाता। Decodex ब्राउज़र में अधिकतम 5 MB UTF-8 टेक्स्ट बदलता है।</p></section><section id="section-3"><h2>त्रुटि का चरण पहचानें</h2><p>atob की त्रुटि अक्सर अक्षर, पैडिंग या प्रीफिक्स से संबंधित होती है। TextDecoder की त्रुटि बाइनरी डेटा या दूसरी कैरेक्टर एन्कोडिंग दर्शा सकती है। Node.js में Buffer.from(text, &quot;utf8&quot;).toString(&quot;base64&quot;) इस्तेमाल करें; ढीला डिकोडर इनपुट सत्यापन का विकल्प नहीं है।</p></section><section id="examples"><h2>यह उदाहरण बदलें</h2><pre class="article-code"><code>// Browser JavaScript: text → UTF-8 bytes → Base64.
+function utf8ToBase64(text) {
+  const bytes = new TextEncoder().encode(text);
+  let binary = '';
+  for (let i = 0; i &lt; bytes.length; i += 8192) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
+  }
+  return btoa(binary);
+}
+
+// Accept standard Base64 or Base64URL, with complete or omitted padding.
+function base64ToUtf8(value) {
+  let normalized = value.replace(/\s/g, '').replace(/-/g, '+').replace(/_/g, '/');
+  if (!/^[A-Za-z0-9+/]*={0,2}$/.test(normalized) ||
+      normalized.length % 4 === 1 ||
+      (normalized.includes('=') &amp;&amp; normalized.length % 4 !== 0)) {
+    throw new Error('Invalid Base64 characters, length or padding');
+  }
+  normalized += '='.repeat((4 - normalized.length % 4) % 4);
+  const binary = atob(normalized);
+  const bytes = Uint8Array.from(binary, character =&gt; character.charCodeAt(0));
+  return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+}
+
+const text = '안녕하세요 😀';
+const encoded = utf8ToBase64(text);
+console.log(encoded); // 7JWI64WV7ZWY7IS47JqUIPCfmIA=
+console.log(base64ToUtf8(encoded)); // 안녕하세요 😀
+</code></pre><p><a class="primary-button article-example" href="encode.html?example=unicode">यह उदाहरण बदलें →</a></p><p><a href="./">Base64 → UTF-8</a> · <a href="encode.html">UTF-8 → Base64</a></p></section><section><h2>अक्सर पूछे जाने वाले प्रश्न</h2><h3>क्या atob सीधे हिंदी टेक्स्ट देता है?</h3><p>नहीं। यह बाइनरी स्ट्रिंग देता है। मानों को Uint8Array में बदलें और TextDecoder(&quot;utf-8&quot;) से पढ़ें। पुराने unescape() वाले तरीके से बचें।</p></section><section class="article-references"><h2>संदर्भ</h2><ul><li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/btoa">MDN · btoa / Unicode</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder">MDN · TextDecoder</a></li><li><a href="https://nodejs.org/api/buffer.html">Node.js · Buffer</a></li></ul></section><section class="guide-resources" data-new-guides><h2>अन्य Base64 गाइड</h2><div class="guide-grid"><a class="guide-card" href="base64url.html"><h3>Base64 और Base64URL में अंतर: उदाहरण और पैडिंग</h3><p>Base64URL के - _ अक्षर, Base64 के + / अक्षर, पैडिंग और URL पैरामीटर की समस्याएँ समझें।</p></a><a class="guide-card" href="base64-padding.html"><h3>Base64 में = और == क्यों होते हैं? पैडिंग समझें</h3><p>Base64 पैडिंग, अमान्य लंबाई और Zg, Zg= तथा Zg== के अंतर को उदाहरणों से समझें।</p></a></div></section></article></main><footer><span>© Decodex</span><nav class="footer-links"><a href="guides.html">मार्गदर्शिकाएँ</a><a href="about.html">Decodex के बारे में</a><a href="privacy.html">गोपनीयता</a><a href="contact.html">संपर्क</a></nav></footer></body></html>

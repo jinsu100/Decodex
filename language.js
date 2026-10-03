@@ -22,7 +22,7 @@
   const path = window.location.pathname;
   const current = Object.keys(folders).find(lang => folders[lang] && path.startsWith('/' + folders[lang] + '/')) || 'en';
   const page = current === 'en' ? path : path.slice(folders[current].length + 1);
-  const supportedPage = ['/', '/index.html', '/encode.html', '/about.html', '/privacy.html', '/contact.html', '/guides.html', '/base64-errors.html', '/base64-korean.html'].includes(page);
+  const supportedPage = ['/', '/index.html', '/encode.html', '/about.html', '/privacy.html', '/contact.html', '/guides.html', '/base64-errors.html', '/base64-korean.html', '/base64url.html', '/base64-padding.html', '/javascript-base64.html'].includes(page);
   // Direct translated links retain their language. Only the default entry or an
   // explicit one-navigation choice selects a different language automatically.
   const target = supported(requested) ? requested : current === 'en' ? preferred : current;

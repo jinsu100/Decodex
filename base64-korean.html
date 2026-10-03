@@ -14,9 +14,9 @@
   <link rel="icon" href="https://decodex.fyi/favicon.ico" sizes="16x16 32x32 48x48 96x96">
   <link rel="icon" type="image/png" href="https://decodex.fyi/decodexFavicon.png" sizes="96x96">
   <meta name="color-scheme" content="light dark">
-  <script src="theme.js?v=20261003l"></script>
-  <link rel="stylesheet" href="style.css?v=20261003l">
-  <script src="language.js?v=20261003l"></script>
+  <script src="theme.js?v=20261003m"></script>
+  <link rel="stylesheet" href="style.css?v=20261003m">
+  <script src="language.js?v=20261003m"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -54,7 +54,8 @@
 <h2 id="broken">Why Korean text looks garbled</h2><p>Base64 does not automatically change a character encoding. Bytes originally produced using CP949 or EUC-KR may not read correctly as UTF-8. Check the encoding used by the source service or file. If possible, produce UTF-8 text there before encoding it again.</p><p>If the original text is already garbled, converting it to Base64 preserves that garbled content. Repeated decoding cannot generally recover the original Korean text. Decode again only when the source was actually encoded multiple times.</p><p>If the character encoding is correct, check for truncation or extra content with the examples in our <a href="base64-errors.html">Base64 error troubleshooting guide</a>.</p>
 <h2 id="developers">Notes for JavaScript developers</h2><p>Passing Unicode directly to <code>btoa("안녕하세요")</code> causes an error. <code>btoa()</code> treats each character as one byte, so first produce UTF-8 bytes with <code>TextEncoder</code>, then encode those bytes. Reverse the process by converting Base64 back into bytes and interpreting them with <code>TextDecoder</code>. See <a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/btoa#unicode_strings">MDN’s Unicode conversion guidance</a> for implementation details.</p>
 <h2>Handle the result with care</h2><p>Anyone can reverse Base64. Korean text becoming an unfamiliar ASCII string does not make it encrypted. Decodex processes conversions in your browser, but posting the copied result on another site can expose the original text. Read our <a href="privacy.html">privacy policy</a> for information about site visit statistics.</p><aside class="article-related"><h2>Related guides</h2><p><a href="base64-errors.html">How to fix Base64 decoding errors</a></p><p><a href="guides.html">All guides</a></p></aside></article>
-  </main>
+<section class="guide-resources" data-new-guides><h2>More Base64 guides</h2><div class="guide-grid"><a class="guide-card" href="base64url.html"><h3>Base64 vs Base64URL: differences, padding and decoding examples</h3><p>Compare Base64 and Base64URL with tested examples. Learn why + and / become - and _, when padding is omitted, and how to decode URL-safe UTF-8 text.</p></a><a class="guide-card" href="base64-padding.html"><h3>Base64 padding explained: what = and == mean</h3><p>Understand Base64 padding with f, fo and foo examples. Check missing padding, invalid lengths and why deleting = is not always safe.</p></a><a class="guide-card" href="javascript-base64.html"><h3>JavaScript Base64 with Unicode: fix btoa() errors using UTF-8</h3><p>Encode and decode Korean, Hindi and emoji in JavaScript with TextEncoder, btoa, atob and TextDecoder. Includes tested Unicode-safe code and browser examples.</p></a></div></section>
+</main>
   <footer><span>© Decodex</span><nav class="footer-links" aria-label="Site information"><a href="guides.html">Guides</a><a href="about.html">About</a><a href="privacy.html">Privacy</a><a href="contact.html">Contact</a></nav></footer>
 </body>
 </html>

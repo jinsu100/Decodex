@@ -1,0 +1,77 @@
+{
+  "base64url": {
+    "title": "Base64 e Base64URL: diferenças, preenchimento e exemplos",
+    "description": "Compare Base64 e Base64URL, os caracteres + / e - _, preenchimento e decodificação UTF-8 com exemplos verificados.",
+    "intro": "Base64URL representa os mesmos bytes que Base64, mas muda dois caracteres para facilitar o uso em URLs. O Decodex aceita os dois formatos e exibe texto UTF-8. Você pode testar o exemplo da tabela diretamente no conversor.",
+    "sections": [
+      [
+        "O que muda no alfabeto",
+        "Base64 usa + e /; Base64URL usa - e _. Letras e números são iguais. O preenchimento = é uma regra separada: alguns protocolos o removem e outros o mantêm. Uma sequência só de letras e números não revela qual alfabeto foi usado. Nenhum dos formatos é criptografia."
+      ],
+      [
+        "Quando uma URL altera os dados",
+        "Em application/x-www-form-urlencoded, + pode ser interpretado como espaço. / também pode ser confundido com um separador de caminho. Use URLSearchParams para montar parâmetros. Se + já foi perdido, o decodificador não consegue reconstruí-lo com certeza. O emoji 😀 vira 8J+YgA== em Base64 e 8J-YgA== em Base64URL."
+      ],
+      [
+        "Converter e conferir",
+        "Primeiro codifique os bytes em Base64, troque + por - e / por _, e remova somente os = finais se o protocolo permitir. O Decodex gera Base64 padrão com preenchimento e aceita Base64URL ao decodificar. Ler um segmento JWT não verifica assinatura, validade ou permissões; esta ferramenta não valida tokens."
+      ]
+    ],
+    "faq": [
+      [
+        "Base64URL sempre remove =?",
+        "Não. Siga as regras do sistema que recebe os dados. No Decodex, o exemplo sem preenchimento 8J-YgA resulta em 😀."
+      ]
+    ]
+  },
+  "base64-padding": {
+    "title": "Preenchimento Base64: o significado de = e ==",
+    "description": "Entenda o preenchimento Base64 com f, fo e foo. Confira sequências sem =, comprimentos inválidos e erros de preenchimento parcial.",
+    "intro": "O = final é preenchimento, não um caractere do texto original. Base64 representa três bytes com quatro caracteres. Um grupo final de um byte precisa de ==; um de dois bytes precisa de = no formato com preenchimento.",
+    "sections": [
+      [
+        "Conte bytes, não letras",
+        "Cada caractere de dados representa seis bits. Três bytes completam 24 bits e quatro caracteres. Acentos e emojis podem ocupar vários bytes UTF-8: 😀 ocupa quatro bytes e produz 8J+YgA==. A tabela compara entradas de um, dois e três bytes."
+      ],
+      [
+        "Restaurar o preenchimento omitido",
+        "Se o formato aceitar entrada sem preenchimento, remova espaços e calcule o comprimento módulo 4. Resto 2: adicione ==; resto 3: adicione =; resto 0: não adicione nada. Resto 1: a sequência está inválida ou truncada e adicionar = não resolve. Confira o formato exigido pela API."
+      ],
+      [
+        "Por que Zg funciona e Zg= falha",
+        "O Decodex restaura o preenchimento totalmente omitido de Zg e obtém f. Zg== também é válido. Zg= tem preenchimento parcial e comprimento incorreto, então é rejeitado. A=AA e Zg=== também falham. Não adicione nem remova = repetidamente para esconder um erro de cópia."
+      ]
+    ],
+    "faq": [
+      [
+        "Toda sequência Base64 termina com =?",
+        "Não. Quando a quantidade de bytes é múltipla de três, nenhum preenchimento é necessário. Outros protocolos o omitem explicitamente."
+      ]
+    ]
+  },
+  "javascript-base64": {
+    "title": "Base64 em JavaScript com Unicode: corrigir erros de btoa()",
+    "description": "Codifique acentos, coreano e emojis com TextEncoder e decodifique com atob e TextDecoder. Código UTF-8 e exemplos verificados.",
+    "intro": "btoa() recebe uma sequência binária com unidades de código de um byte. Não converte texto para UTF-8 automaticamente. Coreano, hindi e muitos emojis podem causar InvalidCharacterError. Use bytes UTF-8 explícitos para obter uma conversão confiável.",
+    "sections": [
+      [
+        "Codificar e decodificar Unicode",
+        "TextEncoder transforma texto em bytes. O código abaixo processa blocos pequenos antes de chamar btoa, evitando um argumento para cada byte de um texto grande. Para recuperar o texto, atob gera bytes e TextDecoder os interpreta como UTF-8. A opção fatal detecta bytes inválidos."
+      ],
+      [
+        "Confira a conversão de ida e volta",
+        "안녕하세요 😀 produz 7JWI64WV7ZWY7IS47JqUIPCfmIA=. A decodificação precisa recuperar o mesmo texto, espaço e emoji. O link abre o conversor com dados públicos predefinidos, sem colocar texto do usuário na URL. O Decodex converte localmente até 5 MB de texto UTF-8."
+      ],
+      [
+        "Descubra em qual etapa ocorreu o erro",
+        "Um erro de atob costuma indicar Base64, preenchimento ou prefixos incorretos. Um erro de TextDecoder pode indicar dados binários ou outra codificação, mesmo com um alfabeto Base64 válido. No Node.js, Buffer.from(text, \"utf8\").toString(\"base64\") codifica texto, mas a decodificação permissiva não substitui a validação."
+      ]
+    ],
+    "faq": [
+      [
+        "atob devolve texto legível diretamente?",
+        "Não. Ele devolve uma sequência binária. Converta os valores para Uint8Array e use TextDecoder(\"utf-8\"). Prefira esse caminho a funções antigas como unescape()."
+      ]
+    ]
+  }
+}

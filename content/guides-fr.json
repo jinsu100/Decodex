@@ -1,0 +1,77 @@
+{
+  "base64url": {
+    "title": "Base64 ou Base64URL : différences et exemples",
+    "description": "Comprendre les caractères + / et - _, le remplissage et les problèmes de paramètres URL avec des exemples UTF-8.",
+    "intro": "Base64URL représente les mêmes octets que Base64, mais remplace deux caractères. Decodex accepte les deux alphabets pour décoder du texte UTF-8. Ni Base64 ni Base64URL ne chiffrent les données.",
+    "sections": [
+      [
+        "Alphabet et remplissage",
+        "Base64 utilise + et / ; Base64URL utilise - et _. Les lettres et les chiffres restent identiques. Le remplissage = dépend du protocole : il peut être conservé ou omis. Une chaîne uniquement alphanumérique ne permet pas de distinguer les deux formats."
+      ],
+      [
+        "Attention aux paramètres URL",
+        "Dans application/x-www-form-urlencoded, + peut devenir un espace. Utilisez URLSearchParams pour construire les paramètres sans perdre les caractères. Si le + a déjà disparu, le décodage ne peut pas le reconstituer avec certitude. 😀 donne 8J+YgA== en Base64 et 8J-YgA== en Base64URL."
+      ],
+      [
+        "Convertir et vérifier",
+        "Après l’encodage, remplacez + par - et / par _. Supprimez les = finaux uniquement si le protocole l’autorise. Decodex produit du Base64 standard avec remplissage et accepte Base64URL au décodage. Lire un segment JWT ne vérifie ni sa signature ni son expiration."
+      ]
+    ],
+    "faq": [
+      [
+        "Base64URL exclut-il toujours le signe = ?",
+        "Non. Respectez le format attendu par le destinataire. Dans Decodex, 8J-YgA sans remplissage redonne 😀."
+      ]
+    ]
+  },
+  "base64-padding": {
+    "title": "Remplissage Base64 : pourquoi = ou == ?",
+    "description": "Comprendre le remplissage Base64, les longueurs invalides et les différences entre Zg, Zg= et Zg==.",
+    "intro": "Base64 transforme des groupes de trois octets en quatre caractères. Le signe = complète le dernier groupe lorsque sa taille est insuffisante. Il indique un remplissage et ne représente pas une lettre du texte initial.",
+    "sections": [
+      [
+        "Compter les octets",
+        "Un octet restant exige == ; deux exigent = ; trois n’en exigent aucun. f donne Zg==, fo donne Zm8= et foo donne Zm9v. Comptez les octets UTF-8, car une lettre accentuée ou un emoji peut occuper plusieurs octets."
+      ],
+      [
+        "Restaurer un remplissage absent",
+        "Après suppression des espaces, une longueur modulo 4 de 2 peut recevoir == et une longueur modulo 4 de 3 peut recevoir =. Un reste de 1 signale une longueur impossible : ajouter des = ne suffit pas. Vérifiez aussi l’alphabet et le protocole utilisé."
+      ],
+      [
+        "Distinguer absence et erreur",
+        "Decodex accepte Zg et Zg==, mais refuse Zg= car le remplissage présent est incomplet. Il refuse également A=AA et Zg===. Ne supprimez pas arbitrairement les caractères pour masquer une corruption. Certains protocoles imposent un remplissage exact, d’autres l’omettent."
+      ]
+    ],
+    "faq": [
+      [
+        "Une chaîne sans = est-elle toujours incorrecte ?",
+        "Non. Les données dont la taille est un multiple de trois octets n’exigent pas de remplissage. Certains protocoles le suppriment également."
+      ]
+    ]
+  },
+  "javascript-base64": {
+    "title": "Base64 en JavaScript : Unicode et erreur btoa",
+    "description": "Encoder et décoder du texte Unicode avec TextEncoder, btoa, atob et TextDecoder, sans perdre les accents ou les emojis.",
+    "intro": "btoa() attend une chaîne binaire dont chaque unité tient dans un octet. Il n’encode pas automatiquement le texte en UTF-8. Certains caractères Unicode provoquent InvalidCharacterError ; convertissez d’abord le texte en octets.",
+    "sections": [
+      [
+        "Encoder et décoder en UTF-8",
+        "TextEncoder produit les octets du texte. Le code ci-dessous les traite par blocs avant btoa, pour éviter une limite du nombre d’arguments. Pour le décodage, convertissez la sortie d’atob en Uint8Array puis utilisez TextDecoder. L’option fatal détecte les octets UTF-8 invalides."
+      ],
+      [
+        "Tester un aller-retour",
+        "안녕하세요 😀 donne 7JWI64WV7ZWY7IS47JqUIPCfmIA=. Le décodage doit restituer les mêmes espaces et caractères. Le lien d’exemple utilise un nom de démonstration fixe, sans placer votre texte dans l’URL. Decodex traite jusqu’à 5 MB de texte UTF-8 dans le navigateur."
+      ],
+      [
+        "Identifier la bonne erreur",
+        "Un échec d’atob indique généralement un problème d’alphabet, de remplissage ou de préfixe. Une erreur de TextDecoder peut indiquer des données binaires ou un autre encodage. Sous Node.js, Buffer.from(text, \"utf8\").toString(\"base64\") convient à l’encodage ; un décodeur permissif ne remplace pas la validation."
+      ]
+    ],
+    "faq": [
+      [
+        "atob restitue-t-il directement le texte Unicode ?",
+        "Non. Il renvoie une chaîne binaire. Convertissez ses valeurs en Uint8Array, puis lisez-les avec TextDecoder(\"utf-8\"). Évitez les recettes anciennes utilisant unescape()."
+      ]
+    ]
+  }
+}

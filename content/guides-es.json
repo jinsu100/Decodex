@@ -1,0 +1,77 @@
+{
+  "base64url": {
+    "title": "Base64 y Base64URL: diferencias, relleno y ejemplos",
+    "description": "Compara Base64 y Base64URL, los caracteres + / y - _, el relleno y la decodificación de texto UTF-8 con ejemplos comprobados.",
+    "intro": "Base64URL representa los mismos bytes que Base64, pero cambia dos caracteres para facilitar su uso en URL. Decodex acepta ambos formatos y muestra texto UTF-8. El ejemplo de la tabla puede probarse directamente en el conversor.",
+    "sections": [
+      [
+        "Qué cambia y qué no",
+        "Base64 usa + y /; Base64URL usa - y _. Las letras y los números se mantienen. El relleno = es una decisión independiente: algunos protocolos lo omiten y otros lo conservan. Una cadena formada solo por letras y números no permite distinguir los dos alfabetos. Ninguno de los formatos es un cifrado."
+      ],
+      [
+        "Por qué una URL puede alterar el resultado",
+        "En datos application/x-www-form-urlencoded, + puede interpretarse como un espacio. / también puede confundirse con un separador de ruta. Utiliza URLSearchParams para construir parámetros. Si + ya se perdió al convertirse en espacio, el decodificador no puede reconstruirlo con certeza. El emoji 😀 se representa como 8J+YgA== en Base64 y 8J-YgA== en Base64URL."
+      ],
+      [
+        "Convertir y comprobar el resultado",
+        "Para crear Base64URL, codifica primero los bytes, sustituye + por - y / por _, y elimina únicamente los = finales si el protocolo lo permite. Decodex genera Base64 estándar con relleno y acepta Base64URL al decodificar. Leer un segmento JWT no verifica su firma, caducidad ni permisos; esta herramienta no valida tokens."
+      ]
+    ],
+    "faq": [
+      [
+        "¿Base64URL siempre omite =?",
+        "No. Sigue las reglas del sistema receptor. El ejemplo 8J-YgA sin relleno se decodifica como 😀 en Decodex."
+      ]
+    ]
+  },
+  "base64-padding": {
+    "title": "Relleno Base64: qué significan = y ==",
+    "description": "Entiende el relleno Base64 con f, fo y foo. Comprueba cadenas sin =, longitudes inválidas y errores de relleno parcial.",
+    "intro": "El = final es relleno, no un carácter del texto original. Base64 representa tres bytes mediante cuatro caracteres. Un grupo final de un byte necesita ==; uno de dos bytes necesita = en el formato con relleno.",
+    "sections": [
+      [
+        "Cuenta bytes, no letras",
+        "Cada carácter de datos representa seis bits. Tres bytes completan 24 bits y cuatro caracteres. Los acentos y emojis pueden ocupar varios bytes UTF-8: 😀 ocupa cuatro bytes y produce 8J+YgA==. La tabla compara entradas de uno, dos y tres bytes."
+      ],
+      [
+        "Restaurar relleno omitido",
+        "Si el formato admite entrada sin relleno, elimina espacios y calcula la longitud módulo 4. Resto 2: añade ==; resto 3: añade =; resto 0: no añadas nada. Resto 1: la cadena es inválida o está truncada y añadir = no la repara. Comprueba siempre el formato esperado por la API."
+      ],
+      [
+        "Por qué Zg funciona y Zg= falla",
+        "Decodex restaura el relleno completamente omitido de Zg y obtiene f. Zg== también es válido. Zg= tiene relleno parcial y longitud incorrecta, por lo que se rechaza. A=AA y Zg=== también fallan. No añadas o elimines = repetidamente para ocultar un error de copia."
+      ]
+    ],
+    "faq": [
+      [
+        "¿Toda cadena Base64 termina en =?",
+        "No. Si el número de bytes es múltiplo de tres, no se necesita relleno. Otros protocolos omiten el relleno expresamente."
+      ]
+    ]
+  },
+  "javascript-base64": {
+    "title": "Base64 en JavaScript con Unicode: solucionar errores de btoa()",
+    "description": "Codifica acentos, coreano y emojis con TextEncoder y decodifica con atob y TextDecoder. Código UTF-8 y ejemplos comprobados.",
+    "intro": "btoa() recibe una cadena binaria con unidades de código de un byte. No convierte texto a UTF-8 automáticamente. Coreano, hindi y muchos emojis pueden causar InvalidCharacterError. Usa bytes UTF-8 explícitos para conseguir una conversión fiable.",
+    "sections": [
+      [
+        "Codificar y decodificar Unicode",
+        "TextEncoder convierte el texto en bytes. El código de abajo procesa pequeños bloques antes de llamar a btoa, evitando un argumento por cada byte de un texto grande. Para recuperar el texto, atob produce bytes que TextDecoder interpreta como UTF-8. La opción fatal detecta bytes inválidos."
+      ],
+      [
+        "Verifica la conversión de ida y vuelta",
+        "안녕하세요 😀 produce 7JWI64WV7ZWY7IS47JqUIPCfmIA=. La decodificación debe recuperar exactamente el texto, el espacio y el emoji. El enlace del ejemplo abre el conversor con datos públicos predefinidos, sin incluir texto del usuario en la URL. Decodex convierte localmente texto UTF-8 de hasta 5 MB."
+      ],
+      [
+        "Identifica dónde ocurre el error",
+        "Un error de atob suele indicar Base64, relleno o prefijos incorrectos. Un error de TextDecoder puede indicar datos binarios o una codificación distinta, aunque el alfabeto Base64 sea válido. Node.js ofrece Buffer.from(text, \"utf8\").toString(\"base64\"), pero su decodificación permisiva no sustituye la validación de entrada."
+      ]
+    ],
+    "faq": [
+      [
+        "¿atob devuelve directamente texto legible?",
+        "No. Devuelve una cadena binaria. Convierte sus valores en Uint8Array y utiliza TextDecoder(\"utf-8\"). Prefiere este enfoque a funciones antiguas como unescape()."
+      ]
+    ]
+  }
+}

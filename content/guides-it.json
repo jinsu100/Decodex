@@ -1,0 +1,77 @@
+{
+  "base64url": {
+    "title": "Base64 e Base64URL: differenze ed esempi",
+    "description": "Confronta gli alfabeti Base64 e Base64URL, il padding e i problemi nei parametri URL con esempi UTF-8.",
+    "intro": "Base64URL rappresenta gli stessi byte di Base64, sostituendo due caratteri. Decodex accetta entrambi gli alfabeti per decodificare testo UTF-8. Nessuno dei due formati cifra i dati.",
+    "sections": [
+      [
+        "Alfabeto e padding",
+        "Base64 usa + e /; Base64URL usa - e _. Lettere e cifre non cambiano. Il padding = dipende dal protocollo e può essere conservato oppure omesso. Una stringa composta soltanto da lettere e numeri non permette di distinguere i due formati."
+      ],
+      [
+        "Problemi nei parametri URL",
+        "Nel formato application/x-www-form-urlencoded, + può diventare uno spazio. Usa URLSearchParams per costruire i parametri. Se il + è già stato perso, il decoder non può ricostruirlo con certezza. 😀 diventa 8J+YgA== in Base64 e 8J-YgA== in Base64URL."
+      ],
+      [
+        "Conversione e verifica",
+        "Dopo aver codificato i byte, sostituisci + con - e / con _. Elimina i = finali soltanto se il protocollo lo consente. Decodex produce Base64 standard con padding e decodifica anche Base64URL. Leggere un segmento JWT non verifica la firma, la scadenza o le autorizzazioni."
+      ]
+    ],
+    "faq": [
+      [
+        "Base64URL esclude sempre il segno =?",
+        "No. Segui il formato richiesto dal destinatario. In Decodex, 8J-YgA senza padding restituisce 😀."
+      ]
+    ]
+  },
+  "base64-padding": {
+    "title": "Padding Base64: perché = oppure ==?",
+    "description": "Capire il padding Base64 e correggere le lunghezze non valide: esempi con Zg, Zg= e Zg==.",
+    "intro": "Base64 trasforma gruppi di tre byte in quattro caratteri. Il segno = completa l’ultimo gruppo quando mancano byte. È un indicatore di padding e non una lettera del testo originale.",
+    "sections": [
+      [
+        "Contare i byte",
+        "Un byte residuo richiede ==, due richiedono = e tre non richiedono padding. f diventa Zg==, fo diventa Zm8= e foo diventa Zm9v. Conta i byte UTF-8: una lettera accentata o un emoji può occupare più byte."
+      ],
+      [
+        "Ripristinare il padding assente",
+        "Dopo aver rimosso gli spazi, una lunghezza modulo 4 di 2 può ricevere == e una di 3 può ricevere =. Un resto di 1 indica una lunghezza impossibile: aggiungere = non risolve il problema. Controlla anche l’alfabeto e il protocollo."
+      ],
+      [
+        "Distinguere omissione ed errore",
+        "Decodex accetta Zg e Zg==, ma rifiuta Zg= perché il padding presente è incompleto. Rifiuta anche A=AA e Zg===. Non cancellare caratteri arbitrariamente per nascondere dati corrotti. Alcuni protocolli richiedono il padding esatto, altri lo omettono."
+      ]
+    ],
+    "faq": [
+      [
+        "Una stringa senza = è sempre errata?",
+        "No. Quando la quantità di byte è un multiplo di tre, il padding non serve. Anche alcuni protocolli lo eliminano esplicitamente."
+      ]
+    ]
+  },
+  "javascript-base64": {
+    "title": "Base64 in JavaScript: Unicode ed errore btoa",
+    "description": "Codificare e decodificare testo Unicode con TextEncoder, btoa, atob e TextDecoder senza perdere accenti ed emoji.",
+    "intro": "btoa() richiede una stringa binaria con unità rappresentabili in un byte. Non converte automaticamente il testo in UTF-8. Molti caratteri Unicode possono causare InvalidCharacterError: converti prima il testo in byte.",
+    "sections": [
+      [
+        "Conversione UTF-8",
+        "TextEncoder produce i byte del testo. Il codice seguente li elabora a blocchi prima di btoa, evitando il limite del numero di argomenti. Per decodificare, trasforma il risultato di atob in Uint8Array e usa TextDecoder. L’opzione fatal rileva byte UTF-8 non validi."
+      ],
+      [
+        "Verificare il risultato",
+        "안녕하세요 😀 diventa 7JWI64WV7ZWY7IS47JqUIPCfmIA=. La decodifica deve ripristinare esattamente testo e spazi. Il link di esempio usa un nome pubblico predefinito, senza inserire il tuo testo nell’URL. Decodex tratta fino a 5 MB di testo UTF-8 nel browser."
+      ],
+      [
+        "Trovare la causa dell’errore",
+        "Un errore di atob riguarda spesso alfabeto, padding o prefissi. Un errore di TextDecoder può indicare dati binari o un’altra codifica. In Node.js puoi usare Buffer.from(text, \"utf8\").toString(\"base64\"); una decodifica permissiva non sostituisce la validazione."
+      ]
+    ],
+    "faq": [
+      [
+        "atob restituisce direttamente il testo Unicode?",
+        "No. Restituisce una stringa binaria. Converti i valori in Uint8Array e leggili con TextDecoder(\"utf-8\"). Evita le vecchie soluzioni basate su unescape()."
+      ]
+    ]
+  }
+}

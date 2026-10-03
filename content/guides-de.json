@@ -1,0 +1,77 @@
+{
+  "base64url": {
+    "title": "Base64 und Base64URL: Unterschiede, Padding und Beispiele",
+    "description": "Vergleiche Base64 und Base64URL, + / und - _, Padding und UTF-8-Dekodierung anhand geprüfter Beispiele.",
+    "intro": "Base64URL stellt dieselben Bytes wie Base64 dar, ändert aber zwei Zeichen für die Verwendung in URLs. Decodex akzeptiert beide Formate und zeigt UTF-8-Text an. Das Beispiel aus der Tabelle lässt sich direkt im Konverter prüfen.",
+    "sections": [
+      [
+        "Was sich am Alphabet ändert",
+        "Base64 verwendet + und /; Base64URL verwendet - und _. Buchstaben und Ziffern bleiben gleich. Padding mit = ist eine getrennte Regel: Manche Protokolle lassen es weg, andere behalten es. Eine Zeichenfolge nur aus Buchstaben und Ziffern verrät das verwendete Alphabet nicht. Beide Formate sind keine Verschlüsselung."
+      ],
+      [
+        "Wenn eine URL Daten verändert",
+        "Bei application/x-www-form-urlencoded kann + als Leerzeichen interpretiert werden. / kann außerdem mit einem Pfadtrenner kollidieren. Verwende URLSearchParams zum Erstellen von Parametern. Ein bereits verlorenes + kann der Decoder nicht zuverlässig rekonstruieren. Das Emoji 😀 ergibt 8J+YgA== in Base64 und 8J-YgA== in Base64URL."
+      ],
+      [
+        "Umwandeln und kontrollieren",
+        "Kodiere zuerst die Bytes als Base64, ersetze + durch - und / durch _, und entferne nur abschließende =, wenn das Protokoll dies erlaubt. Decodex erzeugt standardmäßiges Base64 mit Padding und akzeptiert Base64URL beim Dekodieren. Das Lesen eines JWT-Segments prüft weder Signatur noch Ablaufzeit oder Berechtigungen; das Werkzeug validiert keine Tokens."
+      ]
+    ],
+    "faq": [
+      [
+        "Fehlt bei Base64URL immer das =?",
+        "Nein. Maßgeblich sind die Regeln des empfangenden Systems. Das ungepolsterte Beispiel 8J-YgA wird in Decodex zu 😀 dekodiert."
+      ]
+    ]
+  },
+  "base64-padding": {
+    "title": "Base64-Padding: Was = und == bedeuten",
+    "description": "Base64-Padding mit f, fo und foo verstehen. Fehlende Füllzeichen, ungültige Längen und teilweise gefüllte Zeichenfolgen prüfen.",
+    "intro": "Ein abschließendes = ist Padding und kein Zeichen des ursprünglichen Texts. Base64 stellt drei Bytes mit vier Zeichen dar. Eine letzte Gruppe aus einem Byte benötigt ==, eine aus zwei Bytes benötigt = im gepolsterten Format.",
+    "sections": [
+      [
+        "Bytes statt Buchstaben zählen",
+        "Jedes Datenzeichen steht für sechs Bits. Drei Bytes ergeben 24 Bits und vier Zeichen. Umlaute und Emojis können mehrere UTF-8-Bytes belegen: 😀 belegt vier Bytes und ergibt 8J+YgA==. Die Tabelle vergleicht Eingaben aus einem, zwei und drei Bytes."
+      ],
+      [
+        "Fehlendes Padding wiederherstellen",
+        "Wenn ungepolsterte Eingaben erlaubt sind, entferne Leerzeichen und prüfe die Länge modulo 4. Rest 2: == ergänzen; Rest 3: = ergänzen; Rest 0: nichts ergänzen. Rest 1 bedeutet ungültige oder abgeschnittene Daten und lässt sich mit = nicht reparieren. Prüfe das von der API erwartete Format."
+      ],
+      [
+        "Warum Zg funktioniert und Zg= scheitert",
+        "Decodex ergänzt das vollständig fehlende Padding von Zg und liefert f. Zg== ist ebenfalls gültig. Zg= ist nur teilweise gepolstert und hat eine falsche Gesamtlänge, deshalb wird es abgelehnt. Auch A=AA und Zg=== scheitern. Wiederholtes Hinzufügen oder Entfernen von = kann einen Kopierfehler verdecken."
+      ]
+    ],
+    "faq": [
+      [
+        "Endet jede Base64-Zeichenfolge mit =?",
+        "Nein. Ist die Bytezahl durch drei teilbar, ist kein Padding nötig. Manche Protokolle lassen es ausdrücklich weg."
+      ]
+    ]
+  },
+  "javascript-base64": {
+    "title": "JavaScript und Unicode-Base64: btoa()-Fehler mit UTF-8 beheben",
+    "description": "Umlaute, Koreanisch und Emojis mit TextEncoder kodieren und mit atob und TextDecoder dekodieren. Geprüfter UTF-8-Code mit Beispielen.",
+    "intro": "btoa() erwartet eine Binärzeichenfolge mit Codeeinheiten im Ein-Byte-Bereich. Es wandelt Text nicht automatisch in UTF-8 um. Koreanisch, Hindi und viele Emojis können InvalidCharacterError auslösen. Verwende explizite UTF-8-Bytes für verlässliche Ergebnisse.",
+    "sections": [
+      [
+        "Unicode kodieren und dekodieren",
+        "TextEncoder wandelt Text in Bytes um. Der folgende Code verarbeitet kleine Blöcke vor btoa und vermeidet damit zu viele Funktionsargumente bei großen Texten. Zum Wiederherstellen liefert atob Bytes, die TextDecoder als UTF-8 liest. Die Option fatal erkennt ungültige Bytes."
+      ],
+      [
+        "Den vollständigen Hin- und Rückweg prüfen",
+        "안녕하세요 😀 ergibt 7JWI64WV7ZWY7IS47JqUIPCfmIA=. Die Dekodierung muss Text, Leerzeichen und Emoji unverändert wiederherstellen. Der Beispiellink öffnet den Konverter mit festgelegten öffentlichen Daten, ohne Benutzereingaben in die URL aufzunehmen. Decodex verarbeitet lokal bis zu 5 MB UTF-8-Text."
+      ],
+      [
+        "Den fehlerhaften Schritt erkennen",
+        "Ein atob-Fehler deutet häufig auf ungültiges Base64, Padding oder Präfixe hin. Ein TextDecoder-Fehler kann Binärdaten oder eine andere Zeichenkodierung bedeuten, selbst bei gültigem Base64-Alphabet. In Node.js kodiert Buffer.from(text, \"utf8\").toString(\"base64\") Text; die großzügige Dekodierung ersetzt keine Eingabevalidierung."
+      ]
+    ],
+    "faq": [
+      [
+        "Liefert atob direkt lesbaren Text?",
+        "Nein. Es liefert eine Binärzeichenfolge. Übertrage die Werte in Uint8Array und verwende TextDecoder(\"utf-8\"). Bevorzuge diesen Ansatz gegenüber älteren Funktionen wie unescape()."
+      ]
+    ]
+  }
+}

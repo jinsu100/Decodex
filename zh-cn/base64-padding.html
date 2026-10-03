@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="Cm98OmZVzYxYRo2uHkpDjDzFabqjTbHxmLgRPnfnQM0">
+  <meta name="description" content="用f、fo和foo解释Base64填充，检查省略的=、无效长度以及部分填充错误。">
+  <title>Base64末尾的=和==是什么意思：填充与错误排查 | Decodex</title>
+  <link rel="canonical" href="https://decodex.fyi/zh-cn/base64-padding.html">
+  <meta property="og:title" content="Base64末尾的=和==是什么意思：填充与错误排查 | Decodex">
+  <meta property="og:description" content="用f、fo和foo解释Base64填充，检查省略的=、无效长度以及部分填充错误。">
+  <meta property="og:url" content="https://decodex.fyi/zh-cn/base64-padding.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Decodex">
+  <link rel="icon" href="https://decodex.fyi/favicon.ico" sizes="16x16 32x32 48x48 96x96">
+  <link rel="icon" type="image/png" href="https://decodex.fyi/decodexFavicon.png" sizes="96x96">
+  <meta name="color-scheme" content="light dark">
+  <script src="/locales/zh-CN.js?v=20261003m"></script>
+<script src="/theme.js?v=20261003m"></script>
+  <link rel="stylesheet" href="/style.css?v=20261003m">
+  <script src="/language.js?v=20261003m"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XVJFGV14XL');
+  </script>
+<link rel="alternate" hreflang="en" href="https://decodex.fyi/base64-padding.html">
+<link rel="alternate" hreflang="ko" href="https://decodex.fyi/ko/base64-padding.html">
+<link rel="alternate" hreflang="es" href="https://decodex.fyi/es/base64-padding.html">
+<link rel="alternate" hreflang="pt-BR" href="https://decodex.fyi/pt-br/base64-padding.html">
+<link rel="alternate" hreflang="de" href="https://decodex.fyi/de/base64-padding.html">
+<link rel="alternate" hreflang="ja" href="https://decodex.fyi/ja/base64-padding.html">
+<link rel="alternate" hreflang="zh-CN" href="https://decodex.fyi/zh-cn/base64-padding.html">
+<link rel="alternate" hreflang="fr" href="https://decodex.fyi/fr/base64-padding.html">
+<link rel="alternate" hreflang="it" href="https://decodex.fyi/it/base64-padding.html">
+<link rel="alternate" hreflang="nl" href="https://decodex.fyi/nl/base64-padding.html">
+<link rel="alternate" hreflang="hi" href="https://decodex.fyi/hi/base64-padding.html">
+<link rel="alternate" hreflang="ru" href="https://decodex.fyi/ru/base64-padding.html">
+<link rel="alternate" hreflang="x-default" href="https://decodex.fyi/base64-padding.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"Base64末尾的=和==是什么意思：填充与错误排查","description":"用f、fo和foo解释Base64填充，检查省略的=、无效长度以及部分填充错误。","inLanguage":"zh-CN","mainEntityOfPage":"https://decodex.fyi/zh-cn/base64-padding.html","datePublished":"2026-10-03","dateModified":"2026-10-03","author":{"@type":"Person","name":"jinsu100","url":"https://github.com/jinsu100"},"publisher":{"@type":"Organization","name":"Decodex","url":"https://decodex.fyi/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Decodex","item":"https://decodex.fyi/zh-cn/"},{"@type":"ListItem","position":2,"name":"指南","item":"https://decodex.fyi/zh-cn/guides.html"},{"@type":"ListItem","position":3,"name":"Base64末尾的=和==是什么意思：填充与错误排查","item":"https://decodex.fyi/zh-cn/base64-padding.html"}]}]</script>
+</head><body data-lang="zh-CN"><header class="header"><a class="brand" href="./" aria-label="Decodex"><img src="/decodexLogo.png" alt="Decodex" width="2172" height="724"></a><div class="header-tools"><button id="theme-toggle" class="theme-toggle" type="button" aria-label="深色模式" aria-pressed="false" hidden><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">深色模式</span></button><nav class="language-switch" aria-label="语言"><details class="language-menu"><summary>🌐 简体中文</summary><div class="language-options"><a href="/base64-padding.html" lang="en" hreflang="en">English</a><a href="/ko/base64-padding.html" lang="ko" hreflang="ko">한국어</a><a href="/zh-cn/base64-padding.html" lang="zh-CN" hreflang="zh-CN" aria-current="page">简体中文</a><a href="/es/base64-padding.html" lang="es" hreflang="es">Español</a><a href="/hi/base64-padding.html" lang="hi" hreflang="hi">हिन्दी</a><a href="/ru/base64-padding.html" lang="ru" hreflang="ru">Русский</a><a href="/fr/base64-padding.html" lang="fr" hreflang="fr">Français</a><a href="/pt-br/base64-padding.html" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a><a href="/de/base64-padding.html" lang="de" hreflang="de">Deutsch</a><a href="/ja/base64-padding.html" lang="ja" hreflang="ja">日本語</a><a href="/it/base64-padding.html" lang="it" hreflang="it">Italiano</a><a href="/nl/base64-padding.html" lang="nl" hreflang="nl">Nederlands</a></div></details></nav></div></header><main class="info-page"><nav class="article-breadcrumb" aria-label="Decodex"><a href="./">Decodex</a> → <a href="guides.html">指南</a></nav><section class="intro"><p class="eyebrow">DECODEX · BASE64 · UTF-8</p><h1>Base64末尾的=和==是什么意思：填充与错误排查</h1><p class="description">用f、fo和foo解释Base64填充，检查省略的=、无效长度以及部分填充错误。</p><p class="article-byline">作者: <a href="https://github.com/jinsu100">jinsu100 · Decodex</a> · 更新日期: <time datetime="2026-10-03">2026-10-03</time></p></section><article class="info-content"><p>末尾的=是填充，不是原文字符。Base64用4个字符表示3个字节。最后剩1个字节时，带填充格式需要==；剩2个字节时需要=。</p><nav class="article-toc" aria-label="目录"><strong>目录</strong><ol><li><a href="#section-1">计算字节数，不是文字数</a></li><li><a href="#section-2">恢复省略的填充</a></li><li><a href="#section-3">为什么Zg成功而Zg=失败</a></li><li><a href="#examples">转换此示例</a></li></ol></nav><section id="section-1"><h2>计算字节数，不是文字数</h2><p>每个数据字符表示6位。3个字节共24位，正好对应4个字符。中文和表情符号在UTF-8中可能占多个字节。😀占4字节，编码为8J+YgA==。表格比较了1、2和3字节的输入。</p></section><section id="section-2"><h2>恢复省略的填充</h2><p>当格式允许省略填充时，先去掉空白，再计算长度除以4的余数。余2补==，余3补=，余0无需补充。余1表示无效或截断的数据，增加=不能修复。请检查API要求的格式。</p></section><section id="section-3"><h2>为什么Zg成功而Zg=失败</h2><p>Decodex为完全省略填充的Zg恢复填充并得到f，Zg==也有效。Zg=只有部分填充且总长度错误，所以被拒绝。A=AA和Zg===也会失败。不要反复增删=来掩盖复制错误。</p></section><section id="examples"><h2>转换此示例</h2><div class="article-table"><table><thead><tr><th scope="col">文本</th><th scope="col">UTF-8 bytes</th><th scope="col">Base64</th><th scope="col">填充</th></tr></thead><tbody><tr><td><code>f</code></td><td><code>1</code></td><td><code>Zg==</code></td><td><code>==</code></td></tr><tr><td><code>fo</code></td><td><code>2</code></td><td><code>Zm8=</code></td><td><code>=</code></td></tr><tr><td><code>foo</code></td><td><code>3</code></td><td><code>Zm9v</code></td><td><code>—</code></td></tr></tbody></table></div><p><a class="primary-button article-example" href="./?example=padding">转换此示例 →</a></p><p><a href="./">Base64 → UTF-8</a> · <a href="encode.html">UTF-8 → Base64</a></p></section><section><h2>常见问题</h2><h3>所有Base64都以=结尾吗？</h3><p>不是。当字节数是3的倍数时，无需填充。某些协议也会明确省略填充。</p></section><section class="article-references"><h2>参考资料</h2><ul><li><a href="https://www.rfc-editor.org/rfc/rfc4648#section-3.2">RFC 4648 · Base64 padding</a></li></ul></section><section class="guide-resources" data-new-guides><h2>更多Base64指南</h2><div class="guide-grid"><a class="guide-card" href="base64url.html"><h3>Base64与Base64URL的区别：字符、填充和解码示例</h3><p>比较Base64与Base64URL的+ /和- _、填充省略规则，以及经过验证的UTF-8解码示例。</p></a><a class="guide-card" href="javascript-base64.html"><h3>JavaScript中文Base64转换：解决btoa的Unicode错误</h3><p>使用TextEncoder、atob和TextDecoder转换中文、韩文和表情符号。提供经过验证的UTF-8代码与示例。</p></a></div></section></article></main><footer><span>© Decodex</span><nav class="footer-links"><a href="guides.html">指南</a><a href="about.html">关于Decodex</a><a href="privacy.html">隐私政策</a><a href="contact.html">联系我们</a></nav></footer></body></html>

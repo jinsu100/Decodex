@@ -3,7 +3,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
-const version = '20261003l';
+const version = '20261003m';
 const names = {en:'English',ko:'한국어',es:'Español','pt-BR':'Português (Brasil)',de:'Deutsch',ja:'日本語','zh-CN':'简体中文',fr:'Français',it:'Italiano',nl:'Nederlands',hi:'हिन्दी',ru:'Русский'};
 // English and Korean are pinned; others follow OBDILCI V6 (July 2025)
 // estimated connected L1+L2 speakers, using Chinese/Portuguese as locale proxies.
@@ -62,4 +62,6 @@ for(const lang of ['en','ko'])for(const page of pages){
  fs.writeFileSync(file,html);
 }
 fs.writeFileSync(path.join(root,'sitemap.xml'),'<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n'+Object.keys(names).flatMap(lang=>pages.map(page=>`<url><loc>https://decodex.fyi${url(lang,page)}</loc></url>`)).join('\n')+'\n</urlset>\n');
-console.log('Generated 80 translated pages; updated 16 original pages and sitemap (96 URLs).');
+console.log('Updated 96 converter, information and existing guide pages.');
+
+require('./build-guides.cjs');

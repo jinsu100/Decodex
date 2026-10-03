@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="it"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="Cm98OmZVzYxYRo2uHkpDjDzFabqjTbHxmLgRPnfnQM0">
+  <meta name="description" content="Codificare e decodificare testo Unicode con TextEncoder, btoa, atob e TextDecoder senza perdere accenti ed emoji.">
+  <title>Base64 in JavaScript: Unicode ed errore btoa | Decodex</title>
+  <link rel="canonical" href="https://decodex.fyi/it/javascript-base64.html">
+  <meta property="og:title" content="Base64 in JavaScript: Unicode ed errore btoa | Decodex">
+  <meta property="og:description" content="Codificare e decodificare testo Unicode con TextEncoder, btoa, atob e TextDecoder senza perdere accenti ed emoji.">
+  <meta property="og:url" content="https://decodex.fyi/it/javascript-base64.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Decodex">
+  <link rel="icon" href="https://decodex.fyi/favicon.ico" sizes="16x16 32x32 48x48 96x96">
+  <link rel="icon" type="image/png" href="https://decodex.fyi/decodexFavicon.png" sizes="96x96">
+  <meta name="color-scheme" content="light dark">
+  <script src="/locales/it.js?v=20261003m"></script>
+<script src="/theme.js?v=20261003m"></script>
+  <link rel="stylesheet" href="/style.css?v=20261003m">
+  <script src="/language.js?v=20261003m"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XVJFGV14XL');
+  </script>
+<link rel="alternate" hreflang="en" href="https://decodex.fyi/javascript-base64.html">
+<link rel="alternate" hreflang="ko" href="https://decodex.fyi/ko/javascript-base64.html">
+<link rel="alternate" hreflang="es" href="https://decodex.fyi/es/javascript-base64.html">
+<link rel="alternate" hreflang="pt-BR" href="https://decodex.fyi/pt-br/javascript-base64.html">
+<link rel="alternate" hreflang="de" href="https://decodex.fyi/de/javascript-base64.html">
+<link rel="alternate" hreflang="ja" href="https://decodex.fyi/ja/javascript-base64.html">
+<link rel="alternate" hreflang="zh-CN" href="https://decodex.fyi/zh-cn/javascript-base64.html">
+<link rel="alternate" hreflang="fr" href="https://decodex.fyi/fr/javascript-base64.html">
+<link rel="alternate" hreflang="it" href="https://decodex.fyi/it/javascript-base64.html">
+<link rel="alternate" hreflang="nl" href="https://decodex.fyi/nl/javascript-base64.html">
+<link rel="alternate" hreflang="hi" href="https://decodex.fyi/hi/javascript-base64.html">
+<link rel="alternate" hreflang="ru" href="https://decodex.fyi/ru/javascript-base64.html">
+<link rel="alternate" hreflang="x-default" href="https://decodex.fyi/javascript-base64.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"Base64 in JavaScript: Unicode ed errore btoa","description":"Codificare e decodificare testo Unicode con TextEncoder, btoa, atob e TextDecoder senza perdere accenti ed emoji.","inLanguage":"it","mainEntityOfPage":"https://decodex.fyi/it/javascript-base64.html","datePublished":"2026-10-03","dateModified":"2026-10-03","author":{"@type":"Person","name":"jinsu100","url":"https://github.com/jinsu100"},"publisher":{"@type":"Organization","name":"Decodex","url":"https://decodex.fyi/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Decodex","item":"https://decodex.fyi/it/"},{"@type":"ListItem","position":2,"name":"Guide","item":"https://decodex.fyi/it/guides.html"},{"@type":"ListItem","position":3,"name":"Base64 in JavaScript: Unicode ed errore btoa","item":"https://decodex.fyi/it/javascript-base64.html"}]}]</script>
+</head><body data-lang="it"><header class="header"><a class="brand" href="./" aria-label="Decodex"><img src="/decodexLogo.png" alt="Decodex" width="2172" height="724"></a><div class="header-tools"><button id="theme-toggle" class="theme-toggle" type="button" aria-label="Modalità scura" aria-pressed="false" hidden><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">Modalità scura</span></button><nav class="language-switch" aria-label="Lingua"><details class="language-menu"><summary>🌐 Italiano</summary><div class="language-options"><a href="/javascript-base64.html" lang="en" hreflang="en">English</a><a href="/ko/javascript-base64.html" lang="ko" hreflang="ko">한국어</a><a href="/zh-cn/javascript-base64.html" lang="zh-CN" hreflang="zh-CN">简体中文</a><a href="/es/javascript-base64.html" lang="es" hreflang="es">Español</a><a href="/hi/javascript-base64.html" lang="hi" hreflang="hi">हिन्दी</a><a href="/ru/javascript-base64.html" lang="ru" hreflang="ru">Русский</a><a href="/fr/javascript-base64.html" lang="fr" hreflang="fr">Français</a><a href="/pt-br/javascript-base64.html" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a><a href="/de/javascript-base64.html" lang="de" hreflang="de">Deutsch</a><a href="/ja/javascript-base64.html" lang="ja" hreflang="ja">日本語</a><a href="/it/javascript-base64.html" lang="it" hreflang="it" aria-current="page">Italiano</a><a href="/nl/javascript-base64.html" lang="nl" hreflang="nl">Nederlands</a></div></details></nav></div></header><main class="info-page"><nav class="article-breadcrumb" aria-label="Decodex"><a href="./">Decodex</a> → <a href="guides.html">Guide</a></nav><section class="intro"><p class="eyebrow">DECODEX · BASE64 · UTF-8</p><h1>Base64 in JavaScript: Unicode ed errore btoa</h1><p class="description">Codificare e decodificare testo Unicode con TextEncoder, btoa, atob e TextDecoder senza perdere accenti ed emoji.</p><p class="article-byline">Autore: <a href="https://github.com/jinsu100">jinsu100 · Decodex</a> · Aggiornato: <time datetime="2026-10-03">2026-10-03</time></p></section><article class="info-content"><p>btoa() richiede una stringa binaria con unità rappresentabili in un byte. Non converte automaticamente il testo in UTF-8. Molti caratteri Unicode possono causare InvalidCharacterError: converti prima il testo in byte.</p><nav class="article-toc" aria-label="Indice"><strong>Indice</strong><ol><li><a href="#section-1">Conversione UTF-8</a></li><li><a href="#section-2">Verificare il risultato</a></li><li><a href="#section-3">Trovare la causa dell’errore</a></li><li><a href="#examples">Prova questo esempio</a></li></ol></nav><section id="section-1"><h2>Conversione UTF-8</h2><p>TextEncoder produce i byte del testo. Il codice seguente li elabora a blocchi prima di btoa, evitando il limite del numero di argomenti. Per decodificare, trasforma il risultato di atob in Uint8Array e usa TextDecoder. L’opzione fatal rileva byte UTF-8 non validi.</p></section><section id="section-2"><h2>Verificare il risultato</h2><p>안녕하세요 😀 diventa 7JWI64WV7ZWY7IS47JqUIPCfmIA=. La decodifica deve ripristinare esattamente testo e spazi. Il link di esempio usa un nome pubblico predefinito, senza inserire il tuo testo nell’URL. Decodex tratta fino a 5 MB di testo UTF-8 nel browser.</p></section><section id="section-3"><h2>Trovare la causa dell’errore</h2><p>Un errore di atob riguarda spesso alfabeto, padding o prefissi. Un errore di TextDecoder può indicare dati binari o un’altra codifica. In Node.js puoi usare Buffer.from(text, &quot;utf8&quot;).toString(&quot;base64&quot;); una decodifica permissiva non sostituisce la validazione.</p></section><section id="examples"><h2>Prova questo esempio</h2><pre class="article-code"><code>// Browser JavaScript: text → UTF-8 bytes → Base64.
+function utf8ToBase64(text) {
+  const bytes = new TextEncoder().encode(text);
+  let binary = '';
+  for (let i = 0; i &lt; bytes.length; i += 8192) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
+  }
+  return btoa(binary);
+}
+
+// Accept standard Base64 or Base64URL, with complete or omitted padding.
+function base64ToUtf8(value) {
+  let normalized = value.replace(/\s/g, '').replace(/-/g, '+').replace(/_/g, '/');
+  if (!/^[A-Za-z0-9+/]*={0,2}$/.test(normalized) ||
+      normalized.length % 4 === 1 ||
+      (normalized.includes('=') &amp;&amp; normalized.length % 4 !== 0)) {
+    throw new Error('Invalid Base64 characters, length or padding');
+  }
+  normalized += '='.repeat((4 - normalized.length % 4) % 4);
+  const binary = atob(normalized);
+  const bytes = Uint8Array.from(binary, character =&gt; character.charCodeAt(0));
+  return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+}
+
+const text = '안녕하세요 😀';
+const encoded = utf8ToBase64(text);
+console.log(encoded); // 7JWI64WV7ZWY7IS47JqUIPCfmIA=
+console.log(base64ToUtf8(encoded)); // 안녕하세요 😀
+</code></pre><p><a class="primary-button article-example" href="encode.html?example=unicode">Prova questo esempio →</a></p><p><a href="./">Base64 → UTF-8</a> · <a href="encode.html">UTF-8 → Base64</a></p></section><section><h2>Domande frequenti</h2><h3>atob restituisce direttamente il testo Unicode?</h3><p>No. Restituisce una stringa binaria. Converti i valori in Uint8Array e leggili con TextDecoder(&quot;utf-8&quot;). Evita le vecchie soluzioni basate su unescape().</p></section><section class="article-references"><h2>Riferimenti</h2><ul><li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/btoa">MDN · btoa / Unicode</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder">MDN · TextDecoder</a></li><li><a href="https://nodejs.org/api/buffer.html">Node.js · Buffer</a></li></ul></section><section class="guide-resources" data-new-guides><h2>Altre guide Base64</h2><div class="guide-grid"><a class="guide-card" href="base64url.html"><h3>Base64 e Base64URL: differenze ed esempi</h3><p>Confronta gli alfabeti Base64 e Base64URL, il padding e i problemi nei parametri URL con esempi UTF-8.</p></a><a class="guide-card" href="base64-padding.html"><h3>Padding Base64: perché = oppure ==?</h3><p>Capire il padding Base64 e correggere le lunghezze non valide: esempi con Zg, Zg= e Zg==.</p></a></div></section></article></main><footer><span>© Decodex</span><nav class="footer-links"><a href="guides.html">Guide</a><a href="about.html">Informazioni su Decodex</a><a href="privacy.html">Privacy</a><a href="contact.html">Contatti</a></nav></footer></body></html>

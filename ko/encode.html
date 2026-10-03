@@ -15,9 +15,9 @@
   <link rel="icon" href="https://decodex.fyi/favicon.ico" sizes="16x16 32x32 48x48 96x96">
   <link rel="icon" type="image/png" href="https://decodex.fyi/decodexFavicon.png" sizes="96x96">
   <meta name="color-scheme" content="light dark">
-  <script src="../theme.js?v=20261003l"></script>
-  <link rel="stylesheet" href="../style.css?v=20261003l">
-  <script src="../language.js?v=20261003l"></script>
+  <script src="../theme.js?v=20261003m"></script>
+  <link rel="stylesheet" href="../style.css?v=20261003m">
+  <script src="../language.js?v=20261003m"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -25,7 +25,7 @@
     gtag('js', new Date());
     gtag('config', 'G-XVJFGV14XL');
   </script>
-  <script src="../function.js?v=20261003l" defer></script>
+  <script src="../function.js?v=20261003m" defer></script>
 <link rel="alternate" hreflang="en" href="https://decodex.fyi/encode.html">
 <link rel="alternate" hreflang="ko" href="https://decodex.fyi/ko/encode.html">
 <link rel="alternate" hreflang="es" href="https://decodex.fyi/es/encode.html">
@@ -85,7 +85,8 @@
     </section>
     <section class="guide" aria-label="Base64 사용 안내"><h2>Base64 인코딩 사용법</h2><ol><li>입력 칸에 텍스트를 입력하거나 붙여넣으세요.</li><li>자동으로 인코딩됩니다. <strong>자동 변환</strong>을 끈 경우 <strong>인코딩하기</strong>를 누르거나 Ctrl+Enter(맥: ⌘+Enter)를 누르세요.</li><li><strong>결과 복사</strong>를 눌러 Base64 문자열을 복사하세요.</li></ol><p>예를 들어 <code>Hello</code>는 <code>SGVsbG8=</code>로 변환됩니다. 텍스트를 먼저 UTF-8 바이트로 변환하므로 한글·이모지 등 유니코드 문자를 지원합니다.</p><h2>Base64 인코딩 자주 묻는 질문</h2><details><summary>어떤 형식의 Base64를 생성하나요?</summary><p>영문자·숫자·더하기·슬래시를 사용하는 표준 Base64를 생성하며, 필요한 경우 등호로 패딩을 붙입니다. 결과에 줄바꿈을 추가하지 않습니다.</p></details><details><summary>파일도 인코딩할 수 있나요?</summary><p>이 도구는 UTF-8 기준 최대 5MB의 텍스트를 변환합니다. 파일 이름을 붙여넣어도 파일 내용이 인코딩되지는 않습니다.</p></details><details><summary>Base64는 크기를 줄이거나 정보를 숨겨 주나요?</summary><p>아니요. Base64는 일반적으로 바이트 데이터보다 약 3분의 1 커지고 패딩이 추가됩니다. 누구나 디코딩할 수 있으며 암호화가 아닙니다.</p></details><p>Base64 문자열을 읽고 싶으신가요? <a href="./">Base64를 텍스트로 디코딩하세요</a>.</p><p>변환은 브라우저에서 처리하며 입력 텍스트를 변환 서버로 보내지 않습니다. Google 애널리틱스는 사이트 방문을 측정합니다.</p></section>
     <section class="guide-resources" aria-label="Base64 문제 해결과 변환 안내"><h2>Base64 문제 해결과 변환 안내</h2><div class="guide-grid"><a class="guide-card" href="base64-errors.html"><h3>Base64 디코딩 오류 해결 방법</h3><p>잘못된 문자, 패딩, UTF-8 오류를 예시와 함께 확인하고 Base64 디코딩 문제를 해결하는 방법.</p><span>글 읽기 →</span></a><a class="guide-card" href="base64-korean.html"><h3>한글·이모지 Base64 인코딩과 디코딩</h3><p>한글이 깨지는 이유와 UTF-8 변환 순서를 설명하고, 검증된 예시로 한글·이모지 Base64를 변환합니다.</p><span>글 읽기 →</span></a></div></section>
-  </main>
+<section class="guide-resources" data-new-guides><h2>더 알아보기</h2><div class="guide-grid"><a class="guide-card" href="base64url.html"><h3>Base64와 Base64URL 차이 — URL 안전 문자·패딩·디코딩 예제</h3><p>Base64와 Base64URL의 + /, - _ 차이와 패딩 생략 조건을 예제로 비교합니다. URL에서 문자가 바뀌는 이유와 UTF-8 디코딩 방법을 확인하세요.</p></a><a class="guide-card" href="base64-padding.html"><h3>Base64 끝의 =와 == 의미 — 패딩 오류·생략 규칙 설명</h3><p>Base64 패딩 =와 ==의 의미를 f·fo·foo 예제로 설명합니다. 패딩 없는 문자열의 복원, 길이 오류, Zg와 Zg=의 차이를 확인하세요.</p></a><a class="guide-card" href="javascript-base64.html"><h3>JavaScript 한글 Base64 인코딩·디코딩 — btoa 오류 해결</h3><p>JavaScript btoa의 한글·이모지 오류를 TextEncoder와 TextDecoder로 해결합니다. UTF-8 인코딩·디코딩 코드와 검증된 예제를 제공합니다.</p></a></div></section>
+</main>
   <footer><span>© Decodex</span><nav class="footer-links" aria-label="사이트 정보"><a href="guides.html">사용 안내</a><a href="about.html">사이트 소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a></nav></footer>
 </body>
 </html>

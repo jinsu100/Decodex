@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="google-site-verification" content="Cm98OmZVzYxYRo2uHkpDjDzFabqjTbHxmLgRPnfnQM0">
+  <meta name="description" content="使用TextEncoder、atob和TextDecoder转换中文、韩文和表情符号。提供经过验证的UTF-8代码与示例。">
+  <title>JavaScript中文Base64转换：解决btoa的Unicode错误 | Decodex</title>
+  <link rel="canonical" href="https://decodex.fyi/zh-cn/javascript-base64.html">
+  <meta property="og:title" content="JavaScript中文Base64转换：解决btoa的Unicode错误 | Decodex">
+  <meta property="og:description" content="使用TextEncoder、atob和TextDecoder转换中文、韩文和表情符号。提供经过验证的UTF-8代码与示例。">
+  <meta property="og:url" content="https://decodex.fyi/zh-cn/javascript-base64.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Decodex">
+  <link rel="icon" href="https://decodex.fyi/favicon.ico" sizes="16x16 32x32 48x48 96x96">
+  <link rel="icon" type="image/png" href="https://decodex.fyi/decodexFavicon.png" sizes="96x96">
+  <meta name="color-scheme" content="light dark">
+  <script src="/locales/zh-CN.js?v=20261003m"></script>
+<script src="/theme.js?v=20261003m"></script>
+  <link rel="stylesheet" href="/style.css?v=20261003m">
+  <script src="/language.js?v=20261003m"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XVJFGV14XL');
+  </script>
+<link rel="alternate" hreflang="en" href="https://decodex.fyi/javascript-base64.html">
+<link rel="alternate" hreflang="ko" href="https://decodex.fyi/ko/javascript-base64.html">
+<link rel="alternate" hreflang="es" href="https://decodex.fyi/es/javascript-base64.html">
+<link rel="alternate" hreflang="pt-BR" href="https://decodex.fyi/pt-br/javascript-base64.html">
+<link rel="alternate" hreflang="de" href="https://decodex.fyi/de/javascript-base64.html">
+<link rel="alternate" hreflang="ja" href="https://decodex.fyi/ja/javascript-base64.html">
+<link rel="alternate" hreflang="zh-CN" href="https://decodex.fyi/zh-cn/javascript-base64.html">
+<link rel="alternate" hreflang="fr" href="https://decodex.fyi/fr/javascript-base64.html">
+<link rel="alternate" hreflang="it" href="https://decodex.fyi/it/javascript-base64.html">
+<link rel="alternate" hreflang="nl" href="https://decodex.fyi/nl/javascript-base64.html">
+<link rel="alternate" hreflang="hi" href="https://decodex.fyi/hi/javascript-base64.html">
+<link rel="alternate" hreflang="ru" href="https://decodex.fyi/ru/javascript-base64.html">
+<link rel="alternate" hreflang="x-default" href="https://decodex.fyi/javascript-base64.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"JavaScript中文Base64转换：解决btoa的Unicode错误","description":"使用TextEncoder、atob和TextDecoder转换中文、韩文和表情符号。提供经过验证的UTF-8代码与示例。","inLanguage":"zh-CN","mainEntityOfPage":"https://decodex.fyi/zh-cn/javascript-base64.html","datePublished":"2026-10-03","dateModified":"2026-10-03","author":{"@type":"Person","name":"jinsu100","url":"https://github.com/jinsu100"},"publisher":{"@type":"Organization","name":"Decodex","url":"https://decodex.fyi/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Decodex","item":"https://decodex.fyi/zh-cn/"},{"@type":"ListItem","position":2,"name":"指南","item":"https://decodex.fyi/zh-cn/guides.html"},{"@type":"ListItem","position":3,"name":"JavaScript中文Base64转换：解决btoa的Unicode错误","item":"https://decodex.fyi/zh-cn/javascript-base64.html"}]}]</script>
+</head><body data-lang="zh-CN"><header class="header"><a class="brand" href="./" aria-label="Decodex"><img src="/decodexLogo.png" alt="Decodex" width="2172" height="724"></a><div class="header-tools"><button id="theme-toggle" class="theme-toggle" type="button" aria-label="深色模式" aria-pressed="false" hidden><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">深色模式</span></button><nav class="language-switch" aria-label="语言"><details class="language-menu"><summary>🌐 简体中文</summary><div class="language-options"><a href="/javascript-base64.html" lang="en" hreflang="en">English</a><a href="/ko/javascript-base64.html" lang="ko" hreflang="ko">한국어</a><a href="/zh-cn/javascript-base64.html" lang="zh-CN" hreflang="zh-CN" aria-current="page">简体中文</a><a href="/es/javascript-base64.html" lang="es" hreflang="es">Español</a><a href="/hi/javascript-base64.html" lang="hi" hreflang="hi">हिन्दी</a><a href="/ru/javascript-base64.html" lang="ru" hreflang="ru">Русский</a><a href="/fr/javascript-base64.html" lang="fr" hreflang="fr">Français</a><a href="/pt-br/javascript-base64.html" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a><a href="/de/javascript-base64.html" lang="de" hreflang="de">Deutsch</a><a href="/ja/javascript-base64.html" lang="ja" hreflang="ja">日本語</a><a href="/it/javascript-base64.html" lang="it" hreflang="it">Italiano</a><a href="/nl/javascript-base64.html" lang="nl" hreflang="nl">Nederlands</a></div></details></nav></div></header><main class="info-page"><nav class="article-breadcrumb" aria-label="Decodex"><a href="./">Decodex</a> → <a href="guides.html">指南</a></nav><section class="intro"><p class="eyebrow">DECODEX · BASE64 · UTF-8</p><h1>JavaScript中文Base64转换：解决btoa的Unicode错误</h1><p class="description">使用TextEncoder、atob和TextDecoder转换中文、韩文和表情符号。提供经过验证的UTF-8代码与示例。</p><p class="article-byline">作者: <a href="https://github.com/jinsu100">jinsu100 · Decodex</a> · 更新日期: <time datetime="2026-10-03">2026-10-03</time></p></section><article class="info-content"><p>btoa()接收码元在单字节范围内的二进制字符串，不会自动转换为UTF-8。中文、韩文、印地语和许多表情符号可能导致InvalidCharacterError。请显式转换为UTF-8字节。</p><nav class="article-toc" aria-label="目录"><strong>目录</strong><ol><li><a href="#section-1">编码及解码Unicode</a></li><li><a href="#section-2">检查往返转换</a></li><li><a href="#section-3">区分错误发生的阶段</a></li><li><a href="#examples">转换此示例</a></li></ol></nav><section id="section-1"><h2>编码及解码Unicode</h2><p>TextEncoder将文本转换为字节。下方代码在调用btoa前分块处理，避免大文本触发函数参数数量限制。恢复文本时，把atob的字节值交给TextDecoder按UTF-8读取。fatal选项会检测无效字节并报错。</p></section><section id="section-2"><h2>检查往返转换</h2><p>안녕하세요 😀编码为7JWI64WV7ZWY7IS47JqUIPCfmIA=。解码必须还原相同文本、空格和表情符号。示例链接只使用预设公开示例名称，不把用户文本放入URL。Decodex在浏览器内处理最多5 MB的UTF-8文本。</p></section><section id="section-3"><h2>区分错误发生的阶段</h2><p>atob错误通常与Base64字符、填充或前缀有关。TextDecoder错误可能表示二进制数据或其他字符编码，即使Base64字符集有效。Node.js中可用Buffer.from(text, &quot;utf8&quot;).toString(&quot;base64&quot;)，但宽松的解码不能代替输入验证。</p></section><section id="examples"><h2>转换此示例</h2><pre class="article-code"><code>// Browser JavaScript: text → UTF-8 bytes → Base64.
+function utf8ToBase64(text) {
+  const bytes = new TextEncoder().encode(text);
+  let binary = '';
+  for (let i = 0; i &lt; bytes.length; i += 8192) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
+  }
+  return btoa(binary);
+}
+
+// Accept standard Base64 or Base64URL, with complete or omitted padding.
+function base64ToUtf8(value) {
+  let normalized = value.replace(/\s/g, '').replace(/-/g, '+').replace(/_/g, '/');
+  if (!/^[A-Za-z0-9+/]*={0,2}$/.test(normalized) ||
+      normalized.length % 4 === 1 ||
+      (normalized.includes('=') &amp;&amp; normalized.length % 4 !== 0)) {
+    throw new Error('Invalid Base64 characters, length or padding');
+  }
+  normalized += '='.repeat((4 - normalized.length % 4) % 4);
+  const binary = atob(normalized);
+  const bytes = Uint8Array.from(binary, character =&gt; character.charCodeAt(0));
+  return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+}
+
+const text = '안녕하세요 😀';
+const encoded = utf8ToBase64(text);
+console.log(encoded); // 7JWI64WV7ZWY7IS47JqUIPCfmIA=
+console.log(base64ToUtf8(encoded)); // 안녕하세요 😀
+</code></pre><p><a class="primary-button article-example" href="encode.html?example=unicode">转换此示例 →</a></p><p><a href="./">Base64 → UTF-8</a> · <a href="encode.html">UTF-8 → Base64</a></p></section><section><h2>常见问题</h2><h3>atob能直接返回可读中文吗？</h3><p>不能。它返回二进制字符串。把值转换为Uint8Array，再用TextDecoder(&quot;utf-8&quot;)读取。建议采用明确的字节转换，避免依赖旧的unescape()。</p></section><section class="article-references"><h2>参考资料</h2><ul><li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/btoa">MDN · btoa / Unicode</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder">MDN · TextDecoder</a></li><li><a href="https://nodejs.org/api/buffer.html">Node.js · Buffer</a></li></ul></section><section class="guide-resources" data-new-guides><h2>更多Base64指南</h2><div class="guide-grid"><a class="guide-card" href="base64url.html"><h3>Base64与Base64URL的区别：字符、填充和解码示例</h3><p>比较Base64与Base64URL的+ /和- _、填充省略规则，以及经过验证的UTF-8解码示例。</p></a><a class="guide-card" href="base64-padding.html"><h3>Base64末尾的=和==是什么意思：填充与错误排查</h3><p>用f、fo和foo解释Base64填充，检查省略的=、无效长度以及部分填充错误。</p></a></div></section></article></main><footer><span>© Decodex</span><nav class="footer-links"><a href="guides.html">指南</a><a href="about.html">关于Decodex</a><a href="privacy.html">隐私政策</a><a href="contact.html">联系我们</a></nav></footer></body></html>

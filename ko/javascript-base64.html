@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>JavaScript 한글 Base64 인코딩·디코딩 — btoa 오류 해결 | Decodex</title>
+  <meta name="description" content="JavaScript btoa의 한글·이모지 오류를 TextEncoder와 TextDecoder로 해결합니다. UTF-8 인코딩·디코딩 코드와 검증된 예제를 제공합니다.">
+  <link rel="canonical" href="https://decodex.fyi/ko/javascript-base64.html">
+  <meta property="og:title" content="JavaScript 한글 Base64 인코딩·디코딩 — btoa 오류 해결 | Decodex">
+  <meta property="og:description" content="JavaScript btoa의 한글·이모지 오류를 TextEncoder와 TextDecoder로 해결합니다. UTF-8 인코딩·디코딩 코드와 검증된 예제를 제공합니다.">
+  <meta property="og:url" content="https://decodex.fyi/ko/javascript-base64.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Decodex">
+  <link rel="icon" href="https://decodex.fyi/favicon.ico" sizes="16x16 32x32 48x48 96x96">
+  <link rel="icon" type="image/png" href="https://decodex.fyi/decodexFavicon.png" sizes="96x96">
+  <meta name="color-scheme" content="light dark">
+  <script src="/theme.js?v=20261003m"></script>
+  <link rel="stylesheet" href="/style.css?v=20261003m">
+  <script src="/language.js?v=20261003m"></script>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-XVJFGV14XL');
+  </script>
+
+<link rel="alternate" hreflang="en" href="https://decodex.fyi/javascript-base64.html">
+<link rel="alternate" hreflang="ko" href="https://decodex.fyi/ko/javascript-base64.html">
+<link rel="alternate" hreflang="es" href="https://decodex.fyi/es/javascript-base64.html">
+<link rel="alternate" hreflang="pt-BR" href="https://decodex.fyi/pt-br/javascript-base64.html">
+<link rel="alternate" hreflang="de" href="https://decodex.fyi/de/javascript-base64.html">
+<link rel="alternate" hreflang="ja" href="https://decodex.fyi/ja/javascript-base64.html">
+<link rel="alternate" hreflang="zh-CN" href="https://decodex.fyi/zh-cn/javascript-base64.html">
+<link rel="alternate" hreflang="fr" href="https://decodex.fyi/fr/javascript-base64.html">
+<link rel="alternate" hreflang="it" href="https://decodex.fyi/it/javascript-base64.html">
+<link rel="alternate" hreflang="nl" href="https://decodex.fyi/nl/javascript-base64.html">
+<link rel="alternate" hreflang="hi" href="https://decodex.fyi/hi/javascript-base64.html">
+<link rel="alternate" hreflang="ru" href="https://decodex.fyi/ru/javascript-base64.html">
+<link rel="alternate" hreflang="x-default" href="https://decodex.fyi/javascript-base64.html">
+<script type="application/ld+json">[{"@context":"https://schema.org","@type":"Article","headline":"JavaScript 한글 Base64 인코딩·디코딩 — btoa 오류 해결","description":"JavaScript btoa의 한글·이모지 오류를 TextEncoder와 TextDecoder로 해결합니다. UTF-8 인코딩·디코딩 코드와 검증된 예제를 제공합니다.","inLanguage":"ko","mainEntityOfPage":"https://decodex.fyi/ko/javascript-base64.html","datePublished":"2026-10-03","dateModified":"2026-10-03","author":{"@type":"Person","name":"jinsu100","url":"https://github.com/jinsu100"},"publisher":{"@type":"Organization","name":"Decodex","url":"https://decodex.fyi/"}},{"@context":"https://schema.org","@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Decodex","item":"https://decodex.fyi/ko/"},{"@type":"ListItem","position":2,"name":"Base64 사용 안내","item":"https://decodex.fyi/ko/guides.html"},{"@type":"ListItem","position":3,"name":"JavaScript 한글 Base64 인코딩·디코딩 — btoa 오류 해결","item":"https://decodex.fyi/ko/javascript-base64.html"}]}]</script>
+</head><body data-lang="ko"><header class="header">
+    <a class="brand" href="./" aria-label="Decodex 홈"><img src="../decodexLogo.png" alt="Decodex" width="2172" height="724"></a>
+    <div class="header-tools"><button id="theme-toggle" class="theme-toggle" type="button" aria-label="다크 모드" aria-pressed="false" hidden><span class="theme-icon" aria-hidden="true">☀</span><span class="theme-label">다크 모드</span></button><nav class="language-switch" aria-label="언어"><details class="language-menu"><summary>🌐 한국어</summary><div class="language-options"><a href="/javascript-base64.html" lang="en" hreflang="en">English</a><a href="/ko/javascript-base64.html" lang="ko" hreflang="ko" aria-current="page">한국어</a><a href="/zh-cn/javascript-base64.html" lang="zh-CN" hreflang="zh-CN">简体中文</a><a href="/es/javascript-base64.html" lang="es" hreflang="es">Español</a><a href="/hi/javascript-base64.html" lang="hi" hreflang="hi">हिन्दी</a><a href="/ru/javascript-base64.html" lang="ru" hreflang="ru">Русский</a><a href="/fr/javascript-base64.html" lang="fr" hreflang="fr">Français</a><a href="/pt-br/javascript-base64.html" lang="pt-BR" hreflang="pt-BR">Português (Brasil)</a><a href="/de/javascript-base64.html" lang="de" hreflang="de">Deutsch</a><a href="/ja/javascript-base64.html" lang="ja" hreflang="ja">日本語</a><a href="/it/javascript-base64.html" lang="it" hreflang="it">Italiano</a><a href="/nl/javascript-base64.html" lang="nl" hreflang="nl">Nederlands</a></div></details></nav></div>
+  </header><main class="info-page"><nav class="article-breadcrumb" aria-label="Decodex"><a href="./">Decodex</a> → <a href="guides.html">Base64 사용 안내</a></nav><section class="intro"><p class="eyebrow">DECODEX · BASE64 · UTF-8</p><h1>JavaScript 한글 Base64 인코딩·디코딩 — btoa 오류 해결</h1><p class="description">JavaScript btoa의 한글·이모지 오류를 TextEncoder와 TextDecoder로 해결합니다. UTF-8 인코딩·디코딩 코드와 검증된 예제를 제공합니다.</p><p class="article-byline">작성: <a href="https://github.com/jinsu100">jinsu100 · Decodex</a> · 수정일: <time datetime="2026-10-03">2026-10-03</time></p></section><article class="info-content"><p>btoa()는 각 코드 단위가 1바이트 범위에 들어가는 바이너리 문자열을 받습니다. 한글·힌디어·이모지를 직접 넣으면 InvalidCharacterError가 발생할 수 있습니다. Unicode 텍스트는 먼저 UTF-8 바이트로 바꾼 뒤 Base64로 인코딩하고, 복원할 때는 디코딩된 바이트를 UTF-8로 읽어야 합니다.</p><nav class="article-toc" aria-label="목차"><strong>목차</strong><ol><li><a href="#section-1">btoa(&quot;안녕하세요&quot;)가 실패하는 이유</a></li><li><a href="#section-2">한글과 이모지를 처리하는 안전한 코드</a></li><li><a href="#section-3">한글·이모지 왕복 변환 확인하기</a></li><li><a href="#section-4">Base64 오류와 UTF-8 오류는 해결 방법이 다릅니다</a></li><li><a href="#section-5">브라우저와 Node.js의 코드 구분</a></li><li><a href="#examples">예제로 직접 변환하기</a></li></ol></nav><section id="section-1"><h2>btoa(&quot;안녕하세요&quot;)가 실패하는 이유</h2><p>JavaScript 문자열이 그대로 UTF-8 바이트인 것은 아닙니다. btoa()는 UTF-8 변환을 자동으로 수행하지 않습니다. 바이트 범위를 벗어난 문자는 오류가 나고, 범위 안의 일부 문자도 의도한 UTF-8과 다른 바이트로 인코딩될 수 있습니다. 악센트가 있는 문자까지 일관되게 처리하려면 TextEncoder를 사용하세요.</p></section><section id="section-2"><h2>한글과 이모지를 처리하는 안전한 코드</h2><p>아래 코드는 텍스트를 UTF-8 바이트로 명시적으로 변환합니다. 인코더는 큰 배열을 한 번에 펼쳐 함수 인수 제한에 걸리지 않도록 작은 묶음으로 처리합니다. 디코더는 Base64URL 문자와 공백을 처리하고, 형식을 검사한 뒤 패딩을 복원합니다. TextDecoder의 fatal 옵션으로 잘못된 UTF-8을 대체 문자로 덮지 않고 오류로 알립니다. 이 코드는 텍스트용이며 파일 미리보기 코드는 아닙니다.</p></section><section id="section-3"><h2>한글·이모지 왕복 변환 확인하기</h2><p>정확히 안녕하세요 😀를 인코딩하면 7JWI64WV7ZWY7IS47JqUIPCfmIA=가 됩니다. 다시 디코딩하면 공백과 이모지를 포함한 원문과 같아야 합니다. 아래 예제는 브라우저 변환 코드로 검증했습니다. 예제 링크에는 미리 정한 이름만 넣고 사용자 입력 텍스트를 URL에 넣지 않습니다.</p></section><section id="section-4"><h2>Base64 오류와 UTF-8 오류는 해결 방법이 다릅니다</h2><p>atob() 단계의 오류는 잘못된 Base64 문자, 패딩, 데이터 URL 접두사 같은 문제일 가능성이 있습니다. fatal 모드 TextDecoder 오류는 Base64 형식과 별개로 바이트가 올바른 UTF-8이 아니라는 뜻입니다. 이미지·PDF·다른 문자 인코딩도 이 오류를 낼 수 있습니다. 어느 단계에서 실패했는지 확인해야 정확하게 해결할 수 있습니다.</p></section><section id="section-5"><h2>브라우저와 Node.js의 코드 구분</h2><p>Node.js에서는 Buffer.from(text, &quot;utf8&quot;).toString(&quot;base64&quot;)로 UTF-8 텍스트를 인코딩할 수 있습니다. Buffer 디코딩은 일부 입력을 관대하게 받아들이므로 변환 성공만으로 신뢰할 수 없는 입력을 검증했다고 보면 안 됩니다. 브라우저에서는 아래 TextEncoder/TextDecoder 코드로 처리할 수 있습니다. Decodex는 최대 5 MB의 UTF-8 텍스트를 브라우저 안에서 변환합니다.</p></section><section id="examples"><h2>예제로 직접 변환하기</h2><pre class="article-code"><code>// Browser JavaScript: text → UTF-8 bytes → Base64.
+function utf8ToBase64(text) {
+  const bytes = new TextEncoder().encode(text);
+  let binary = '';
+  for (let i = 0; i &lt; bytes.length; i += 8192) {
+    binary += String.fromCharCode(...bytes.subarray(i, i + 8192));
+  }
+  return btoa(binary);
+}
+
+// Accept standard Base64 or Base64URL, with complete or omitted padding.
+function base64ToUtf8(value) {
+  let normalized = value.replace(/\s/g, '').replace(/-/g, '+').replace(/_/g, '/');
+  if (!/^[A-Za-z0-9+/]*={0,2}$/.test(normalized) ||
+      normalized.length % 4 === 1 ||
+      (normalized.includes('=') &amp;&amp; normalized.length % 4 !== 0)) {
+    throw new Error('Invalid Base64 characters, length or padding');
+  }
+  normalized += '='.repeat((4 - normalized.length % 4) % 4);
+  const binary = atob(normalized);
+  const bytes = Uint8Array.from(binary, character =&gt; character.charCodeAt(0));
+  return new TextDecoder('utf-8', { fatal: true }).decode(bytes);
+}
+
+const text = '안녕하세요 😀';
+const encoded = utf8ToBase64(text);
+console.log(encoded); // 7JWI64WV7ZWY7IS47JqUIPCfmIA=
+console.log(base64ToUtf8(encoded)); // 안녕하세요 😀
+</code></pre><p><a class="primary-button article-example" href="encode.html?example=unicode">예제로 직접 변환하기 →</a></p><p><a href="./">Base64 → UTF-8</a> · <a href="encode.html">UTF-8 → Base64</a></p></section><section><h2>자주 묻는 질문</h2><h3>atob()만 쓰면 한글이 바로 나오나요?</h3><p>아니요. atob()의 결과는 바이너리 문자열입니다. 바이트 값을 Uint8Array로 옮긴 뒤 TextDecoder(&quot;utf-8&quot;)로 읽어야 합니다.</p><h3>btoa(unescape(encodeURIComponent(text)))를 써도 되나요?</h3><p>TextEncoder와 TextDecoder를 사용하는 명시적인 바이트 변환을 권장합니다. 문자 인코딩 과정이 분명하고 오래된 unescape() 함수에 의존하지 않습니다.</p></section><section class="article-references"><h2>참고 자료</h2><ul><li><a href="https://developer.mozilla.org/en-US/docs/Web/API/Window/btoa">MDN · btoa / Unicode</a></li><li><a href="https://developer.mozilla.org/en-US/docs/Web/API/TextDecoder">MDN · TextDecoder</a></li><li><a href="https://nodejs.org/api/buffer.html">Node.js · Buffer</a></li></ul></section><section class="guide-resources" data-new-guides><h2>더 알아보기</h2><div class="guide-grid"><a class="guide-card" href="base64url.html"><h3>Base64와 Base64URL 차이 — URL 안전 문자·패딩·디코딩 예제</h3><p>Base64와 Base64URL의 + /, - _ 차이와 패딩 생략 조건을 예제로 비교합니다. URL에서 문자가 바뀌는 이유와 UTF-8 디코딩 방법을 확인하세요.</p></a><a class="guide-card" href="base64-padding.html"><h3>Base64 끝의 =와 == 의미 — 패딩 오류·생략 규칙 설명</h3><p>Base64 패딩 =와 ==의 의미를 f·fo·foo 예제로 설명합니다. 패딩 없는 문자열의 복원, 길이 오류, Zg와 Zg=의 차이를 확인하세요.</p></a></div></section></article></main><footer><span>© Decodex</span><nav class="footer-links" aria-label="사이트 정보"><a href="guides.html" aria-current="page">사용 안내</a><a href="about.html">사이트 소개</a><a href="privacy.html">개인정보처리방침</a><a href="contact.html">문의</a></nav></footer></body></html>

@@ -15,9 +15,9 @@
   <link rel="icon" href="https://decodex.fyi/favicon.ico" sizes="16x16 32x32 48x48 96x96">
   <link rel="icon" type="image/png" href="https://decodex.fyi/decodexFavicon.png" sizes="96x96">
   <meta name="color-scheme" content="light dark">
-  <script src="theme.js?v=20261003l"></script>
-  <link rel="stylesheet" href="style.css?v=20261003l">
-  <script src="language.js?v=20261003l"></script>
+  <script src="theme.js?v=20261003m"></script>
+  <link rel="stylesheet" href="style.css?v=20261003m">
+  <script src="language.js?v=20261003m"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -25,7 +25,7 @@
     gtag('js', new Date());
     gtag('config', 'G-XVJFGV14XL');
   </script>
-  <script src="function.js?v=20261003l" defer></script>
+  <script src="function.js?v=20261003m" defer></script>
 <link rel="alternate" hreflang="en" href="https://decodex.fyi/encode.html">
 <link rel="alternate" hreflang="ko" href="https://decodex.fyi/ko/encode.html">
 <link rel="alternate" hreflang="es" href="https://decodex.fyi/es/encode.html">
@@ -85,7 +85,8 @@
     </section>
     <section class="guide" aria-label="Base64 usage guide"><h2>How to encode text to Base64</h2><ol><li>Enter or paste your text into the input box.</li><li>Your text encodes automatically. With <strong>Auto convert</strong> off, click <strong>Encode Base64</strong>, or press Ctrl+Enter (⌘+Enter on Mac).</li><li>Click <strong>Copy result</strong> to copy the Base64 string.</li></ol><p>For example, <code>Hello</code> becomes <code>SGVsbG8=</code>. Text is first converted to UTF-8 bytes, so Korean, emoji and other Unicode characters are supported.</p><h2>Base64 encoding questions</h2><details><summary>What format does this encoder produce?</summary><p>It produces standard Base64 using letters, digits, plus and slash, with equals signs for padding when needed. The output contains no added line breaks.</p></details><details><summary>Can I encode a file with this tool?</summary><p>This tool encodes text only, up to 5 MB of UTF-8 data. Pasting a filename does not encode the file contents.</p></details><details><summary>Does Base64 make text smaller or keep it secret?</summary><p>No. Base64 usually makes byte data about one-third larger, plus padding. Anyone can decode it; it is not encryption.</p></details><p>Need to read a Base64 string? <a href="./">Decode Base64 to text</a>.</p><p>Conversion runs in your browser. Your text is not sent to a conversion server. Google Analytics measures site visits.</p></section>
     <section class="guide-resources" aria-label="Base64 help and guides"><h2>Base64 help and guides</h2><div class="guide-grid"><a class="guide-card" href="base64-errors.html"><h3>How to fix Base64 decoding errors</h3><p>Troubleshoot invalid Base64 characters, padding, copied URLs and UTF-8 errors with examples tested in Decodex.</p><span>Read guide →</span></a><a class="guide-card" href="base64-korean.html"><h3>Base64 encoding Korean text and emoji with UTF-8</h3><p>Convert Korean text and emoji to and from Base64, understand garbled text, and test a verified UTF-8 example.</p><span>Read guide →</span></a></div></section>
-  </main>
+<section class="guide-resources" data-new-guides><h2>More Base64 guides</h2><div class="guide-grid"><a class="guide-card" href="base64url.html"><h3>Base64 vs Base64URL: differences, padding and decoding examples</h3><p>Compare Base64 and Base64URL with tested examples. Learn why + and / become - and _, when padding is omitted, and how to decode URL-safe UTF-8 text.</p></a><a class="guide-card" href="base64-padding.html"><h3>Base64 padding explained: what = and == mean</h3><p>Understand Base64 padding with f, fo and foo examples. Check missing padding, invalid lengths and why deleting = is not always safe.</p></a><a class="guide-card" href="javascript-base64.html"><h3>JavaScript Base64 with Unicode: fix btoa() errors using UTF-8</h3><p>Encode and decode Korean, Hindi and emoji in JavaScript with TextEncoder, btoa, atob and TextDecoder. Includes tested Unicode-safe code and browser examples.</p></a></div></section>
+</main>
   <footer><span>© Decodex</span><nav class="footer-links" aria-label="Site information"><a href="guides.html">Guides</a><a href="about.html">About</a><a href="privacy.html">Privacy</a><a href="contact.html">Contact</a></nav></footer>
 </body>
 </html>

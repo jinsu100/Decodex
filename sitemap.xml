@@ -8,6 +8,9 @@
 <url><loc>https://decodex.fyi/guides.html</loc></url>
 <url><loc>https://decodex.fyi/base64-errors.html</loc></url>
 <url><loc>https://decodex.fyi/base64-korean.html</loc></url>
+<url><loc>https://decodex.fyi/base64url.html</loc></url>
+<url><loc>https://decodex.fyi/base64-padding.html</loc></url>
+<url><loc>https://decodex.fyi/javascript-base64.html</loc></url>
 <url><loc>https://decodex.fyi/ko/</loc></url>
 <url><loc>https://decodex.fyi/ko/encode.html</loc></url>
 <url><loc>https://decodex.fyi/ko/about.html</loc></url>
@@ -16,6 +19,9 @@
 <url><loc>https://decodex.fyi/ko/guides.html</loc></url>
 <url><loc>https://decodex.fyi/ko/base64-errors.html</loc></url>
 <url><loc>https://decodex.fyi/ko/base64-korean.html</loc></url>
+<url><loc>https://decodex.fyi/ko/base64url.html</loc></url>
+<url><loc>https://decodex.fyi/ko/base64-padding.html</loc></url>
+<url><loc>https://decodex.fyi/ko/javascript-base64.html</loc></url>
 <url><loc>https://decodex.fyi/es/</loc></url>
 <url><loc>https://decodex.fyi/es/encode.html</loc></url>
 <url><loc>https://decodex.fyi/es/about.html</loc></url>
@@ -24,6 +30,9 @@
 <url><loc>https://decodex.fyi/es/guides.html</loc></url>
 <url><loc>https://decodex.fyi/es/base64-errors.html</loc></url>
 <url><loc>https://decodex.fyi/es/base64-korean.html</loc></url>
+<url><loc>https://decodex.fyi/es/base64url.html</loc></url>
+<url><loc>https://decodex.fyi/es/base64-padding.html</loc></url>
+<url><loc>https://decodex.fyi/es/javascript-base64.html</loc></url>
 <url><loc>https://decodex.fyi/pt-br/</loc></url>
 <url><loc>https://decodex.fyi/pt-br/encode.html</loc></url>
 <url><loc>https://decodex.fyi/pt-br/about.html</loc></url>
@@ -32,6 +41,9 @@
 <url><loc>https://decodex.fyi/pt-br/guides.html</loc></url>
 <url><loc>https://decodex.fyi/pt-br/base64-errors.html</loc></url>
 <url><loc>https://decodex.fyi/pt-br/base64-korean.html</loc></url>
+<url><loc>https://decodex.fyi/pt-br/base64url.html</loc></url>
+<url><loc>https://decodex.fyi/pt-br/base64-padding.html</loc></url>
+<url><loc>https://decodex.fyi/pt-br/javascript-base64.html</loc></url>
 <url><loc>https://decodex.fyi/de/</loc></url>
 <url><loc>https://decodex.fyi/de/encode.html</loc></url>
 <url><loc>https://decodex.fyi/de/about.html</loc></url>
@@ -40,6 +52,9 @@
 <url><loc>https://decodex.fyi/de/guides.html</loc></url>
 <url><loc>https://decodex.fyi/de/base64-errors.html</loc></url>
 <url><loc>https://decodex.fyi/de/base64-korean.html</loc></url>
+<url><loc>https://decodex.fyi/de/base64url.html</loc></url>
+<url><loc>https://decodex.fyi/de/base64-padding.html</loc></url>
+<url><loc>https://decodex.fyi/de/javascript-base64.html</loc></url>
 <url><loc>https://decodex.fyi/ja/</loc></url>
 <url><loc>https://decodex.fyi/ja/encode.html</loc></url>
 <url><loc>https://decodex.fyi/ja/about.html</loc></url>
@@ -48,6 +63,9 @@
 <url><loc>https://decodex.fyi/ja/guides.html</loc></url>
 <url><loc>https://decodex.fyi/ja/base64-errors.html</loc></url>
 <url><loc>https://decodex.fyi/ja/base64-korean.html</loc></url>
+<url><loc>https://decodex.fyi/ja/base64url.html</loc></url>
+<url><loc>https://decodex.fyi/ja/base64-padding.html</loc></url>
+<url><loc>https://decodex.fyi/ja/javascript-base64.html</loc></url>
 <url><loc>https://decodex.fyi/zh-cn/</loc></url>
 <url><loc>https://decodex.fyi/zh-cn/encode.html</loc></url>
 <url><loc>https://decodex.fyi/zh-cn/about.html</loc></url>
@@ -56,6 +74,9 @@
 <url><loc>https://decodex.fyi/zh-cn/guides.html</loc></url>
 <url><loc>https://decodex.fyi/zh-cn/base64-errors.html</loc></url>
 <url><loc>https://decodex.fyi/zh-cn/base64-korean.html</loc></url>
+<url><loc>https://decodex.fyi/zh-cn/base64url.html</loc></url>
+<url><loc>https://decodex.fyi/zh-cn/base64-padding.html</loc></url>
+<url><loc>https://decodex.fyi/zh-cn/javascript-base64.html</loc></url>
 <url><loc>https://decodex.fyi/fr/</loc></url>
 <url><loc>https://decodex.fyi/fr/encode.html</loc></url>
 <url><loc>https://decodex.fyi/fr/about.html</loc></url>
@@ -64,6 +85,9 @@
 <url><loc>https://decodex.fyi/fr/guides.html</loc></url>
 <url><loc>https://decodex.fyi/fr/base64-errors.html</loc></url>
 <url><loc>https://decodex.fyi/fr/base64-korean.html</loc></url>
+<url><loc>https://decodex.fyi/fr/base64url.html</loc></url>
+<url><loc>https://decodex.fyi/fr/base64-padding.html</loc></url>
+<url><loc>https://decodex.fyi/fr/javascript-base64.html</loc></url>
 <url><loc>https://decodex.fyi/it/</loc></url>
 <url><loc>https://decodex.fyi/it/encode.html</loc></url>
 <url><loc>https://decodex.fyi/it/about.html</loc></url>
@@ -72,6 +96,9 @@
 <url><loc>https://decodex.fyi/it/guides.html</loc></url>
 <url><loc>https://decodex.fyi/it/base64-errors.html</loc></url>
 <url><loc>https://decodex.fyi/it/base64-korean.html</loc></url>
+<url><loc>https://decodex.fyi/it/base64url.html</loc></url>
+<url><loc>https://decodex.fyi/it/base64-padding.html</loc></url>
+<url><loc>https://decodex.fyi/it/javascript-base64.html</loc></url>
 <url><loc>https://decodex.fyi/nl/</loc></url>
 <url><loc>https://decodex.fyi/nl/encode.html</loc></url>
 <url><loc>https://decodex.fyi/nl/about.html</loc></url>
@@ -80,6 +107,9 @@
 <url><loc>https://decodex.fyi/nl/guides.html</loc></url>
 <url><loc>https://decodex.fyi/nl/base64-errors.html</loc></url>
 <url><loc>https://decodex.fyi/nl/base64-korean.html</loc></url>
+<url><loc>https://decodex.fyi/nl/base64url.html</loc></url>
+<url><loc>https://decodex.fyi/nl/base64-padding.html</loc></url>
+<url><loc>https://decodex.fyi/nl/javascript-base64.html</loc></url>
 <url><loc>https://decodex.fyi/hi/</loc></url>
 <url><loc>https://decodex.fyi/hi/encode.html</loc></url>
 <url><loc>https://decodex.fyi/hi/about.html</loc></url>
@@ -88,6 +118,9 @@
 <url><loc>https://decodex.fyi/hi/guides.html</loc></url>
 <url><loc>https://decodex.fyi/hi/base64-errors.html</loc></url>
 <url><loc>https://decodex.fyi/hi/base64-korean.html</loc></url>
+<url><loc>https://decodex.fyi/hi/base64url.html</loc></url>
+<url><loc>https://decodex.fyi/hi/base64-padding.html</loc></url>
+<url><loc>https://decodex.fyi/hi/javascript-base64.html</loc></url>
 <url><loc>https://decodex.fyi/ru/</loc></url>
 <url><loc>https://decodex.fyi/ru/encode.html</loc></url>
 <url><loc>https://decodex.fyi/ru/about.html</loc></url>
@@ -96,4 +129,7 @@
 <url><loc>https://decodex.fyi/ru/guides.html</loc></url>
 <url><loc>https://decodex.fyi/ru/base64-errors.html</loc></url>
 <url><loc>https://decodex.fyi/ru/base64-korean.html</loc></url>
+<url><loc>https://decodex.fyi/ru/base64url.html</loc></url>
+<url><loc>https://decodex.fyi/ru/base64-padding.html</loc></url>
+<url><loc>https://decodex.fyi/ru/javascript-base64.html</loc></url>
 </urlset>

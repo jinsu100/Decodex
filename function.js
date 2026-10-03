@@ -173,3 +173,15 @@ copyButton.addEventListener('click', async () => {
   }
 });
 counts();
+
+// Only named public demonstrations are read from the URL, never user text.
+if (window.location && typeof URLSearchParams !== 'undefined') {
+  const preset = new URLSearchParams(window.location.search).get('example');
+  const examples = mode === 'encode'
+    ? { unicode: '안녕하세요 😀' }
+    : { base64url: '8J-YgA', padding: 'Zg' };
+  if (Object.prototype.hasOwnProperty.call(examples, preset)) {
+    input.value = examples[preset];
+    scheduleAutoConvert();
+  }
+}
