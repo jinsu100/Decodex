@@ -572,13 +572,13 @@ html[data-theme="dark"] .language-options a:hover, html[data-theme="dark"] .lang
 .workspace .panel-action p, .output-action-hint { align-self:center; margin:0; color:var(--muted); font-size:11px; line-height:1.6; }
 .workspace .primary-button, .workspace .copy-button { height:48px; min-height:48px; padding:10px 16px; justify-content:center; font-size:14px; }
 @supports(grid-template-rows:subgrid) {
-  .workspace { grid-template-rows:minmax(72px,auto) 220px minmax(126px,auto); }
+  .workspace { grid-template-rows:minmax(72px,auto) minmax(220px,auto) minmax(126px,auto); }
   .workspace .panel { display:grid; grid-row:span 3; grid-template-rows:subgrid; row-gap:0; }
   .workspace textarea { height:100%; min-height:0; }
 }
 @media(max-width:700px) {
   .workspace { grid-template-rows:none; }
-  .workspace .panel { display:grid; grid-row:auto; grid-template-rows:minmax(72px,auto) 160px minmax(126px,auto); }
+  .workspace .panel { display:grid; grid-row:auto; grid-template-rows:minmax(72px,auto) minmax(160px,auto) minmax(126px,auto); }
   .workspace textarea { height:160px; min-height:0; }
   .panel-heading .small-actions { gap:4px; }
   .panel-heading .small-actions button { font-size:11px; padding:8px 7px; }
@@ -596,3 +596,17 @@ html[data-theme="dark"] .language-options a:hover, html[data-theme="dark"] .lang
 }
 .workspace .panel-action, .workspace .output-actions { grid-template-columns:minmax(0,1fr); justify-content:stretch; }
 .workspace .panel-action .primary-button { width:100%; }
+
+/* Native corner grips resize the editable text and the decoded result.
+   The shared grid row grows with the dragged field, aligning its neighbour. */
+body[data-mode="encode"] #userInput,
+body[data-mode="decode"] #result {
+  height:220px;
+  min-height:220px;
+  resize:vertical;
+  overflow:auto;
+}
+@media(max-width:700px) {
+  body[data-mode="encode"] #userInput,
+  body[data-mode="decode"] #result { height:160px; min-height:160px; }
+}
