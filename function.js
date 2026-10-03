@@ -1,6 +1,25 @@
 'use strict';
 const input = document.getElementById('userInput');
 const output = document.getElementById('result');
+
+// Native textarea dragging changes its inline height. Mirror that height so
+// either grip can also shrink the shared row, including stacked mobile panels.
+const converterFields = [input, output];
+const panelResizeObserver = new MutationObserver(records => {
+  const draggedField = records[records.length - 1].target;
+  const height = draggedField.style.height;
+  if (!height) return;
+  panelResizeObserver.disconnect();
+  for (const field of converterFields) {
+    if (field.style.height !== height) field.style.height = height;
+  }
+  for (const field of converterFields) {
+    panelResizeObserver.observe(field, { attributes: true, attributeFilter: ['style'] });
+  }
+});
+for (const field of converterFields) {
+  panelResizeObserver.observe(field, { attributes: true, attributeFilter: ['style'] });
+}
 const feedback = document.getElementById('feedback');
 const copyButton = document.getElementById('copy-button');
 const mode = document.body.dataset.mode;

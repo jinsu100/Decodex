@@ -597,16 +597,13 @@ html[data-theme="dark"] .language-options a:hover, html[data-theme="dark"] .lang
 .workspace .panel-action, .workspace .output-actions { grid-template-columns:minmax(0,1fr); justify-content:stretch; }
 .workspace .panel-action .primary-button { width:100%; }
 
-/* Native corner grips resize the editable text and the decoded result.
-   The shared grid row grows with the dragged field, aligning its neighbour. */
-body[data-mode="encode"] #userInput,
-body[data-mode="decode"] #result {
+/* Both native corner grips resize the synchronized converter fields. */
+.workspace textarea {
   height:220px;
   min-height:220px;
   resize:vertical;
   overflow:auto;
 }
 @media(max-width:700px) {
-  body[data-mode="encode"] #userInput,
-  body[data-mode="decode"] #result { height:160px; min-height:160px; }
+  .workspace textarea { height:160px; min-height:160px; }
 }
