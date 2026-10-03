@@ -3,7 +3,7 @@
 const fs = require('node:fs');
 const path = require('node:path');
 const root = path.resolve(__dirname, '..');
-const version = '20261003p';
+const version = '20261003q';
 const names = {en:'English',ko:'한국어',es:'Español','pt-BR':'Português (Brasil)',de:'Deutsch',ja:'日本語','zh-CN':'简体中文',fr:'Français',it:'Italiano',nl:'Nederlands',hi:'हिन्दी',ru:'Русский'};
 // English and Korean are pinned; others follow OBDILCI V6 (July 2025)
 // estimated connected L1+L2 speakers, using Chinese/Portuguese as locale proxies.

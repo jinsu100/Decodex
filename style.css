@@ -594,3 +594,5 @@ html[data-theme="dark"] .language-options a:hover, html[data-theme="dark"] .lang
   .converter-toolbar .auto-convert-button { max-width:100%; flex:0 1 auto; }
   .converter-toolbar .mode-switch { flex:1 1 100%; min-width:0; }
 }
+.workspace .panel-action, .workspace .output-actions { grid-template-columns:minmax(0,1fr); justify-content:stretch; }
+.workspace .panel-action .primary-button { width:100%; }

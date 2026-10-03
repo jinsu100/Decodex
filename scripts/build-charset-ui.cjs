@@ -12,7 +12,7 @@ for(const [lang,L] of Object.entries(labels)){
  for(const mode of ['encode','decode']){
   const file=path.join(root,dir,mode==='encode'?'encode.html':'index.html');let html=fs.readFileSync(file,'utf8');
   html=html.replace(/\s*<script src="\/charset(?:s|-messages)\.js[^<]*<\/script>/g,'');
-  html=html.replace('</head>','<script src="/charset-messages.js?v=20261003p" defer></script>\n<script src="/charsets.js?v=20261003p" defer></script>\n</head>');
+  html=html.replace('</head>','<script src="/charset-messages.js?v=20261003q" defer></script>\n<script src="/charsets.js?v=20261003q" defer></script>\n</head>');
   // Deferred scripts execute in document order; conversion must run after codecs.
   const functionScript=html.match(/\s*<script src="[^\"]*function.js[^<]*<\/script>/)[0];
   html=html.replace(functionScript,'').replace('</head>',functionScript+'\n</head>');
