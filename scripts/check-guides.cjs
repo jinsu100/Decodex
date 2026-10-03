@@ -22,7 +22,7 @@ for(const lang of langs)for(const key of ['base64url','base64-padding','javascri
  assert.ok(html.includes('?example='));
  assert.equal((html.match(/data-new-guides/g)||[]).length,1);
 }
-for(const [mode,preset,result] of [['decode','base64url','😀'],['decode','padding','f'],['encode','unicode','7JWI64WV7ZWY7IS47JqUIPCfmIA='],['decode','unknown','']]){
+for(const [mode,preset,result] of [['decode','base64url','😀'],['decode','padding','f'],['decode','unicode','안녕하세요 😀'],['encode','unicode','7JWI64WV7ZWY7IS47JqUIPCfmIA='],['decode','unknown','']]){
  const nodes={};const node=id=>nodes[id]??={value:'',textContent:'',classList:{toggle(){}},addEventListener(){},setAttribute(){},removeAttribute(){}};
  const tasks=[];
  const ctx={window:{location:{search:'?example='+preset}},URLSearchParams,TextEncoder,TextDecoder,Uint8Array,atob,btoa,setTimeout(fn){tasks.push(fn);return tasks.length},clearTimeout(){},document:{body:{dataset:{lang:'ko',mode}},getElementById:node},navigator:{}};

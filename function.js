@@ -179,7 +179,7 @@ if (window.location && typeof URLSearchParams !== 'undefined') {
   const preset = new URLSearchParams(window.location.search).get('example');
   const examples = mode === 'encode'
     ? { unicode: '안녕하세요 😀' }
-    : { base64url: '8J-YgA', padding: 'Zg' };
+    : { base64url: '8J-YgA', padding: 'Zg', unicode: '7JWI64WV7ZWY7IS47JqUIPCfmIA=' };
   if (Object.prototype.hasOwnProperty.call(examples, preset)) {
     input.value = examples[preset];
     scheduleAutoConvert();

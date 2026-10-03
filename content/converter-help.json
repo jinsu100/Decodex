@@ -1,0 +1,398 @@
+{
+  "ko": {
+    "decode": {
+      "heading": "Base64 디코딩 방법과 사용 예제",
+      "intro": "Base64 디코딩은 문자열로 표현된 데이터를 원래 바이트로 되돌리는 과정입니다. 이 온라인 디코더는 복원한 바이트를 UTF-8 텍스트로 읽어 한글·영문·이모지를 표시합니다. API 응답이나 복사한 문자열을 확인할 때 사용할 수 있으며, 이미지·PDF 파일을 내려받는 도구는 아닙니다.",
+      "firstStep": "입력 칸에 Base64 문자열을 붙여넣으세요. JSON의 따옴표나 data:text/plain;base64, 같은 접두사는 빼고 변환할 부분만 넣으세요.",
+      "formatHeading": "지원하는 Base64 형식과 패딩",
+      "errorsHeading": "Base64 디코딩 오류 해결",
+      "faqHeading": "자주 묻는 질문",
+      "faq": [
+        [
+          "Base64를 디코딩했는데 글자가 깨지거나 UTF-8 오류가 나요.",
+          "원문이 UTF-8로 인코딩되었는지 확인하세요. Base64 자체에는 문자 인코딩 정보가 없습니다. EUC-KR·Shift_JIS 같은 다른 인코딩이나 이미지·PDF의 바이트는 이 텍스트 디코더에서 올바르게 표시되지 않을 수 있습니다. 오류가 난다고 =를 계속 추가하면 해결되는 것은 아닙니다."
+        ]
+      ]
+    },
+    "encode": {
+      "heading": "Base64 인코딩 방법과 텍스트 변환 예제",
+      "intro": "Base64 인코딩은 데이터를 전달하기 쉬운 문자로 표현하는 과정입니다. 이 온라인 인코더는 입력한 한글·영문·이모지를 UTF-8 바이트로 변환한 다음 표준 Base64 문자열을 만듭니다. 텍스트를 API나 다른 시스템에 전달할 때 출력 형식이 맞는지 확인하는 데 사용할 수 있습니다.",
+      "firstStep": "입력 칸에 변환할 원문 텍스트를 입력하거나 붙여넣으세요. 이미 인코딩된 문자열을 넣으면 그 문자열을 다시 인코딩하므로 원문을 복원하려면 디코딩 페이지를 사용하세요.",
+      "formatHeading": "인코딩 결과의 문자·패딩·길이",
+      "formatText": "결과는 A–Z, a–z, 0–9, +, /와 끝의 = 패딩을 사용하는 표준 Base64이며, 출력에 줄바꿈을 자동으로 추가하지 않습니다. UTF-8 바이트가 n개이면 결과 길이는 4 × ceil(n / 3)자입니다. f → Zg==, fo → Zm8=, foo → Zm9v처럼 마지막 바이트 수에 따라 패딩이 달라집니다. URL-safe 형식을 요구하는 시스템에는 +와 /를 -와 _로 바꾸고 해당 프로토콜의 패딩 규칙을 따라야 합니다.",
+      "faqHeading": "자주 묻는 질문",
+      "faq": [
+        [
+          "공백과 줄바꿈도 인코딩되나요?",
+          "네. 입력한 공백과 줄바꿈은 UTF-8 바이트에 포함되므로 Hello와 Hello 뒤에 줄바꿈을 넣은 결과는 다릅니다. 다시 디코딩하면 실제 입력한 텍스트가 복원됩니다. 운영체제에 따라 LF와 CRLF가 다를 수 있으니 정확한 값이 필요하면 원문의 줄바꿈도 확인하세요."
+        ]
+      ]
+    },
+    "examplesHeading": "한글·영문·이모지 Base64 예제",
+    "examplesText": "아래 값은 UTF-8 기준으로 검증한 예제입니다. 입력과 결과를 비교해 변환 방향을 확인하세요. 한글과 이모지는 여러 바이트를 사용하므로 글자 수와 Base64 길이가 같지 않습니다.",
+    "unicodeHeading": "한글 인코딩과 UTF-8"
+  },
+  "en": {
+    "decode": {
+      "heading": "How to decode Base64 text online",
+      "intro": "Base64 decoding restores bytes from a text representation. This online decoder reads those bytes as UTF-8 to display readable text, including Korean and emoji. Use it to inspect an API value or a copied string. It is a text converter rather than a tool for downloading image or PDF files.",
+      "firstStep": "Paste the Base64 value into the input box. Remove surrounding JSON quotes or a prefix such as data:text/plain;base64, and keep only the encoded portion.",
+      "formatHeading": "Supported Base64 formats and padding",
+      "errorsHeading": "Fixing Base64 decoding errors",
+      "faqHeading": "Frequently asked questions",
+      "faq": [
+        [
+          "Why is the decoded text garbled or reported as invalid UTF-8?",
+          "Check how the original text was encoded. Base64 does not identify a character encoding. EUC-KR, Shift_JIS and binary image or PDF data may not display correctly in this UTF-8 text decoder. Adding more = characters does not solve a character encoding problem."
+        ]
+      ]
+    },
+    "encode": {
+      "heading": "How to encode text to Base64 online",
+      "intro": "Base64 encoding represents bytes with a transferable alphabet. This online encoder converts your text to UTF-8 bytes, then produces standard Base64. Use it to prepare a text value for an API or check the format expected by another system.",
+      "firstStep": "Type or paste the original text. Entering an existing Base64 value encodes that string again; use the decoder if you want to recover the original text.",
+      "formatHeading": "Base64 output: alphabet, padding and length",
+      "formatText": "The output uses standard Base64 with A–Z, a–z, 0–9, +, / and trailing = padding, without automatically inserted line breaks. For n UTF-8 bytes, the padded output length is 4 × ceil(n / 3) characters. Compare f → Zg==, fo → Zm8= and foo → Zm9v. If the receiving system requires Base64URL, replace + and / with - and _ and follow its padding rules.",
+      "faqHeading": "Frequently asked questions",
+      "faq": [
+        [
+          "Are spaces and line breaks included when encoding?",
+          "Yes. Spaces and line breaks are part of the UTF-8 input bytes, so Hello and Hello followed by a newline have different outputs. Decoding restores the actual input text. LF and CRLF line endings also produce different values; check the original line endings when exact bytes matter."
+        ]
+      ]
+    },
+    "examplesHeading": "Tested Base64 text examples",
+    "examplesText": "These examples are verified using UTF-8. Compare the input and output to check the conversion direction. A Unicode character can occupy multiple bytes, so character count does not determine Base64 length.",
+    "unicodeHeading": "Encoding Unicode text as UTF-8"
+  },
+  "es": {
+    "decode": {
+      "heading": "Cómo decodificar texto Base64 en línea",
+      "intro": "Decodificar Base64 recupera los bytes representados por una cadena. Este decodificador los interpreta como UTF-8 para mostrar texto, incluidos acentos y emojis. Sirve para revisar valores de API; no descarga imágenes ni PDF.",
+      "firstStep": "Pega solo la parte Base64. Elimina las comillas de JSON o prefijos como data:text/plain;base64, antes de convertir.",
+      "formatHeading": "Formatos Base64 y relleno admitidos",
+      "errorsHeading": "Resolver errores de decodificación Base64",
+      "faqHeading": "Preguntas frecuentes",
+      "faq": [
+        [
+          "¿Por qué el texto aparece ilegible o da un error UTF-8?",
+          "Comprueba la codificación original. Base64 no indica si los bytes son UTF-8, otra codificación o datos binarios. Este decodificador no convierte automáticamente EUC-KR ni Shift_JIS. Añadir = no corrige ese problema."
+        ]
+      ]
+    },
+    "encode": {
+      "heading": "Cómo codificar texto en Base64",
+      "intro": "Este codificador convierte el texto original en bytes UTF-8 y genera Base64 estándar. Permite preparar valores para una API o comprobar el formato requerido por otro sistema.",
+      "firstStep": "Escribe o pega el texto original. Introducir una cadena ya codificada la codifica otra vez; usa el decodificador para recuperar el original.",
+      "formatHeading": "Alfabeto, relleno y longitud del resultado",
+      "formatText": "La salida usa A–Z, a–z, 0–9, +, / y relleno = final, sin añadir saltos de línea. Para n bytes UTF-8, su longitud es 4 × ceil(n / 3). Compara f → Zg==, fo → Zm8= y foo → Zm9v. Si necesitas Base64URL, sustituye + y / por - y _ y respeta el relleno del protocolo.",
+      "faqHeading": "Preguntas frecuentes",
+      "faq": [
+        [
+          "¿Se codifican los espacios y saltos de línea?",
+          "Sí. Forman parte de los bytes de entrada. Hello y Hello seguido de un salto de línea producen resultados distintos. LF y CRLF también generan valores diferentes. La decodificación recupera el texto introducido."
+        ]
+      ]
+    },
+    "examplesHeading": "Ejemplos verificados de texto Base64",
+    "examplesText": "Los ejemplos usan UTF-8. Compara entrada y resultado para confirmar la dirección. Un carácter Unicode puede ocupar varios bytes; el número de caracteres no determina la longitud Base64.",
+    "unicodeHeading": "Codificar Unicode con UTF-8"
+  },
+  "pt-BR": {
+    "decode": {
+      "heading": "Como decodificar texto Base64 online",
+      "intro": "Decodificar Base64 recupera os bytes representados por uma string. Este decodificador lê esses bytes como UTF-8 para exibir texto, incluindo acentos e emojis. Use para conferir valores de API; ele não baixa imagens ou PDF.",
+      "firstStep": "Cole apenas a parte Base64. Remova aspas de JSON e prefixos como data:text/plain;base64, antes da conversão.",
+      "formatHeading": "Formatos Base64 e preenchimento aceitos",
+      "errorsHeading": "Resolver erros de decodificação Base64",
+      "faqHeading": "Perguntas frequentes",
+      "faq": [
+        [
+          "Por que o texto fica ilegível ou apresenta erro UTF-8?",
+          "Confira a codificação original. Base64 não identifica UTF-8, outras codificações ou dados binários. Este decodificador não converte automaticamente EUC-KR ou Shift_JIS. Adicionar = não resolve esse problema."
+        ]
+      ]
+    },
+    "encode": {
+      "heading": "Como codificar texto em Base64",
+      "intro": "Este codificador transforma o texto original em bytes UTF-8 e gera Base64 padrão. Use para preparar valores para uma API ou conferir o formato esperado por outro sistema.",
+      "firstStep": "Digite ou cole o texto original. Inserir uma string já codificada a codifica novamente; use o decodificador para recuperar o original.",
+      "formatHeading": "Alfabeto, preenchimento e tamanho da saída",
+      "formatText": "A saída usa A–Z, a–z, 0–9, +, / e preenchimento = no final, sem adicionar quebras de linha. Para n bytes UTF-8, o tamanho é 4 × ceil(n / 3). Compare f → Zg==, fo → Zm8= e foo → Zm9v. Para Base64URL, substitua + e / por - e _ e siga as regras de preenchimento do protocolo.",
+      "faqHeading": "Perguntas frequentes",
+      "faq": [
+        [
+          "Espaços e quebras de linha são codificados?",
+          "Sim. Eles fazem parte dos bytes de entrada. Hello e Hello seguido de uma quebra de linha produzem resultados diferentes. LF e CRLF também geram valores distintos. A decodificação recupera o texto inserido."
+        ]
+      ]
+    },
+    "examplesHeading": "Exemplos verificados de texto Base64",
+    "examplesText": "Os exemplos usam UTF-8. Compare entrada e saída para confirmar a direção. Um caractere Unicode pode ocupar vários bytes; a quantidade de caracteres não determina o tamanho Base64.",
+    "unicodeHeading": "Codificar Unicode com UTF-8"
+  },
+  "de": {
+    "decode": {
+      "heading": "Base64-Text online dekodieren",
+      "intro": "Base64-Dekodierung stellt Bytes aus einer Zeichenfolge wieder her. Dieser Decoder liest sie als UTF-8 und zeigt Text mit Umlauten und Emojis an. Prüfe damit API-Werte; Bilder oder PDF-Dateien werden nicht heruntergeladen.",
+      "firstStep": "Füge nur den Base64-Teil ein. Entferne JSON-Anführungszeichen und Präfixe wie data:text/plain;base64, vor der Umwandlung.",
+      "formatHeading": "Unterstützte Base64-Formate und Padding",
+      "errorsHeading": "Base64-Dekodierungsfehler beheben",
+      "faqHeading": "Häufige Fragen",
+      "faq": [
+        [
+          "Warum ist der Text unlesbar oder wird als ungültiges UTF-8 gemeldet?",
+          "Prüfe die ursprüngliche Zeichenkodierung. Base64 kennzeichnet weder UTF-8 noch andere Kodierungen oder Binärdaten. Dieser Decoder wandelt EUC-KR oder Shift_JIS nicht automatisch um. Weitere = beheben dieses Problem nicht."
+        ]
+      ]
+    },
+    "encode": {
+      "heading": "Text online in Base64 kodieren",
+      "intro": "Dieser Encoder wandelt den Originaltext in UTF-8-Bytes um und erzeugt Standard-Base64. Damit kannst du Textwerte für eine API vorbereiten oder das erwartete Format eines Systems prüfen.",
+      "firstStep": "Gib den Originaltext ein. Eine bereits kodierte Zeichenfolge wird erneut kodiert; zum Wiederherstellen des Originals dient der Decoder.",
+      "formatHeading": "Alphabet, Padding und Länge der Ausgabe",
+      "formatText": "Die Ausgabe verwendet A–Z, a–z, 0–9, +, / und abschließendes =-Padding, ohne zusätzliche Zeilenumbrüche. Für n UTF-8-Bytes beträgt die Länge 4 × ceil(n / 3). Beispiele: f → Zg==, fo → Zm8= und foo → Zm9v. Für Base64URL ersetze + und / durch - und _ und beachte die Padding-Regeln des Protokolls.",
+      "faqHeading": "Häufige Fragen",
+      "faq": [
+        [
+          "Werden Leerzeichen und Zeilenumbrüche mitkodiert?",
+          "Ja. Sie gehören zu den Eingabebytes. Hello und Hello mit anschließendem Zeilenumbruch ergeben unterschiedliche Ausgaben. Auch LF und CRLF unterscheiden sich. Beim Dekodieren wird der eingegebene Text wiederhergestellt."
+        ]
+      ]
+    },
+    "examplesHeading": "Geprüfte Base64-Textbeispiele",
+    "examplesText": "Die Beispiele verwenden UTF-8. Vergleiche Eingabe und Ausgabe, um die Richtung zu prüfen. Ein Unicode-Zeichen kann mehrere Bytes belegen; die Zeichenzahl bestimmt nicht die Base64-Länge.",
+    "unicodeHeading": "Unicode mit UTF-8 kodieren"
+  },
+  "ja": {
+    "decode": {
+      "heading": "Base64をオンラインでデコードする方法",
+      "intro": "Base64デコードは文字列から元のバイトを復元する処理です。このデコーダーはUTF-8として読み取り、日本語・韓国語・絵文字を表示します。APIの値を確認できますが、画像やPDFをダウンロードする機能ではありません。",
+      "firstStep": "Base64部分だけを貼り付けてください。JSONの引用符やdata:text/plain;base64,などの接頭辞は除きます。",
+      "formatHeading": "対応するBase64形式とパディング",
+      "errorsHeading": "Base64デコードのエラーを解決する",
+      "faqHeading": "よくある質問",
+      "faq": [
+        [
+          "文字化けやUTF-8エラーが出るのはなぜですか？",
+          "元の文字エンコーディングを確認してください。Base64自体はUTF-8か別の形式か、バイナリデータかを示しません。このデコーダーはShift_JISやEUC-KRを自動変換しません。=を増やしても解決しません。"
+        ]
+      ]
+    },
+    "encode": {
+      "heading": "テキストをBase64にエンコードする方法",
+      "intro": "このエンコーダーは元のテキストをUTF-8バイトに変換し、標準Base64を生成します。APIに渡す値の作成や、相手のシステムが要求する形式の確認に使えます。",
+      "firstStep": "元のテキストを入力してください。すでにエンコードされた文字列を入れると再度エンコードされます。元に戻すにはデコーダーを使ってください。",
+      "formatHeading": "出力の文字・パディング・長さ",
+      "formatText": "出力はA–Z、a–z、0–9、+、/と末尾の=を使う標準Base64です。改行は自動追加しません。UTF-8がnバイトなら長さは4 × ceil(n / 3)文字です。f → Zg==、fo → Zm8=、foo → Zm9vを比較してください。Base64URLが必要なら+と/を-と_に置換し、プロトコルのパディング規則に従います。",
+      "faqHeading": "よくある質問",
+      "faq": [
+        [
+          "空白や改行もエンコードされますか？",
+          "はい。空白や改行も入力バイトの一部です。Helloと改行付きのHelloは結果が異なります。LFとCRLFも異なる値になります。デコードすると実際に入力したテキストが復元されます。"
+        ]
+      ]
+    },
+    "examplesHeading": "検証済みのBase64変換例",
+    "examplesText": "例はUTF-8で検証しています。入力と結果を比べて変換方向を確認してください。Unicodeの1文字は複数バイトになるため、文字数からBase64の長さは決まりません。",
+    "unicodeHeading": "日本語とUnicodeのUTF-8エンコード"
+  },
+  "zh-CN": {
+    "decode": {
+      "heading": "在线Base64解码方法",
+      "intro": "Base64解码把字符串还原为原始字节。此解码器按UTF-8读取字节，显示中文、韩文和表情符号。可用于检查API中的值，但不提供图片或PDF文件下载。",
+      "firstStep": "只粘贴Base64部分。转换前删除JSON引号和data:text/plain;base64,等前缀。",
+      "formatHeading": "支持的Base64格式与填充",
+      "errorsHeading": "解决Base64解码错误",
+      "faqHeading": "常见问题",
+      "faq": [
+        [
+          "为什么解码后乱码或出现UTF-8错误？",
+          "检查原始字符编码。Base64本身不标明UTF-8、其他编码或二进制数据。此解码器不会自动转换GBK、EUC-KR或Shift_JIS。继续添加=不能解决此问题。"
+        ]
+      ]
+    },
+    "encode": {
+      "heading": "在线文本Base64编码方法",
+      "intro": "此编码器先把原始文本转换为UTF-8字节，再生成标准Base64。可用于准备API参数，或检查其他系统需要的输出格式。",
+      "firstStep": "输入原始文本。输入已编码的字符串会再次编码它；要还原原文，请使用解码器。",
+      "formatHeading": "输出字符、填充与长度",
+      "formatText": "输出使用A–Z、a–z、0–9、+、/和末尾=填充，不自动添加换行。对于n个UTF-8字节，长度为4 × ceil(n / 3)个字符。比较f → Zg==、fo → Zm8=、foo → Zm9v。若需要Base64URL，把+和/替换为-和_，并遵守协议的填充规则。",
+      "faqHeading": "常见问题",
+      "faq": [
+        [
+          "空格和换行也会编码吗？",
+          "会。它们属于输入字节。Hello与末尾带换行的Hello结果不同。LF和CRLF也产生不同值。解码会还原实际输入的文本。"
+        ]
+      ]
+    },
+    "examplesHeading": "经过验证的Base64文本示例",
+    "examplesText": "示例按UTF-8验证。比较输入和结果，确认转换方向。一个Unicode字符可能占多个字节，因此字符数量不能决定Base64长度。",
+    "unicodeHeading": "中文与Unicode的UTF-8编码"
+  },
+  "fr": {
+    "decode": {
+      "heading": "Décoder du texte Base64 en ligne",
+      "intro": "Le décodage Base64 restitue les octets représentés par une chaîne. Ce décodeur les lit en UTF-8 pour afficher du texte, avec accents et emojis. Il permet de vérifier des valeurs d’API, sans télécharger d’images ou de PDF.",
+      "firstStep": "Collez uniquement la partie Base64. Retirez les guillemets JSON et les préfixes tels que data:text/plain;base64, avant la conversion.",
+      "formatHeading": "Formats Base64 et remplissage acceptés",
+      "errorsHeading": "Résoudre les erreurs de décodage Base64",
+      "faqHeading": "Questions fréquentes",
+      "faq": [
+        [
+          "Pourquoi le texte est-il illisible ou signalé comme UTF-8 invalide ?",
+          "Vérifiez l’encodage d’origine. Base64 n’identifie ni UTF-8, ni un autre encodage, ni des données binaires. Ce décodeur ne convertit pas automatiquement EUC-KR ou Shift_JIS. Ajouter des = ne résout pas ce problème."
+        ]
+      ]
+    },
+    "encode": {
+      "heading": "Encoder du texte en Base64 en ligne",
+      "intro": "Cet encodeur transforme le texte original en octets UTF-8, puis produit du Base64 standard. Utilisez-le pour préparer une valeur d’API ou vérifier le format attendu par un autre système.",
+      "firstStep": "Saisissez le texte original. Une chaîne déjà encodée sera encodée à nouveau ; utilisez le décodeur pour retrouver le texte initial.",
+      "formatHeading": "Alphabet, remplissage et longueur du résultat",
+      "formatText": "La sortie utilise A–Z, a–z, 0–9, +, / et le remplissage = final, sans ajouter de sauts de ligne. Pour n octets UTF-8, la longueur est 4 × ceil(n / 3). Comparez f → Zg==, fo → Zm8= et foo → Zm9v. Pour Base64URL, remplacez + et / par - et _ et respectez les règles du protocole.",
+      "faqHeading": "Questions fréquentes",
+      "faq": [
+        [
+          "Les espaces et sauts de ligne sont-ils encodés ?",
+          "Oui. Ils font partie des octets d’entrée. Hello et Hello suivi d’un saut de ligne donnent des résultats différents. LF et CRLF produisent aussi des valeurs distinctes. Le décodage restitue le texte réellement saisi."
+        ]
+      ]
+    },
+    "examplesHeading": "Exemples Base64 vérifiés",
+    "examplesText": "Ces exemples utilisent UTF-8. Comparez entrée et résultat pour vérifier le sens de conversion. Un caractère Unicode peut occuper plusieurs octets ; le nombre de caractères ne détermine pas la longueur Base64.",
+    "unicodeHeading": "Encoder Unicode en UTF-8"
+  },
+  "it": {
+    "decode": {
+      "heading": "Decodificare testo Base64 online",
+      "intro": "La decodifica Base64 ripristina i byte rappresentati da una stringa. Questo decoder li legge come UTF-8 per mostrare testo, accenti ed emoji. Puoi controllare valori di API, ma non scaricare immagini o PDF.",
+      "firstStep": "Incolla solo la parte Base64. Rimuovi virgolette JSON e prefissi come data:text/plain;base64, prima della conversione.",
+      "formatHeading": "Formati Base64 e padding supportati",
+      "errorsHeading": "Risolvere gli errori di decodifica Base64",
+      "faqHeading": "Domande frequenti",
+      "faq": [
+        [
+          "Perché il testo è illeggibile o produce un errore UTF-8?",
+          "Controlla la codifica originale. Base64 non identifica UTF-8, altre codifiche o dati binari. Questo decoder non converte automaticamente EUC-KR o Shift_JIS. Aggiungere = non risolve il problema."
+        ]
+      ]
+    },
+    "encode": {
+      "heading": "Codificare testo in Base64 online",
+      "intro": "Questo encoder converte il testo originale in byte UTF-8 e genera Base64 standard. Usalo per preparare valori di API o verificare il formato richiesto da un altro sistema.",
+      "firstStep": "Inserisci il testo originale. Una stringa già codificata viene codificata di nuovo; usa il decoder per recuperare l’originale.",
+      "formatHeading": "Alfabeto, padding e lunghezza del risultato",
+      "formatText": "L’output usa A–Z, a–z, 0–9, +, / e padding = finale, senza aggiungere interruzioni di riga. Per n byte UTF-8, la lunghezza è 4 × ceil(n / 3). Confronta f → Zg==, fo → Zm8= e foo → Zm9v. Per Base64URL sostituisci + e / con - e _ e rispetta le regole del protocollo.",
+      "faqHeading": "Domande frequenti",
+      "faq": [
+        [
+          "Spazi e interruzioni di riga vengono codificati?",
+          "Sì. Fanno parte dei byte di input. Hello e Hello seguito da un’interruzione di riga hanno risultati diversi. Anche LF e CRLF producono valori differenti. La decodifica ripristina il testo inserito."
+        ]
+      ]
+    },
+    "examplesHeading": "Esempi Base64 verificati",
+    "examplesText": "Gli esempi usano UTF-8. Confronta input e risultato per verificare la direzione. Un carattere Unicode può occupare più byte; il numero di caratteri non determina la lunghezza Base64.",
+    "unicodeHeading": "Codificare Unicode con UTF-8"
+  },
+  "nl": {
+    "decode": {
+      "heading": "Base64-tekst online decoderen",
+      "intro": "Base64-decodering herstelt bytes uit een tekenreeks. Deze decoder leest ze als UTF-8 en toont tekst met accenten en emoji. Gebruik hem om API-waarden te controleren; afbeeldingen en PDF-bestanden worden niet gedownload.",
+      "firstStep": "Plak alleen het Base64-gedeelte. Verwijder JSON-aanhalingstekens en voorvoegsels zoals data:text/plain;base64, vóór de conversie.",
+      "formatHeading": "Ondersteunde Base64-formaten en padding",
+      "errorsHeading": "Base64-decodeerfouten oplossen",
+      "faqHeading": "Veelgestelde vragen",
+      "faq": [
+        [
+          "Waarom is de tekst onleesbaar of ongeldig UTF-8?",
+          "Controleer de oorspronkelijke tekencodering. Base64 identificeert geen UTF-8, andere coderingen of binaire gegevens. Deze decoder zet EUC-KR of Shift_JIS niet automatisch om. Extra = lossen dit probleem niet op."
+        ]
+      ]
+    },
+    "encode": {
+      "heading": "Tekst online naar Base64 coderen",
+      "intro": "Deze encoder zet oorspronkelijke tekst om in UTF-8-bytes en maakt standaard-Base64. Gebruik hem om API-waarden voor te bereiden of het vereiste formaat van een systeem te controleren.",
+      "firstStep": "Voer de oorspronkelijke tekst in. Een al gecodeerde reeks wordt opnieuw gecodeerd; gebruik de decoder om de oorspronkelijke tekst terug te krijgen.",
+      "formatHeading": "Alfabet, padding en uitvoerlengte",
+      "formatText": "De uitvoer gebruikt A–Z, a–z, 0–9, +, / en afsluitende =-padding, zonder toegevoegde regeleinden. Voor n UTF-8-bytes is de lengte 4 × ceil(n / 3). Vergelijk f → Zg==, fo → Zm8= en foo → Zm9v. Vervang voor Base64URL + en / door - en _ en volg de protocolregels.",
+      "faqHeading": "Veelgestelde vragen",
+      "faq": [
+        [
+          "Worden spaties en regeleinden meegecodeerd?",
+          "Ja. Ze horen bij de invoerbytes. Hello en Hello gevolgd door een regeleinde geven verschillende resultaten. LF en CRLF leveren ook verschillende waarden. Decoderen herstelt de ingevoerde tekst."
+        ]
+      ]
+    },
+    "examplesHeading": "Gecontroleerde Base64-voorbeelden",
+    "examplesText": "Deze voorbeelden gebruiken UTF-8. Vergelijk invoer en uitvoer om de richting te controleren. Een Unicode-teken kan meerdere bytes innemen; het aantal tekens bepaalt niet de Base64-lengte.",
+    "unicodeHeading": "Unicode met UTF-8 coderen"
+  },
+  "hi": {
+    "decode": {
+      "heading": "ऑनलाइन Base64 टेक्स्ट डिकोड कैसे करें",
+      "intro": "Base64 डिकोडिंग स्ट्रिंग से मूल बाइट लौटाती है। यह डिकोडर उन्हें UTF-8 के रूप में पढ़कर हिंदी, कोरियाई और इमोजी दिखाता है। API के मान जाँच सकते हैं; यह चित्र या PDF डाउनलोड नहीं करता।",
+      "firstStep": "केवल Base64 भाग पेस्ट करें। पहले JSON के उद्धरण चिह्न और data:text/plain;base64, जैसे प्रीफिक्स हटाएँ।",
+      "formatHeading": "समर्थित Base64 प्रारूप और पैडिंग",
+      "errorsHeading": "Base64 डिकोडिंग की त्रुटियाँ सुधारें",
+      "faqHeading": "अक्सर पूछे जाने वाले प्रश्न",
+      "faq": [
+        [
+          "टेक्स्ट बिगड़ा हुआ या अमान्य UTF-8 क्यों दिखता है?",
+          "मूल कैरेक्टर एन्कोडिंग जाँचें। Base64 UTF-8, दूसरी एन्कोडिंग या बाइनरी डेटा की पहचान नहीं बताता। यह डिकोडर EUC-KR या Shift_JIS अपने आप नहीं बदलता। और = जोड़ने से यह समस्या हल नहीं होती।"
+        ]
+      ]
+    },
+    "encode": {
+      "heading": "टेक्स्ट को ऑनलाइन Base64 में एन्कोड कैसे करें",
+      "intro": "यह एन्कोडर मूल टेक्स्ट को UTF-8 बाइट में बदलकर सामान्य Base64 बनाता है। API के मान तैयार करने या दूसरे सिस्टम का अपेक्षित प्रारूप जाँचने में इसका इस्तेमाल करें।",
+      "firstStep": "मूल टेक्स्ट लिखें या पेस्ट करें। पहले से एन्कोड की गई स्ट्रिंग दोबारा एन्कोड होगी; मूल टेक्स्ट लौटाने के लिए डिकोडर इस्तेमाल करें।",
+      "formatHeading": "आउटपुट के अक्षर, पैडिंग और लंबाई",
+      "formatText": "आउटपुट में A–Z, a–z, 0–9, +, / और आखिर में = पैडिंग होती है। नई लाइन अपने आप नहीं जुड़ती। n UTF-8 बाइट के लिए लंबाई 4 × ceil(n / 3) है। f → Zg==, fo → Zm8= और foo → Zm9v देखें। Base64URL चाहिए तो + और / को - और _ से बदलें और प्रोटोकॉल की पैडिंग नियमावली अपनाएँ।",
+      "faqHeading": "अक्सर पूछे जाने वाले प्रश्न",
+      "faq": [
+        [
+          "क्या स्पेस और नई लाइन भी एन्कोड होते हैं?",
+          "हाँ। वे इनपुट बाइट का हिस्सा हैं। Hello और नई लाइन वाला Hello अलग परिणाम देते हैं। LF और CRLF के मान भी अलग होते हैं। डिकोडिंग असल में लिखे टेक्स्ट को लौटाती है।"
+        ]
+      ]
+    },
+    "examplesHeading": "जाँचे गए Base64 टेक्स्ट उदाहरण",
+    "examplesText": "ये उदाहरण UTF-8 इस्तेमाल करते हैं। दिशा जाँचने के लिए इनपुट और परिणाम मिलाएँ। एक Unicode अक्षर कई बाइट ले सकता है; अक्षर संख्या Base64 लंबाई नहीं बताती।",
+    "unicodeHeading": "हिंदी और Unicode का UTF-8 एन्कोडिंग"
+  },
+  "ru": {
+    "decode": {
+      "heading": "Как декодировать текст Base64 онлайн",
+      "intro": "Декодирование Base64 восстанавливает байты из строки. Этот декодер читает их как UTF-8 и показывает русский текст и эмодзи. Проверяйте значения API; инструмент не скачивает изображения или PDF.",
+      "firstStep": "Вставьте только часть Base64. Сначала удалите кавычки JSON и префиксы вроде data:text/plain;base64,.",
+      "formatHeading": "Поддерживаемые форматы Base64 и заполнение",
+      "errorsHeading": "Исправление ошибок декодирования Base64",
+      "faqHeading": "Частые вопросы",
+      "faq": [
+        [
+          "Почему текст нечитаемый или возникает ошибка UTF-8?",
+          "Проверьте исходную кодировку. Base64 не указывает UTF-8, другую кодировку или двоичные данные. Этот декодер не преобразует EUC-KR или Shift_JIS автоматически. Дополнительные = не решат проблему."
+        ]
+      ]
+    },
+    "encode": {
+      "heading": "Как кодировать текст в Base64 онлайн",
+      "intro": "Этот кодировщик превращает исходный текст в байты UTF-8 и создаёт стандартный Base64. Используйте его для подготовки значений API или проверки формата, требуемого другой системой.",
+      "firstStep": "Введите исходный текст. Уже закодированная строка будет закодирована повторно; для восстановления оригинала используйте декодер.",
+      "formatHeading": "Алфавит, заполнение и длина результата",
+      "formatText": "Вывод использует A–Z, a–z, 0–9, +, / и конечное заполнение =, без добавления переносов строк. Для n байтов UTF-8 длина равна 4 × ceil(n / 3). Сравните f → Zg==, fo → Zm8= и foo → Zm9v. Для Base64URL замените + и / на - и _ и соблюдайте правила протокола.",
+      "faqHeading": "Частые вопросы",
+      "faq": [
+        [
+          "Кодируются ли пробелы и переносы строк?",
+          "Да. Они входят в байты ввода. Hello и Hello с переносом строки дают разные результаты. LF и CRLF также создают разные значения. Декодирование восстанавливает введённый текст."
+        ]
+      ]
+    },
+    "examplesHeading": "Проверенные примеры Base64",
+    "examplesText": "Примеры используют UTF-8. Сравните ввод и результат, чтобы проверить направление. Один символ Unicode может занимать несколько байтов; число символов не определяет длину Base64.",
+    "unicodeHeading": "Кодирование Unicode в UTF-8"
+  }
+}

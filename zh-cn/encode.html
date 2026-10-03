@@ -14,10 +14,10 @@
   <link rel="icon" href="https://decodex.fyi/favicon.ico" sizes="16x16 32x32 48x48 96x96">
   <link rel="icon" type="image/png" href="https://decodex.fyi/decodexFavicon.png" sizes="96x96">
   <meta name="color-scheme" content="light dark">
-  <script src="/locales/zh-CN.js?v=20261003m"></script>
-<script src="/theme.js?v=20261003m"></script>
-  <link rel="stylesheet" href="/style.css?v=20261003m">
-  <script src="/language.js?v=20261003m"></script>
+  <script src="/locales/zh-CN.js?v=20261003n"></script>
+<script src="/theme.js?v=20261003n"></script>
+  <link rel="stylesheet" href="/style.css?v=20261003n">
+  <script src="/language.js?v=20261003n"></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-XVJFGV14XL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
@@ -25,7 +25,7 @@
     gtag('js', new Date());
     gtag('config', 'G-XVJFGV14XL');
   </script>
-  <script src="/function.js?v=20261003m" defer></script>
+  <script src="/function.js?v=20261003n" defer></script>
 <link rel="alternate" hreflang="en" href="https://decodex.fyi/encode.html">
 <link rel="alternate" hreflang="ko" href="https://decodex.fyi/ko/encode.html">
 <link rel="alternate" hreflang="es" href="https://decodex.fyi/es/encode.html">
@@ -42,5 +42,6 @@
 <form id="converter" novalidate><div class="converter-toolbar"><button type="button" id="auto-convert-button" class="auto-convert-button" aria-pressed="true" aria-describedby="auto-convert-hint">自动转换: 开启</button><nav class="mode-switch" aria-label="Base64"><a href="./">Base64解码</a><a href="encode.html" aria-current="page">Base64编码</a></nav></div><p id="auto-convert-hint" class="auto-convert-hint">输入或粘贴时自动转换。关闭后可手动转换。</p>
 <div class="workspace"><section class="panel input-panel" aria-labelledby="input-label"><div class="panel-heading"><label id="input-label" for="userInput">输入</label></div><textarea id="userInput" placeholder="输入或粘贴文本…" spellcheck="false" autocapitalize="off" autocomplete="off" aria-describedby="input-hint feedback"></textarea><div class="panel-footer"><span id="input-count">0 个字符</span><div class="small-actions"><button type="button" id="example-button">试用示例</button><button type="button" id="clear-button">清空</button></div></div><div class="conversion-bar panel-action"><p id="input-hint">支持UTF-8文本，输出不含换行。</p><button class="primary-button" type="submit">Base64编码 <span aria-hidden="true">→</span></button></div></section>
 <section class="panel output-panel" aria-labelledby="output-label"><div class="panel-heading"><label id="output-label" for="result">结果 · Base64</label><button class="copy-button" type="button" id="copy-button" disabled><span aria-hidden="true">⧉</span> 复制结果</button></div><textarea id="result" readonly placeholder="结果将显示在这里。" spellcheck="false"></textarea><div class="panel-footer"><span id="output-count">0 个字符</span></div></section></div><p id="feedback" class="feedback" role="status" aria-live="polite" aria-atomic="true"></p></form>
-<section class="guide"><h2>使用方法</h2><ol><li>将文本或Base64字符串粘贴到输入框中。</li><li>工具会自动转换。关闭自动转换后，请点击转换按钮或按Ctrl+Enter（Mac上为⌘+Enter）。</li><li>点击复制按钮复制结果。UTF-8文本上限为5 MB。</li></ol><p>转换在浏览器中完成。输入和结果不会发送到转换服务器。Google Analytics用于统计访问和功能使用情况。</p><p>Base64是一种可逆的数据表示方式，并非加密。它不能保护密码或其他秘密信息。</p></section><section class="guide-resources"><h2>指南</h2><div class="guide-grid"><a class="guide-card" href="base64-errors.html"><h3>解决Base64解码错误</h3></a><a class="guide-card" href="base64-korean.html"><h3>使用UTF-8转换韩文和表情符号</h3></a></div></section><section class="guide-resources" data-new-guides><h2>更多Base64指南</h2><div class="guide-grid"><a class="guide-card" href="base64url.html"><h3>Base64与Base64URL的区别：字符、填充和解码示例</h3><p>比较Base64与Base64URL的+ /和- _、填充省略规则，以及经过验证的UTF-8解码示例。</p></a><a class="guide-card" href="base64-padding.html"><h3>Base64末尾的=和==是什么意思：填充与错误排查</h3><p>用f、fo和foo解释Base64填充，检查省略的=、无效长度以及部分填充错误。</p></a><a class="guide-card" href="javascript-base64.html"><h3>JavaScript中文Base64转换：解决btoa的Unicode错误</h3><p>使用TextEncoder、atob和TextDecoder转换中文、韩文和表情符号。提供经过验证的UTF-8代码与示例。</p></a></div></section>
+<section class="guide converter-help" id="converter-help" data-converter-help="encode"><h2>在线文本Base64编码方法</h2><p>此编码器先把原始文本转换为UTF-8字节，再生成标准Base64。可用于准备API参数，或检查其他系统需要的输出格式。</p><ol><li>输入原始文本。输入已编码的字符串会再次编码它；要还原原文，请使用解码器。</li><li>工具会自动转换。关闭自动转换后，请点击转换按钮或按Ctrl+Enter（Mac上为⌘+Enter）。</li><li>点击复制按钮复制结果。UTF-8文本上限为5 MB。</li></ol><h2>经过验证的Base64文本示例</h2><p>示例按UTF-8验证。比较输入和结果，确认转换方向。一个Unicode字符可能占多个字节，因此字符数量不能决定Base64长度。</p><div class="article-table"><table><thead><tr><th scope="col">输入</th><th scope="col">结果</th></tr></thead><tbody><tr data-example-text="Hello"><td><code>Hello</code></td><td><code>SGVsbG8=</code></td></tr><tr data-example-text="你好"><td><code>你好</code></td><td><code>5L2g5aW9</code></td></tr><tr data-example-text="안녕하세요 😀"><td><code>안녕하세요 😀</code></td><td><code>7JWI64WV7ZWY7IS47JqUIPCfmIA=</code></td></tr></tbody></table></div><p><a href="?example=unicode#converter">转换Unicode示例 →</a></p><h2>输出字符、填充与长度</h2><p>输出使用A–Z、a–z、0–9、+、/和末尾=填充，不自动添加换行。对于n个UTF-8字节，长度为4 × ceil(n / 3)个字符。比较f → Zg==、fo → Zm8=、foo → Zm9v。若需要Base64URL，把+和/替换为-和_，并遵守协议的填充规则。</p><h2>中文与Unicode的UTF-8编码</h2><p>要正确恢复中文、韩文或表情符号，原文必须使用UTF-8编码。Base64表示字节，并不标明字符编码。如果出现乱码或错误，请检查原始编码。本工具不会自动转换GBK、Shift_JIS等其他字符编码。可使用下方示例验证编码和解码。</p><h2>常见问题</h2><details><summary>空格和换行也会编码吗？</summary><p>会。它们属于输入字节。Hello与末尾带换行的Hello结果不同。LF和CRLF也产生不同值。解码会还原实际输入的文本。</p></details><details><summary>Base64能保护文本吗？</summary><p>Base64是一种可逆的数据表示方式，并非加密。它不能保护密码或其他秘密信息。</p></details><p><a href="./">Base64解码 →</a></p><p>转换在浏览器中完成。输入和结果不会发送到转换服务器。Google Analytics用于统计访问和功能使用情况。</p></section>
+<section class="guide-resources converter-related"><h2>更多说明</h2><ul><li><a href="base64-korean.html">使用UTF-8转换韩文和表情符号</a></li><li><a href="base64-padding.html">Base64末尾的=和==是什么意思：填充与错误排查</a></li><li><a href="javascript-base64.html">JavaScript中文Base64转换：解决btoa的Unicode错误</a></li></ul></section>
 </main><footer><span>© Decodex</span><nav class="footer-links"><a href="guides.html">指南</a><a href="about.html">关于Decodex</a><a href="privacy.html">隐私政策</a><a href="contact.html">联系我们</a></nav></footer></body></html>
