@@ -499,3 +499,24 @@ textarea { min-height:220px; font-size:14px; }
 .theme-icon { font-size:19px; line-height:1; }
 @media(max-width:700px) { .theme-label { display:none; } .theme-toggle { width:44px; padding:8px; } }
 @media(max-width:380px) { .header { padding-left:16px; padding-right:16px; } .brand img { width:106px; } .header-tools { gap:6px; } }
+
+/* Native details keeps every language link available without JavaScript. */
+.language-switch { position: relative; border: 0; padding: 0; background: transparent; }
+.language-menu { position: relative; font-size: .85rem; }
+.language-menu summary { cursor: pointer; padding: .65rem .8rem; border: 1px solid var(--border, #cbd5e1); border-radius: 10px; white-space: nowrap; }
+.language-options { position: absolute; z-index: 30; right: 0; top: calc(100% + 8px); display: grid; min-width: 210px; max-height: min(65vh, 480px); overflow-y: auto; background: #fff; color: #17233d; border: 1px solid #cbd5e1; border-radius: 12px; padding: 6px; box-shadow: 0 12px 30px #0002; }
+.language-options a { display: block; border-radius: 6px; padding: .65rem .85rem; white-space: nowrap; }
+.language-options a:hover, .language-options a[aria-current="page"] { background: #e5f3f2; color: #12544e; }
+html[data-theme="dark"] .language-options { background: #182333; color: #edf3fa; border-color: #425168; }
+html[data-theme="dark"] .language-options a:hover, html[data-theme="dark"] .language-options a[aria-current="page"] { background: #254640; color: #b9f2dc; }
+.info-content pre { max-width: 100%; overflow-x: auto; padding: 1rem; }
+.mode-switch a, .primary-button, .copy-button, .auto-convert-button { white-space: normal; text-align: center; }
+.panel-heading { gap: .75rem; }
+@media (max-width: 600px) {
+  .header-tools { flex-wrap: wrap; justify-content: flex-end; }
+  .converter-toolbar { align-items: stretch; }
+  .mode-switch { min-width: 0; }
+  .mode-switch a { min-width: 0; overflow-wrap: anywhere; }
+  .panel-footer { gap: .5rem; flex-wrap: wrap; }
+  .small-actions { flex-wrap: wrap; }
+}

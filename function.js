@@ -4,7 +4,8 @@ const output = document.getElementById('result');
 const feedback = document.getElementById('feedback');
 const copyButton = document.getElementById('copy-button');
 const mode = document.body.dataset.mode;
-const locale = document.body.dataset.lang === 'ko' ? 'ko' : 'en';
+const locale = document.body.dataset.lang || 'en';
+const localized = window.decodexLocale;
 const koreanMessages = {
   "Please use text smaller than 5 MB.": "5MB보다 작은 텍스트를 입력하세요.",
   "Paste a Base64 string to get started.": "Base64 문자열을 입력하거나 붙여넣으세요.",
@@ -19,7 +20,7 @@ const koreanMessages = {
   "Copied to clipboard.": "클립보드에 복사했습니다.",
   "Automatic copying is unavailable. The result is selected; press Ctrl+C or ⌘C to copy.": "자동 복사를 사용할 수 없습니다. 선택된 결과를 Ctrl+C 또는 ⌘C로 복사하세요."
 };
-function t(text) { return locale === 'ko' ? koreanMessages[text] || text : text; }
+function t(text) { return localized?.messages[text] || (locale === 'ko' ? koreanMessages[text] || text : text); }
 
 const MAX_BYTES = 5 * 1024 * 1024;
 let copyVersion = 0;
@@ -74,8 +75,8 @@ function scheduleAutoConvert() {
   }
 }
 function counts() {
-  document.getElementById('input-count').textContent = `${Array.from(input.value).length.toLocaleString(locale)}${locale === 'ko' ? '자' : ' characters'}`;
-  document.getElementById('output-count').textContent = `${Array.from(output.value).length.toLocaleString(locale)}${locale === 'ko' ? '자' : ' characters'}`;
+  document.getElementById('input-count').textContent = `${Array.from(input.value).length.toLocaleString(locale)}${locale === 'ko' ? '자' : ' ' + (localized?.chars || 'characters')}`;
+  document.getElementById('output-count').textContent = `${Array.from(output.value).length.toLocaleString(locale)}${locale === 'ko' ? '자' : ' ' + (localized?.chars || 'characters')}`;
   copyButton.disabled = !output.value;
 }
 function message(text, error = false) {
@@ -137,7 +138,9 @@ if (autoConvertButton) {
   autoConvertButton.addEventListener('click', () => {
     autoConvert = !autoConvert;
     autoConvertButton.setAttribute('aria-pressed', String(autoConvert));
-    autoConvertButton.textContent = locale === 'ko'
+    autoConvertButton.textContent = localized
+      ? `${localized.auto}: ${autoConvert ? localized.on : localized.off}`
+      : locale === 'ko'
       ? `자동 변환: ${autoConvert ? '켜짐' : '꺼짐'}`
       : `Auto convert: ${autoConvert ? 'ON' : 'OFF'}`;
     document.getElementById('auto-convert-hint').textContent = autoConvert
@@ -151,7 +154,7 @@ if (autoConvertButton) {
 input.addEventListener('keydown', event => { if ((event.ctrlKey || event.metaKey) && event.key === 'Enter') { event.preventDefault(); convert(); } });
 document.getElementById('clear-button').addEventListener('click', () => { input.value = ''; cancelAutoConvert(); resetResult(); input.focus(); });
 document.getElementById('example-button').addEventListener('click', () => {
-  const example = 'Hello, Decodex! 안녕하세요 👋';
+  const example = localized?.example || 'Hello, Decodex! 안녕하세요 👋';
   input.value = mode === 'encode' ? example : encodeText(example);
   scheduleAutoConvert(); input.focus();
 });

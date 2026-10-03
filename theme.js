@@ -15,7 +15,9 @@
     const dark = theme === 'dark';
     const korean = root.lang === 'ko';
     button.setAttribute('aria-pressed', String(dark));
-    button.title = korean
+    button.title = window.decodexLocale
+      ? `${window.decodexLocale.dark}: ${dark ? window.decodexLocale.on : window.decodexLocale.off}`
+      : korean
       ? dark ? '다크 모드 끄기' : '다크 모드 켜기'
       : dark ? 'Turn dark mode off' : 'Turn dark mode on';
     button.querySelector('.theme-icon').textContent = dark ? '☾' : '☀';
