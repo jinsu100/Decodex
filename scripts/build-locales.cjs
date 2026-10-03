@@ -5,12 +5,15 @@ const path = require('node:path');
 const root = path.resolve(__dirname, '..');
 const version = '20261003l';
 const names = {en:'English',ko:'한국어',es:'Español','pt-BR':'Português (Brasil)',de:'Deutsch',ja:'日本語','zh-CN':'简体中文',fr:'Français',it:'Italiano',nl:'Nederlands',hi:'हिन्दी',ru:'Русский'};
+// English and Korean are pinned; others follow OBDILCI V6 (July 2025)
+// estimated connected L1+L2 speakers, using Chinese/Portuguese as locale proxies.
+const menuOrder = ["en", "ko", "zh-CN", "es", "hi", "ru", "fr", "pt-BR", "de", "ja", "it", "nl"];
 const dirs = Object.fromEntries(Object.keys(names).map(k=>[k,k==='en'?'':k.toLowerCase()+'/']));
 const pages = ['index.html','encode.html','about.html','privacy.html','contact.html','guides.html','base64-errors.html','base64-korean.html'];
 const url = (lang,page)=>'/'+dirs[lang]+(page==='index.html'?'':page);
 const escape = s=>String(s).replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;');
 function alternates(page) {return [...Object.keys(names).map(lang=>`<link rel="alternate" hreflang="${lang}" href="https://decodex.fyi${url(lang,page)}">`),`<link rel="alternate" hreflang="x-default" href="https://decodex.fyi${url('en',page)}">`].join('\n');}
-function menu(lang,page,label) {return `<nav class="language-switch" aria-label="${escape(label)}"><details class="language-menu"><summary>🌐 ${names[lang]}</summary><div class="language-options">${Object.keys(names).map(l=>`<a href="${url(l,page)}" lang="${l}" hreflang="${l}"${l===lang?' aria-current="page"':''}>${names[l]}</a>`).join('')}</div></details></nav>`;}
+function menu(lang,page,label) {return `<nav class="language-switch" aria-label="${escape(label)}"><details class="language-menu"><summary>🌐 ${names[lang]}</summary><div class="language-options">${menuOrder.map(l=>`<a href="${url(l,page)}" lang="${l}" hreflang="${l}"${l===lang?' aria-current="page"':''}>${names[l]}</a>`).join('')}</div></details></nav>`;}
 const baseHead=fs.readFileSync(path.join(root,'index.html'),'utf8').match(/<head>([\s\S]*?)<\/head>/)[1];
 for (const lang of Object.keys(names).filter(l=>!['en','ko'].includes(l))) {
  const d=JSON.parse(fs.readFileSync(path.join(root,'locales',lang+'.json'),'utf8'));
